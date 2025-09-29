@@ -187,22 +187,33 @@ export const ContactCard = ({ contact, onDelete, onUpdate, onEdit }: ContactCard
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => {
-                console.log('Edit button clicked in ContactCard for:', contact.name);
-                console.log('onEdit function exists:', !!onEdit);
-                alert(`Test: Trycker redigera för ${contact.name}`);
-                if (onEdit) {
-                  console.log('Calling onEdit function');
-                  onEdit(contact);
-                } else {
-                  console.log('onEdit function is not available');
-                }
-              }}>
+            <DropdownMenuContent 
+              align="end" 
+              className="z-[100] min-w-[120px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-lg p-1"
+            >
+              <DropdownMenuItem 
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  console.log('Edit button clicked in ContactCard for:', contact.name);
+                  console.log('onEdit function exists:', !!onEdit);
+                  alert(`Test: Trycker redigera för ${contact.name}`);
+                  if (onEdit) {
+                    console.log('Calling onEdit function');
+                    onEdit(contact);
+                  } else {
+                    console.log('onEdit function is not available');
+                  }
+                }}
+                className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer"
+              >
                 <Edit className="w-4 h-4 mr-2" />
                 Redigera
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => onDelete(contact.id)} className="text-destructive">
+              <DropdownMenuItem 
+                onClick={() => onDelete(contact.id)} 
+                className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 rounded cursor-pointer"
+              >
                 <Trash2 className="w-4 h-4 mr-2" />
                 {t('contact.delete')}
               </DropdownMenuItem>
