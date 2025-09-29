@@ -61,6 +61,7 @@ const Dashboard = () => {
   const [showImporter, setShowImporter] = useState(false);
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
   const [showAllContacts, setShowAllContacts] = useState(false);
+  const [editingContact, setEditingContact] = useState<Contact | null>(null);
   
   const [showCalendar, setShowCalendar] = useState(false);
 
@@ -80,6 +81,19 @@ const Dashboard = () => {
         title: t('subscription.almostAtLimit'),
         description: warningMessage,
       });
+    }
+  };
+
+  const handleEditContact = (contact: Contact) => {
+    console.log('🟢 Dashboard: Edit contact clicked:', contact.name);
+    setEditingContact(contact);
+    setShowAddDialog(true);
+  };
+
+  const handleDialogClose = (open: boolean) => {
+    setShowAddDialog(open);
+    if (!open) {
+      setEditingContact(null);
     }
   };
 
@@ -367,6 +381,7 @@ const Dashboard = () => {
                   contact={contact}
                   onDelete={deleteContact}
                   onUpdate={updateContact}
+                  onEdit={handleEditContact}
                 />
               ))}
             </div>
@@ -415,6 +430,7 @@ const Dashboard = () => {
                   contact={contact}
                   onDelete={deleteContact}
                   onUpdate={updateContact}
+                  onEdit={handleEditContact}
                 />
               ))}
             </div>
@@ -446,8 +462,10 @@ const Dashboard = () => {
         {/* Dialogs */}
         <AddContactDialog
           open={showAddDialog}
-          onOpenChange={setShowAddDialog}
+          onOpenChange={handleDialogClose}
           onAddContact={handleAddContact}
+          onUpdateContact={updateContact}
+          editingContact={editingContact}
         />
         
         <ContactImporter
