@@ -80,14 +80,8 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
       return null; // Invalid or missing year
     }
     
-    let age = today.getFullYear() - birthYear;
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    
-    return age + (isToday ? 0 : 1);
+    // Calculate the age they turn this year
+    return today.getFullYear() - birthYear;
   };
 
   const getAgeText = () => {
