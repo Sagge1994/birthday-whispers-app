@@ -100,6 +100,18 @@ const Dashboard = () => {
     await addMultipleContacts(newContacts);
   };
 
+  // Get birthdays today
+  const getBirthdaysToday = () => {
+    const today = new Date();
+    return contacts.filter(contact => {
+      if (!contact.birthday) return false;
+      
+      const birthday = new Date(contact.birthday);
+      return birthday.getMonth() === today.getMonth() && 
+             birthday.getDate() === today.getDate();
+    });
+  };
+
   // Get upcoming birthdays
   const getUpcomingBirthdays = () => {
     const today = new Date();
@@ -122,6 +134,7 @@ const Dashboard = () => {
     return upcoming.slice(0, 3); // Show max 3
   };
 
+  const birthdaysToday = getBirthdaysToday();
   const upcomingBirthdays = getUpcomingBirthdays();
 
   const quickActions = [
@@ -279,7 +292,7 @@ const Dashboard = () => {
           <Card className="bg-gradient-card border-0 shadow-card">
             <CardContent className="p-6 text-center">
               <Gift className="w-8 h-8 text-primary mx-auto mb-2" />
-              <div className="text-2xl font-bold text-primary">0</div>
+              <div className="text-2xl font-bold text-primary">{birthdaysToday.length}</div>
               <div className="text-sm text-muted-foreground">{t('dashboard.birthdaysToday')}</div>
             </CardContent>
           </Card>
