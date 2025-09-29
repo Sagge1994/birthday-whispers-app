@@ -109,7 +109,7 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
     }
 
     const defaultMessage = t('contact.defaultMessage');
-    const message = contact.customMessage || defaultMessage;
+    const message = contact.custom_message || defaultMessage;
     sendSMS(contact.phone, message);
   };
 

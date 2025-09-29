@@ -50,7 +50,7 @@ export const CalendarView = ({ contacts, onAddContact }: CalendarViewProps) => {
 
   const sendSMS = (contact: Contact) => {
     const defaultMessage = `Grattis på födelsedagen! 🎉 Hoppas du får en fantastisk dag! 🎂`;
-    const message = contact.customMessage || defaultMessage;
+    const message = contact.custom_message || defaultMessage;
     const smsUrl = `sms:${contact.phone}?body=${encodeURIComponent(message)}`;
     window.location.href = smsUrl;
     

@@ -24,6 +24,7 @@ export type Database = {
           phone: string | null
           updated_at: string
           user_id: string
+          yearly_messages: Json | null
         }
         Insert: {
           birthday: string
@@ -34,6 +35,7 @@ export type Database = {
           phone?: string | null
           updated_at?: string
           user_id: string
+          yearly_messages?: Json | null
         }
         Update: {
           birthday?: string
@@ -44,6 +46,7 @@ export type Database = {
           phone?: string | null
           updated_at?: string
           user_id?: string
+          yearly_messages?: Json | null
         }
         Relationships: []
       }

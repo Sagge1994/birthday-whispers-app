@@ -146,7 +146,7 @@ export const QuickAddBirthdayDialog = ({
       name: formData.name,
       birthday: selectedDate.toISOString().split('T')[0],
       phone: formData.phone,
-      customMessage: formData.customMessage || undefined
+      custom_message: formData.customMessage || undefined
     });
 
     toast({

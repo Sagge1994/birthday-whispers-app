@@ -8,7 +8,8 @@ export interface Contact {
   name: string;
   birthday: string;
   phone?: string;
-  customMessage?: string;
+  custom_message?: string;
+  yearly_messages?: Record<string, string>;
 }
 
 export const useContacts = () => {
@@ -35,7 +36,10 @@ export const useContacts = () => {
 
       if (error) throw error;
 
-      setContacts(data || []);
+      setContacts(data?.map(contact => ({
+        ...contact,
+        yearly_messages: contact.yearly_messages as Record<string, string> || undefined
+      })) || []);
     } catch (error) {
       console.error('Error loading contacts:', error);
       toast({
@@ -64,7 +68,10 @@ export const useContacts = () => {
 
       if (error) throw error;
 
-      setContacts(prev => [...prev, data]);
+      setContacts(prev => [...prev, {
+        ...data,
+        yearly_messages: data.yearly_messages as Record<string, string> || undefined
+      }]);
       
       toast({
         title: "Kontakt tillagd!",
@@ -100,7 +107,10 @@ export const useContacts = () => {
 
       if (error) throw error;
 
-      setContacts(prev => [...prev, ...data]);
+      setContacts(prev => [...prev, ...data.map(contact => ({
+        ...contact,
+        yearly_messages: contact.yearly_messages as Record<string, string> || undefined
+      }))]);
       
       toast({
         title: "Kontakter importerade!",
@@ -134,7 +144,10 @@ export const useContacts = () => {
 
       if (error) throw error;
 
-      setContacts(prev => prev.map(c => c.id === id ? data : c));
+      setContacts(prev => prev.map(c => c.id === id ? {
+        ...data,
+        yearly_messages: data.yearly_messages as Record<string, string> || undefined
+      } : c));
       
       return true;
     } catch (error) {

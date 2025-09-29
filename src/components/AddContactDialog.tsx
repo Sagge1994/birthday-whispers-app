@@ -26,7 +26,8 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
     name: "",
     birthday: "",
     phone: "",
-    customMessage: ""
+    custom_message: "",
+    yearly_messages: {} as Record<string, string>
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -45,7 +46,8 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
       name: formData.name,
       birthday: formData.birthday,
       phone: formData.phone,
-      customMessage: formData.customMessage || undefined
+      custom_message: formData.custom_message || undefined,
+      yearly_messages: Object.keys(formData.yearly_messages).length > 0 ? formData.yearly_messages : undefined
     });
 
     toast({
@@ -58,7 +60,8 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
       name: "",
       birthday: "",
       phone: "",
-      customMessage: ""
+      custom_message: "",
+      yearly_messages: {}
     });
     
     onOpenChange(false);
@@ -110,14 +113,38 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="customMessage">Custom Message (optional)</Label>
+            <Label htmlFor="custom_message">Custom Message (optional)</Label>
             <Textarea
-              id="customMessage"
-              value={formData.customMessage}
-              onChange={(e) => setFormData({...formData, customMessage: e.target.value})}
+              id="custom_message"
+              value={formData.custom_message}
+              onChange={(e) => setFormData({...formData, custom_message: e.target.value})}
               placeholder="Write a personal birthday message..."
               className="bg-background/50 min-h-[80px]"
             />
+          </div>
+          
+          {/* Yearly Messages Section */}
+          <div className="space-y-2">
+            <Label>Yearly Messages (optional)</Label>
+            <div className="space-y-2 max-h-32 overflow-y-auto">
+              {[2025, 2026, 2027, 2028, 2029].map(year => (
+                <div key={year} className="flex gap-2 items-center">
+                  <Label className="w-12 text-xs">{year}:</Label>
+                  <Input
+                    value={formData.yearly_messages[year] || ""}
+                    onChange={(e) => setFormData({
+                      ...formData, 
+                      yearly_messages: {
+                        ...formData.yearly_messages,
+                        [year]: e.target.value
+                      }
+                    })}
+                    placeholder={`Message for ${year}...`}
+                    className="bg-background/50 text-xs h-8"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
           
           <DialogFooter>
