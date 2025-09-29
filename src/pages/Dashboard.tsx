@@ -3,6 +3,16 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { 
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { 
   Calendar, 
   MessageSquare, 
   Bell, 
@@ -49,6 +59,7 @@ const Dashboard = () => {
   const [showMessageManager, setShowMessageManager] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showImporter, setShowImporter] = useState(false);
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
   
   const [showCalendar, setShowCalendar] = useState(false);
 
@@ -220,7 +231,7 @@ const Dashboard = () => {
             <Button
               variant="ghost"
               size="sm"
-              onClick={signOut}
+              onClick={() => setShowLogoutDialog(true)}
               className="text-muted-foreground hover:text-foreground"
             >
               <LogOut className="w-4 h-4" />
@@ -421,6 +432,24 @@ const Dashboard = () => {
           onOpenChange={setShowSettings}
           contacts={contacts}
         />
+        
+        {/* Logout Confirmation Dialog */}
+        <AlertDialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Logga ut</AlertDialogTitle>
+              <AlertDialogDescription>
+                Är du säker på att du vill logga ut?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Avbryt</AlertDialogCancel>
+              <AlertDialogAction onClick={signOut}>
+                Logga ut
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );
