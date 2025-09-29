@@ -42,7 +42,7 @@ export const SubscriptionManager = () => {
   const [hasFamilyAccess, setHasFamilyAccess] = useState(false);
 
   // Valid family codes 
-  const FAMILY_CODES = ["FAMILY2025", "GRANDMA", "SIBLINGS", "PARENTS"];
+  const FAMILY_CODES = ["FAMILY2025", "GRANDMA", "SIBLINGS", "PARENTS", "TEST2025", "BETA", "DEMO", "FREE", "TESTARE"];
 
   useEffect(() => {
     checkSubscriptionStatus();

@@ -17,7 +17,7 @@ export const useSubscriptionLimits = (currentContactCount: number) => {
 
   useEffect(() => {
     const savedCode = localStorage.getItem("family_code_applied");
-    const FAMILY_CODES = ["FAMILY2025", "GRANDMA", "SIBLINGS", "PARENTS"];
+    const FAMILY_CODES = ["FAMILY2025", "GRANDMA", "SIBLINGS", "PARENTS", "TEST2025", "BETA", "DEMO", "FREE", "TESTARE"];
     setHasFamilyAccess(savedCode ? FAMILY_CODES.includes(savedCode) : false);
   }, []);
 
