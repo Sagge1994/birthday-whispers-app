@@ -35,14 +35,20 @@ const Dashboard = () => {
     {
       id: "1",
       name: "Anna Svensson",
-      birthday: "2024-10-15",
+      birthday: "2025-02-05",
       phone: "+46701234567"
     },
     {
       id: "2", 
-      name: "Erik Johansson",
-      birthday: "2024-10-30",
+      name: "Erik Johansson", 
+      birthday: "2025-02-14",
       phone: "+46701234568"
+    },
+    {
+      id: "3",
+      name: "Maria Lindqvist",
+      birthday: "2025-02-20", 
+      phone: "+46701234569"
     }
   ]);
   
