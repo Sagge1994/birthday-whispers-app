@@ -267,11 +267,10 @@ export const SubscriptionManager = () => {
                   <AlertTriangle className="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" />
                   <div className="text-sm">
                     <p className="font-medium text-orange-800 mb-1">Begränsningar med gratis-planen:</p>
-                    <ul className="text-orange-700 space-y-1">
-                      <li>• Max 5 kontakter totalt</li>
-                      <li>• Kan inte lägga till fler kontakter när gränsen nås</li>
-                      <li>• Begränsade påminnelsefunktioner</li>
-                    </ul>
+                     <ul className="text-orange-700 space-y-1">
+                       <li>• Max 5 kontakter totalt</li>
+                       <li>• Kan inte lägga till fler kontakter när gränsen nås</li>
+                     </ul>
                   </div>
                 </div>
               </div>
