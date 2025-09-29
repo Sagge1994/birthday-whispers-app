@@ -48,20 +48,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
         
-        // Check subscription when user logs in
+        // Check subscription when user logs in (defer with setTimeout to avoid deadlock)
         if (session?.user) {
-          try {
-            const { data, error } = await supabase.functions.invoke('check-subscription');
-            if (error) throw error;
-            setSubscriptionStatus(data);
-          } catch (error) {
-            console.error('Error checking subscription:', error);
-          }
+          setTimeout(async () => {
+            try {
+              const { data, error } = await supabase.functions.invoke('check-subscription');
+              if (error) {
+                console.warn('Subscription check failed:', error);
+                // Set default free subscription on error
+                setSubscriptionStatus({ subscribed: false });
+              } else {
+                setSubscriptionStatus(data || { subscribed: false });
+              }
+            } catch (error) {
+              console.warn('Error checking subscription:', error);
+              setSubscriptionStatus({ subscribed: false });
+            }
+          }, 100);
         } else {
           setSubscriptionStatus(null);
         }
@@ -69,20 +77,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
 
     // THEN check for existing session
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
       
-      // Check subscription for existing session
+      // Check subscription for existing session (defer with setTimeout)
       if (session?.user) {
-        try {
-          const { data, error } = await supabase.functions.invoke('check-subscription');
-          if (error) throw error;
-          setSubscriptionStatus(data);
-        } catch (error) {
-          console.error('Error checking subscription:', error);
-        }
+        setTimeout(async () => {
+          try {
+            const { data, error } = await supabase.functions.invoke('check-subscription');
+            if (error) {
+              console.warn('Subscription check failed:', error);
+              setSubscriptionStatus({ subscribed: false });
+            } else {
+              setSubscriptionStatus(data || { subscribed: false });
+            }
+          } catch (error) {
+            console.warn('Error checking subscription:', error);
+            setSubscriptionStatus({ subscribed: false });
+          }
+        }, 100);
       }
     });
 
