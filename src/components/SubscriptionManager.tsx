@@ -135,6 +135,15 @@ export const SubscriptionManager = () => {
     }
   };
 
+  const removeFamilyAccess = () => {
+    localStorage.removeItem("family_code_applied");
+    setHasFamilyAccess(false);
+    toast({
+      title: "Familjerabatt avslutad",
+      description: "Du kan återaktivera den när som helst med din kod.",
+    });
+  };
+
   const isCurrentlyFree = !subscriptionStatus?.subscribed && !hasFamilyAccess;
   const isPremium = subscriptionStatus?.subscribed || hasFamilyAccess;
 
@@ -180,15 +189,26 @@ export const SubscriptionManager = () => {
                   </p>
                 </div>
               </div>
-              {subscriptionStatus?.subscribed && !hasFamilyAccess && (
-                <Button 
-                  onClick={handleManageSubscription}
-                  variant="outline"
-                  className="border-accent-foreground/20 text-accent-foreground hover:bg-accent-foreground/10"
-                >
-                  {t('subscription.manageSubscription')}
-                </Button>
-              )}
+              <div className="flex gap-2">
+                {subscriptionStatus?.subscribed && !hasFamilyAccess && (
+                  <Button 
+                    onClick={handleManageSubscription}
+                    variant="outline"
+                    className="border-accent-foreground/20 text-accent-foreground hover:bg-accent-foreground/10"
+                  >
+                    {t('subscription.manageSubscription')}
+                  </Button>
+                )}
+                {hasFamilyAccess && (
+                  <Button 
+                    onClick={removeFamilyAccess}
+                    variant="outline"
+                    className="border-accent-foreground/20 text-accent-foreground hover:bg-accent-foreground/10"
+                  >
+                    Avsluta familjerabatt
+                  </Button>
+                )}
+              </div>
             </div>
           </CardContent>
         </Card>
