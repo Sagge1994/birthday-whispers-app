@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 
 const Auth = () => {
   const { t } = useTranslation();
@@ -154,6 +155,7 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pastel-pink via-background to-pastel-blue flex items-center justify-center p-4">
+      <LanguageSwitcher />
       <div className="w-full max-w-md">
         <div className="mb-6">
           <Button
