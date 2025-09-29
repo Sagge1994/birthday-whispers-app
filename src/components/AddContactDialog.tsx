@@ -32,9 +32,14 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact, onUpdateCon
     yearly_messages: {} as Record<string, string>
   });
 
+  // Debug logging
+  console.log('AddContactDialog render:', { open, editingContact: editingContact?.name });
+
   // Update form data when editing contact changes
   useEffect(() => {
+    console.log('useEffect triggered:', { editingContact: editingContact?.name, open });
     if (editingContact && open) {
+      console.log('Setting form data for editing:', editingContact);
       setFormData({
         name: editingContact.name || "",
         birthday: editingContact.birthday || "",
@@ -43,6 +48,7 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact, onUpdateCon
         yearly_messages: editingContact.yearly_messages || {}
       });
     } else if (!editingContact && open) {
+      console.log('Resetting form data for new contact');
       // Reset form when adding new contact
       setFormData({
         name: "",

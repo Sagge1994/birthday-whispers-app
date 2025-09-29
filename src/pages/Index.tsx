@@ -31,13 +31,17 @@ const Index = () => {
   };
 
   const handleEditContact = (contact: Contact) => {
+    console.log('Edit contact clicked:', contact.name);
     setEditingContact(contact);
     setShowAddDialog(true);
+    console.log('Dialog should open now, editing contact:', contact.name);
   };
 
   const handleDialogClose = (open: boolean) => {
+    console.log('Dialog close called with:', open);
     setShowAddDialog(open);
     if (!open) {
+      console.log('Clearing editing contact');
       setEditingContact(null);
     }
   };
