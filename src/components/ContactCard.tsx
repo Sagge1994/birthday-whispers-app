@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MoreHorizontal, MessageSquare, Trash2, Calendar } from "lucide-react";
+import { MoreHorizontal, MessageSquare, Trash2, Calendar, Bell } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +12,8 @@ import {
 import { Contact } from "@/pages/Index";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
+import { useSMS } from "@/hooks/useSMS";
+import { usePushNotifications } from "@/hooks/usePushNotifications";
 
 interface ContactCardProps {
   contact: Contact;
@@ -22,6 +24,8 @@ interface ContactCardProps {
 export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) => {
   const { toast } = useToast();
   const { t, i18n } = useTranslation();
+  const { sendSMS } = useSMS();
+  const { scheduleLocalNotification } = usePushNotifications();
   
   const calculateDaysUntilBirthday = () => {
     const today = new Date();
@@ -94,20 +98,40 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
     return t('contact.inDays', { days: daysUntil });
   };
 
-  const sendSMS = () => {
+  const handleSendSMS = () => {
+    if (!contact.phone) {
+      toast({
+        title: "Inget telefonnummer",
+        description: "Denna kontakt har inget telefonnummer sparat",
+        variant: "destructive"
+      });
+      return;
+    }
+
     const defaultMessage = t('contact.defaultMessage');
     const message = contact.customMessage || defaultMessage;
+    sendSMS(contact.phone, message);
+  };
+
+  const scheduleNotification = () => {
+    const birthdayDate = new Date(contact.birthday);
+    const currentYear = new Date().getFullYear();
+    birthdayDate.setFullYear(currentYear);
     
-    // Create SMS URL
-    const smsUrl = `sms:${contact.phone}?body=${encodeURIComponent(message)}`;
+    // If birthday has passed this year, schedule for next year
+    if (birthdayDate < new Date()) {
+      birthdayDate.setFullYear(currentYear + 1);
+    }
     
-    // Open SMS app
-    window.location.href = smsUrl;
+    // Schedule notification for the day before
+    const reminderDate = new Date(birthdayDate);
+    reminderDate.setDate(reminderDate.getDate() - 1);
     
-    toast({
-      title: t('contact.smsReady'),
-      description: t('contact.smsReadyDesc', { name: contact.name }),
-    });
+    scheduleLocalNotification(
+      `${contact.name}s födelsedag imorgon!`,
+      `Glöm inte att gratulera ${contact.name} som fyller år imorgon`,
+      reminderDate
+    );
   };
 
   return (
@@ -157,15 +181,29 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
           )}
         </div>
 
-        {/* SMS Button */}
-        <Button 
-          onClick={sendSMS}
-          className="w-full bg-gradient-primary hover:shadow-soft transition-all duration-300"
-          size="sm"
-        >
-          <MessageSquare className="w-4 h-4 mr-2" />
-          {t('contact.sendSMS')}
-        </Button>
+        {/* Action Buttons */}
+        <div className="space-y-2">
+          {contact.phone && (
+            <Button 
+              onClick={handleSendSMS}
+              className="w-full bg-gradient-primary hover:shadow-soft transition-all duration-300"
+              size="sm"
+            >
+              <MessageSquare className="w-4 h-4 mr-2" />
+              {t('contact.sendSMS')}
+            </Button>
+          )}
+          
+          <Button 
+            onClick={scheduleNotification}
+            variant="outline"
+            className="w-full border-primary/20"
+            size="sm"
+          >
+            <Bell className="w-4 h-4 mr-2" />
+            Ställ in påminnelse
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );

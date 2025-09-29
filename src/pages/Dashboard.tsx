@@ -25,10 +25,12 @@ import { ContactImporter } from "@/components/ContactImporter";
 import { CalendarView } from "@/components/CalendarView";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { MobileAppInfo } from "@/components/MobileAppInfo";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useSubscriptionLimits } from "@/hooks/useSubscriptionLimits";
+import { usePushNotifications } from "@/hooks/usePushNotifications";
 
 const FREE_CONTACT_LIMIT = 5;
 
@@ -58,6 +60,7 @@ const Dashboard = () => {
   ]);
   
   const { isPremium, checkLimitAndShowUpgrade, getWarningMessage } = useSubscriptionLimits(contacts.length);
+  const { isRegistered } = usePushNotifications();
   
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showMessageManager, setShowMessageManager] = useState(false);
@@ -238,6 +241,9 @@ const Dashboard = () => {
               {t('dashboard.subtitle')}
             </p>
         </div>
+
+        {/* Mobile App Info */}
+        <MobileAppInfo />
 
         {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
