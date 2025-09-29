@@ -86,10 +86,18 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
 
   const getAgeText = () => {
     const age = getAge();
+    console.log('Age calculation:', { 
+      contactName: contact.name, 
+      birthday: contact.birthday, 
+      calculatedAge: age 
+    });
+    
     if (age === null) {
       return t('contact.turnsAgeUnknown');
     }
-    return t('contact.turnsAge', { age });
+    
+    // Direct string for debugging
+    return `Fyller ${age} år`;
   };
 
   const getDaysText = () => {
