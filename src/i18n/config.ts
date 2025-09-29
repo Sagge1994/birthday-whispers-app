@@ -134,7 +134,13 @@ const resources = {
       "index.calendar": "Kalender",
       "index.noContacts": "Inga kontakter än",
       "index.noContactsDesc": "Lägg till dina vänner och familj för att komma ihåg deras födelsedagar",
-      "index.addFirstPerson": "Lägg till första personen"
+      "index.addFirstPerson": "Lägg till första personen",
+      
+      // Subscription
+      "subscription.productName.monthly": "Födelsedagspåminnelser Premium Månadsplan",
+      "subscription.productName.yearly": "Födelsedagspåminnelser Premium Årsplan",
+      "subscription.productDescription.monthly": "Premium månadsplan med obegränsade notifikationer och meddelanden",
+      "subscription.productDescription.yearly": "Premium årsplan med obegränsade notifikationer och meddelanden (17% rabatt)"
     }
   },
   en: {
@@ -269,7 +275,13 @@ const resources = {
       "index.calendar": "Calendar",
       "index.noContacts": "No contacts yet",
       "index.noContactsDesc": "Add your friends and family to remember their birthdays",
-      "index.addFirstPerson": "Add your first person"
+      "index.addFirstPerson": "Add your first person",
+      
+      // Subscription
+      "subscription.productName.monthly": "Birthday Reminders Premium Monthly",
+      "subscription.productName.yearly": "Birthday Reminders Premium Yearly",
+      "subscription.productDescription.monthly": "Premium monthly plan with unlimited notifications and messages",
+      "subscription.productDescription.yearly": "Premium yearly plan with unlimited notifications and messages (17% off)"
     }
   },
   es: {
@@ -404,7 +416,13 @@ const resources = {
       "index.calendar": "Calendario",
       "index.noContacts": "Sin contactos aún",
       "index.noContactsDesc": "Agrega a tus amigos y familia para recordar sus cumpleaños",
-      "index.addFirstPerson": "Agregar tu primera persona"
+      "index.addFirstPerson": "Agregar tu primera persona",
+      
+      // Subscription
+      "subscription.productName.monthly": "Recordatorios de Cumpleaños Premium Mensual",
+      "subscription.productName.yearly": "Recordatorios de Cumpleaños Premium Anual",
+      "subscription.productDescription.monthly": "Plan premium mensual con notificaciones y mensajes ilimitados",
+      "subscription.productDescription.yearly": "Plan premium anual con notificaciones y mensajes ilimitados (17% de descuento)"
     }
   },
   fr: {
@@ -539,7 +557,13 @@ const resources = {
       "index.calendar": "Calendrier",
       "index.noContacts": "Aucun contact encore",
       "index.noContactsDesc": "Ajoutez vos amis et votre famille pour vous souvenir de leurs anniversaires",
-      "index.addFirstPerson": "Ajouter votre première personne"
+      "index.addFirstPerson": "Ajouter votre première personne",
+      
+      // Subscription
+      "subscription.productName.monthly": "Rappels d'Anniversaire Premium Mensuel",
+      "subscription.productName.yearly": "Rappels d'Anniversaire Premium Annuel",
+      "subscription.productDescription.monthly": "Plan premium mensuel avec notifications et messages illimités",
+      "subscription.productDescription.yearly": "Plan premium annuel avec notifications et messages illimités (17% de réduction)"
     }
   }
 };
