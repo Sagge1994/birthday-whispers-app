@@ -8,6 +8,8 @@ import { MessageTemplateManager } from "@/components/MessageTemplateManager";
 import { SettingsPanel } from "@/components/SettingsPanel";
 import { CalendarView } from "@/components/CalendarView";
 import { ContactImporter } from "@/components/ContactImporter";
+import { useTranslation } from "react-i18next";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export interface Contact {
   id: string;
@@ -18,6 +20,7 @@ export interface Contact {
 }
 
 const Index = () => {
+  const { t } = useTranslation();
   const [contacts, setContacts] = useState<Contact[]>([
     {
       id: "1",
@@ -83,14 +86,15 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-pastel-pink/20 to-pastel-lavender/30">
+      <LanguageSwitcher />
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
-            🎂 Födelsedagar
+            {t('index.title')}
           </h1>
           <p className="text-muted-foreground text-lg">
-            Glöm aldrig en vän igen
+            {t('index.subtitle')}
           </p>
         </div>
 
@@ -101,7 +105,7 @@ const Index = () => {
             className="bg-gradient-primary hover:shadow-soft transition-all duration-300 transform hover:scale-105"
           >
             <Plus className="w-4 h-4 mr-2" />
-            Lägg till person
+            {t('index.addPerson')}
           </Button>
           
           <Button 
@@ -110,7 +114,7 @@ const Index = () => {
             className="border-primary/20 hover:bg-pastel-mint/50 transition-all duration-300"
           >
             <Download className="w-4 h-4 mr-2" />
-            Importera kontakter
+            {t('index.importContacts')}
           </Button>
           
           <Button 
@@ -119,7 +123,7 @@ const Index = () => {
             className="border-primary/20 hover:bg-pastel-lavender/50 transition-all duration-300"
           >
             <MessageCircle className="w-4 h-4 mr-2" />
-            Meddelanden
+            {t('index.messages')}
           </Button>
           
           <Button 
@@ -128,7 +132,7 @@ const Index = () => {
             className="border-primary/20 hover:bg-pastel-peach/50 transition-all duration-300"
           >
             <Settings className="w-4 h-4 mr-2" />
-            Inställningar
+            {t('index.settings')}
           </Button>
         </div>
 
@@ -137,11 +141,11 @@ const Index = () => {
           <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8 bg-background/50 border border-primary/10">
             <TabsTrigger value="list" className="flex items-center gap-2">
               <List className="w-4 h-4" />
-              Lista
+              {t('index.list')}
             </TabsTrigger>
             <TabsTrigger value="calendar" className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
-              Kalender
+              {t('index.calendar')}
             </TabsTrigger>
           </TabsList>
 
@@ -150,16 +154,16 @@ const Index = () => {
             {sortedContacts.length === 0 ? (
               <div className="text-center py-16">
                 <div className="text-6xl mb-4">🎈</div>
-                <h3 className="text-xl font-semibold mb-2">Inga kontakter än</h3>
+                <h3 className="text-xl font-semibold mb-2">{t('index.noContacts')}</h3>
                 <p className="text-muted-foreground mb-6">
-                  Lägg till dina vänner och familj för att komma ihåg deras födelsedagar
+                  {t('index.noContactsDesc')}
                 </p>
                 <Button 
                   onClick={() => setShowAddDialog(true)}
                   className="bg-gradient-primary hover:shadow-soft"
                 >
                   <Plus className="w-4 h-4 mr-2" />
-                  Lägg till första personen
+                  {t('index.addFirstPerson')}
                 </Button>
               </div>
             ) : (

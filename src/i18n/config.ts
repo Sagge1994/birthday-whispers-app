@@ -121,7 +121,20 @@ const resources = {
       "contact.sendSMS": "Skicka grattis-SMS",
       "contact.smsReady": "SMS förberett!",
       "contact.smsReadyDesc": "Meddelande till {name} är redo att skicka",
-      "contact.defaultMessage": "Grattis på födelsedagen! 🎉 Hoppas du får en fantastisk dag! 🎂"
+      "contact.defaultMessage": "Grattis på födelsedagen! 🎉 Hoppas du får en fantastisk dag! 🎂",
+      
+      // Index Page
+      "index.title": "🎂 Födelsedagar",
+      "index.subtitle": "Glöm aldrig en vän igen",
+      "index.addPerson": "Lägg till person",
+      "index.importContacts": "Importera kontakter",
+      "index.messages": "Meddelanden",
+      "index.settings": "Inställningar",
+      "index.list": "Lista",
+      "index.calendar": "Kalender",
+      "index.noContacts": "Inga kontakter än",
+      "index.noContactsDesc": "Lägg till dina vänner och familj för att komma ihåg deras födelsedagar",
+      "index.addFirstPerson": "Lägg till första personen"
     }
   },
   en: {
@@ -243,7 +256,20 @@ const resources = {
       "contact.sendSMS": "Send Birthday SMS",
       "contact.smsReady": "SMS Ready!",
       "contact.smsReadyDesc": "Message to {name} is ready to send",
-      "contact.defaultMessage": "Happy Birthday! 🎉 Hope you have a fantastic day! 🎂"
+      "contact.defaultMessage": "Happy Birthday! 🎉 Hope you have a fantastic day! 🎂",
+      
+      // Index Page
+      "index.title": "🎂 Birthdays",
+      "index.subtitle": "Never forget a friend again",
+      "index.addPerson": "Add Person",
+      "index.importContacts": "Import Contacts",
+      "index.messages": "Messages",
+      "index.settings": "Settings",
+      "index.list": "List",
+      "index.calendar": "Calendar",
+      "index.noContacts": "No contacts yet",
+      "index.noContactsDesc": "Add your friends and family to remember their birthdays",
+      "index.addFirstPerson": "Add your first person"
     }
   },
   es: {
@@ -365,7 +391,20 @@ const resources = {
       "contact.sendSMS": "Enviar SMS de Cumpleaños",
       "contact.smsReady": "¡SMS Listo!",
       "contact.smsReadyDesc": "Mensaje para {name} está listo para enviar",
-      "contact.defaultMessage": "¡Feliz Cumpleaños! 🎉 ¡Espero que tengas un día fantástico! 🎂"
+      "contact.defaultMessage": "¡Feliz Cumpleaños! 🎉 ¡Espero que tengas un día fantástico! 🎂",
+      
+      // Index Page
+      "index.title": "🎂 Cumpleaños",
+      "index.subtitle": "Nunca olvides a un amigo otra vez",
+      "index.addPerson": "Agregar Persona",
+      "index.importContacts": "Importar Contactos",
+      "index.messages": "Mensajes",
+      "index.settings": "Configuraciones",
+      "index.list": "Lista",
+      "index.calendar": "Calendario",
+      "index.noContacts": "Sin contactos aún",
+      "index.noContactsDesc": "Agrega a tus amigos y familia para recordar sus cumpleaños",
+      "index.addFirstPerson": "Agregar tu primera persona"
     }
   },
   fr: {
@@ -487,7 +526,20 @@ const resources = {
       "contact.sendSMS": "Envoyer SMS d'Anniversaire",
       "contact.smsReady": "SMS Prêt!",
       "contact.smsReadyDesc": "Message pour {name} est prêt à envoyer",
-      "contact.defaultMessage": "Joyeux Anniversaire! 🎉 J'espère que vous passerez une journée fantastique! 🎂"
+      "contact.defaultMessage": "Joyeux Anniversaire! 🎉 J'espère que vous passerez une journée fantastique! 🎂",
+      
+      // Index Page
+      "index.title": "🎂 Anniversaires",
+      "index.subtitle": "N'oubliez plus jamais un ami",
+      "index.addPerson": "Ajouter Personne",
+      "index.importContacts": "Importer Contacts",
+      "index.messages": "Messages",
+      "index.settings": "Paramètres",
+      "index.list": "Liste",
+      "index.calendar": "Calendrier",
+      "index.noContacts": "Aucun contact encore",
+      "index.noContactsDesc": "Ajoutez vos amis et votre famille pour vous souvenir de leurs anniversaires",
+      "index.addFirstPerson": "Ajouter votre première personne"
     }
   }
 };
