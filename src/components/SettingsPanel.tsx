@@ -13,7 +13,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Bell, Clock, Smartphone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { NotificationManager } from "@/components/NotificationManager";
-import { Contact } from "@/pages/Index";
+import { WeeklyReminderSettings } from "@/components/WeeklyReminderSettings";
+import { CronJobInfo } from "@/components/CronJobInfo";
+import { Contact } from "@/hooks/useContacts";
 
 interface SettingsPanelProps {
   open: boolean;
@@ -72,6 +74,10 @@ export const SettingsPanel = ({ open, onOpenChange, contacts }: SettingsPanelPro
         
         <div className="space-y-6">
           <NotificationManager contacts={contacts} />
+          
+          <WeeklyReminderSettings />
+          
+          <CronJobInfo />
 
           {/* Save Button */}
           <Button 

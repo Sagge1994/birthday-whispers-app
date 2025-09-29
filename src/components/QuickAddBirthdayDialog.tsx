@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Contact } from "@/pages/Index";
+import { Contact } from "@/hooks/useContacts";
 import { useToast } from "@/hooks/use-toast";
 import { Calendar, Sparkles, Loader2, Users } from "lucide-react";
 import { format } from "date-fns";

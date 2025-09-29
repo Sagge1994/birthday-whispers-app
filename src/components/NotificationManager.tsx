@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Bell, Clock, Smartphone, CheckCircle2, AlertCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { Contact } from "@/pages/Index";
+import { Contact } from "@/hooks/useContacts";
 import { format, addDays, isSameDay } from "date-fns";
 import { sv } from "date-fns/locale";
 

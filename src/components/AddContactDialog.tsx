@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Contact } from "@/pages/Index";
+import { Contact } from "@/hooks/useContacts";
 import { useToast } from "@/hooks/use-toast";
 
 interface AddContactDialogProps {

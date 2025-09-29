@@ -1,0 +1,154 @@
+import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+};
+
+const logStep = (step: string, details?: any) => {
+  const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
+  console.log(`[WEEKLY-REMINDER] ${step}${detailsStr}`);
+};
+
+serve(async (req) => {
+  // Handle CORS preflight requests
+  if (req.method === "OPTIONS") {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    logStep("Weekly reminder function started");
+
+    const supabaseClient = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+      { auth: { persistSession: false } }
+    );
+
+    // Get current day (0 = Sunday, 1 = Monday, etc.)
+    const currentDay = new Date().getDay();
+    const currentTime = new Date().toTimeString().slice(0, 8); // HH:MM:SS format
+
+    logStep("Checking for weekly reminders", { currentDay, currentTime });
+
+    // Get all users who have weekly reminders enabled for today
+    const { data: reminders, error: remindersError } = await supabaseClient
+      .from('weekly_reminders')
+      .select(`
+        *,
+        profiles!inner(user_id, display_name)
+      `)
+      .eq('enabled', true)
+      .eq('day_of_week', currentDay);
+
+    if (remindersError) {
+      logStep("Error fetching reminders", remindersError);
+      throw remindersError;
+    }
+
+    logStep("Found reminders", { count: reminders?.length || 0 });
+
+    if (!reminders || reminders.length === 0) {
+      return new Response(JSON.stringify({ 
+        message: "No weekly reminders scheduled for today",
+        processed: 0
+      }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      });
+    }
+
+    // Process each user's weekly reminder
+    const results = [];
+    
+    for (const reminder of reminders) {
+      logStep("Processing reminder for user", { userId: reminder.user_id });
+
+      // Get upcoming birthdays for the next 7 days
+      const { data: contacts, error: contactsError } = await supabaseClient
+        .from('contacts')
+        .select('*')
+        .eq('user_id', reminder.user_id);
+
+      if (contactsError) {
+        logStep("Error fetching contacts", contactsError);
+        continue;
+      }
+
+      // Filter contacts with birthdays in the next 7 days
+      const today = new Date();
+      const nextWeek = new Date(today);
+      nextWeek.setDate(today.getDate() + 7);
+
+      const upcomingBirthdays = contacts?.filter(contact => {
+        const birthday = new Date(contact.birthday);
+        const currentYear = today.getFullYear();
+        birthday.setFullYear(currentYear);
+        
+        // If birthday has passed this year, check next year
+        if (birthday < today) {
+          birthday.setFullYear(currentYear + 1);
+        }
+        
+        return birthday >= today && birthday <= nextWeek;
+      }) || [];
+
+      logStep("Found upcoming birthdays", { 
+        userId: reminder.user_id, 
+        count: upcomingBirthdays.length 
+      });
+
+      if (upcomingBirthdays.length > 0) {
+        // Here we would normally send an email or push notification
+        // For now, we'll just log the reminder
+        
+        const birthdayList = upcomingBirthdays.map(contact => {
+          const birthday = new Date(contact.birthday);
+          const currentYear = today.getFullYear();
+          birthday.setFullYear(currentYear);
+          if (birthday < today) {
+            birthday.setFullYear(currentYear + 1);
+          }
+          
+          return {
+            name: contact.name,
+            date: birthday.toLocaleDateString('sv-SE'),
+            phone: contact.phone,
+            hasPhone: !!contact.phone
+          };
+        });
+
+        results.push({
+          userId: reminder.user_id,
+          displayName: reminder.profiles?.display_name,
+          upcomingCount: upcomingBirthdays.length,
+          birthdays: birthdayList
+        });
+
+        logStep("Weekly reminder prepared", {
+          userId: reminder.user_id,
+          birthdayCount: upcomingBirthdays.length
+        });
+      }
+    }
+
+    return new Response(JSON.stringify({ 
+      message: "Weekly reminders processed successfully",
+      processed: results.length,
+      reminders: results
+    }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 200,
+    });
+
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    logStep("ERROR in weekly-reminder", { message: errorMessage });
+    
+    return new Response(JSON.stringify({ error: errorMessage }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 500,
+    });
+  }
+});

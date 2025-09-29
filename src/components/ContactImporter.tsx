@@ -11,7 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Users, Phone, Calendar, CheckCircle2 } from "lucide-react";
-import { Contact } from "@/pages/Index";
+import { Contact } from "@/hooks/useContacts";
 import { useToast } from "@/hooks/use-toast";
 
 interface ImportableContact {

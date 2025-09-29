@@ -10,65 +10,23 @@ import { CalendarView } from "@/components/CalendarView";
 import { ContactImporter } from "@/components/ContactImporter";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-
-export interface Contact {
-  id: string;
-  name: string;
-  birthday: string;
-  phone: string;
-  customMessage?: string;
-}
+import { useContacts, Contact } from "@/hooks/useContacts";
 
 const Index = () => {
   const { t } = useTranslation();
-  const [contacts, setContacts] = useState<Contact[]>([
-    {
-      id: "1",
-      name: "Anna Svensson",
-      birthday: "2025-02-05",
-      phone: "+46701234567"
-    },
-    {
-      id: "2", 
-      name: "Erik Johansson",
-      birthday: "2025-02-14",
-      phone: "+46701234568"
-    },
-    {
-      id: "3",
-      name: "Maria Lindqvist", 
-      birthday: "2025-02-20",
-      phone: "+46701234569"
-    }
-  ]);
+  const { contacts, loading, addContact, addMultipleContacts, deleteContact, updateContact } = useContacts();
   
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showMessageManager, setShowMessageManager] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showImporter, setShowImporter] = useState(false);
 
-  const addContact = (contact: Omit<Contact, "id">) => {
-    const newContact = {
-      ...contact,
-      id: Date.now().toString()
-    };
-    setContacts([...contacts, newContact]);
+  const handleAddContact = async (contact: Omit<Contact, "id">) => {
+    await addContact(contact);
   };
 
-  const addMultipleContacts = (newContacts: Omit<Contact, "id">[]) => {
-    const contactsWithIds = newContacts.map(contact => ({
-      ...contact,
-      id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
-    }));
-    setContacts([...contacts, ...contactsWithIds]);
-  };
-
-  const deleteContact = (id: string) => {
-    setContacts(contacts.filter(c => c.id !== id));
-  };
-
-  const updateContact = (id: string, updates: Partial<Contact>) => {
-    setContacts(contacts.map(c => c.id === id ? { ...c, ...updates } : c));
+  const handleAddMultipleContacts = async (newContacts: Omit<Contact, "id">[]) => {
+    await addMultipleContacts(newContacts);
   };
 
   // Sort contacts by upcoming birthdays
@@ -164,13 +122,13 @@ const Index = () => {
                 <p className="text-muted-foreground mb-6">
                   {t('index.noContactsDesc')}
                 </p>
-                <Button 
-                  onClick={() => setShowAddDialog(true)}
-                  className="bg-gradient-primary hover:shadow-soft"
-                >
-                  <Plus className="w-4 h-4 mr-2" />
-                  {t('index.addFirstPerson')}
-                </Button>
+                  <Button 
+                    onClick={() => setShowAddDialog(true)}
+                    className="bg-gradient-primary hover:shadow-soft"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    {t('index.addFirstPerson')}
+                  </Button>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -187,7 +145,7 @@ const Index = () => {
           </TabsContent>
 
           <TabsContent value="calendar" className="mt-0">
-            <CalendarView contacts={contacts} onAddContact={addContact} />
+            <CalendarView contacts={contacts} onAddContact={handleAddContact} />
           </TabsContent>
         </Tabs>
 
@@ -195,13 +153,13 @@ const Index = () => {
         <AddContactDialog
           open={showAddDialog}
           onOpenChange={setShowAddDialog}
-          onAddContact={addContact}
+          onAddContact={handleAddContact}
         />
         
         <ContactImporter
           open={showImporter}
           onOpenChange={setShowImporter}
-          onImportContacts={addMultipleContacts}
+          onImportContacts={handleAddMultipleContacts}
           existingContacts={contacts}
         />
         

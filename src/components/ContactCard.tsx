@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Contact } from "@/pages/Index";
+import { Contact } from "@/hooks/useContacts";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import { useSMS } from "@/hooks/useSMS";

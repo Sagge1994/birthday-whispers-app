@@ -16,7 +16,6 @@ import {
   Gift,
   Crown
 } from "lucide-react";
-import { Contact } from "@/pages/Index";
 import { ContactCard } from "@/components/ContactCard";
 import { AddContactDialog } from "@/components/AddContactDialog";
 import { MessageTemplateManager } from "@/components/MessageTemplateManager";
@@ -31,6 +30,7 @@ import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useSubscriptionLimits } from "@/hooks/useSubscriptionLimits";
 import { usePushNotifications } from "@/hooks/usePushNotifications";
+import { useContacts, Contact } from "@/hooks/useContacts";
 
 const FREE_CONTACT_LIMIT = 5;
 
@@ -38,26 +38,7 @@ const Dashboard = () => {
   const { toast } = useToast();
   const { t } = useTranslation();
   const { subscriptionStatus } = useAuth();
-  const [contacts, setContacts] = useState<Contact[]>([
-    {
-      id: "1",
-      name: "Anna Svensson",
-      birthday: "2025-02-05",
-      phone: "+46701234567"
-    },
-    {
-      id: "2", 
-      name: "Erik Johansson", 
-      birthday: "2025-02-14",
-      phone: "+46701234568"
-    },
-    {
-      id: "3",
-      name: "Maria Lindqvist",
-      birthday: "2025-02-20", 
-      phone: "+46701234569"
-    }
-  ]);
+  const { contacts, loading, addContact, addMultipleContacts, deleteContact, updateContact } = useContacts();
   
   const { isPremium, checkLimitAndShowUpgrade, getWarningMessage } = useSubscriptionLimits(contacts.length);
   const { isRegistered } = usePushNotifications();
@@ -69,17 +50,14 @@ const Dashboard = () => {
   
   const [showCalendar, setShowCalendar] = useState(false);
 
-  const addContact = (contact: Omit<Contact, "id">) => {
+  const handleAddContact = async (contact: Omit<Contact, "id">) => {
     // Check subscription limits before adding
     if (!checkLimitAndShowUpgrade()) {
       return;
     }
     
-    const newContact = {
-      ...contact,
-      id: Date.now().toString()
-    };
-    setContacts([...contacts, newContact]);
+    const success = await addContact(contact);
+    if (!success) return;
     
     // Show warning if approaching limit
     const warningMessage = getWarningMessage();
@@ -91,7 +69,7 @@ const Dashboard = () => {
     }
   };
 
-  const addMultipleContacts = (newContacts: Omit<Contact, "id">[]) => {
+  const handleAddMultipleContacts = async (newContacts: Omit<Contact, "id">[]) => {
     // Check if adding these contacts would exceed the limit
     const totalAfterImport = contacts.length + newContacts.length;
     
@@ -106,19 +84,7 @@ const Dashboard = () => {
       return;
     }
     
-    const contactsWithIds = newContacts.map(contact => ({
-      ...contact,
-      id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
-    }));
-    setContacts([...contacts, ...contactsWithIds]);
-  };
-
-  const deleteContact = (id: string) => {
-    setContacts(contacts.filter(c => c.id !== id));
-  };
-
-  const updateContact = (id: string, updates: Partial<Contact>) => {
-    setContacts(contacts.map(c => c.id === id ? { ...c, ...updates } : c));
+    await addMultipleContacts(newContacts);
   };
 
   // Get upcoming birthdays
@@ -222,7 +188,7 @@ const Dashboard = () => {
             </Button>
           </div>
           
-          <CalendarView contacts={contacts} onAddContact={addContact} />
+          <CalendarView contacts={contacts} onAddContact={handleAddContact} />
         </div>
       </div>
     );
@@ -416,13 +382,13 @@ const Dashboard = () => {
         <AddContactDialog
           open={showAddDialog}
           onOpenChange={setShowAddDialog}
-          onAddContact={addContact}
+          onAddContact={handleAddContact}
         />
         
         <ContactImporter
           open={showImporter}
           onOpenChange={setShowImporter}
-          onImportContacts={addMultipleContacts}
+          onImportContacts={handleAddMultipleContacts}
           existingContacts={contacts}
         />
         
