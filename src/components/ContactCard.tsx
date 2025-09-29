@@ -101,10 +101,11 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
   };
 
   const getDaysText = () => {
+    if (daysUntil === null) return '';
     if (daysUntil === 1) {
-      return t('contact.inDay', { days: daysUntil });
+      return `📅 Om ${daysUntil} dag`;
     }
-    return t('contact.inDays', { days: daysUntil });
+    return `📅 Om ${daysUntil} dagar`;
   };
 
   const handleSendSMS = () => {
