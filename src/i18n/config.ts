@@ -114,6 +114,7 @@ const resources = {
       // ContactCard
       "contact.turnsAge": "Fyller {age} år",
       "contact.turnsAgeUnknown": "Ålder okänd",
+      "contact.noBirthdaySet": "Datum okänt",
       "contact.delete": "Ta bort",
       "contact.birthdayToday": "🎉 Fyller år idag!",
       "contact.inDays": "📅 Om {days} dagar",
@@ -283,6 +284,7 @@ const resources = {
       // ContactCard
       "contact.turnsAge": "Turns {age}",
       "contact.turnsAgeUnknown": "Age unknown",
+      "contact.noBirthdaySet": "Date unknown",
       "contact.delete": "Delete",
       "contact.birthdayToday": "🎉 Birthday today!",
       "contact.inDays": "📅 In {days} days",
