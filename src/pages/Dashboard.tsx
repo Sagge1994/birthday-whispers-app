@@ -59,7 +59,7 @@ const Dashboard = () => {
   const [showMessageManager, setShowMessageManager] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showImporter, setShowImporter] = useState(false);
-  const [showFacebookImporter, setShowFacebookImporter] = useState(false);
+  
   const [showCalendar, setShowCalendar] = useState(false);
 
   const addContact = (contact: Omit<Contact, "id">) => {
@@ -120,17 +120,8 @@ const Dashboard = () => {
       title: t('actions.importContacts'), 
       description: t('actions.importContactsDesc'),
       action: () => setShowImporter(true),
-      color: "bg-pastel-mint"
     },
     {
-      icon: Facebook,
-      title: t('actions.facebookImport'), 
-      description: t('actions.facebookImportDesc'),
-      action: () => setShowFacebookImporter(true),
-      color: "bg-blue-500"
-    },
-    {
-      icon: Calendar,
       title: t('actions.calendarView'),
       description: t('actions.calendarViewDesc'),
       action: () => setShowCalendar(true),
@@ -381,10 +372,6 @@ const Dashboard = () => {
           existingContacts={contacts}
         />
         
-        <FacebookImporter
-          open={showFacebookImporter}
-          onOpenChange={setShowFacebookImporter}
-        />
         
         <MessageTemplateManager
           open={showMessageManager}
