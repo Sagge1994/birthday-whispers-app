@@ -136,8 +136,8 @@ const Auth = () => {
         }
 
         toast({
-          title: "Account created!",
-          description: "Please check your email to verify your account",
+          title: "Kontot skapat! 📧",
+          description: "Kolla din e-post och klicka på verifikationslänken för att slutföra registreringen. Utan verifiering kan du inte logga in.",
         });
         setIsLogin(true);
       }
