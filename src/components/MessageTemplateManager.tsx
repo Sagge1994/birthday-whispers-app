@@ -42,93 +42,7 @@ export const MessageTemplateManager = ({ open, onOpenChange }: MessageTemplateMa
   const [newTemplate, setNewTemplate] = useState({ name: "", message: "" });
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingTemplate, setEditingTemplate] = useState({ name: "", message: "" });
-  const [isGeneratingAI, setIsGeneratingAI] = useState(false);
-  const [aiApiKey, setAiApiKey] = useState("");
-  const [selectedPersonName, setSelectedPersonName] = useState("");
-
-  const generateAIMessage = async () => {
-    if (!selectedPersonName.trim()) {
-      toast({
-        title: "Enter a name first",
-        description: "AI needs a name to create personalized suggestions",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    if (!aiApiKey.trim()) {
-      toast({
-        title: "API key missing",
-        description: "Enter your Perplexity API key for AI suggestions",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    setIsGeneratingAI(true);
-    
-    try {
-      const response = await fetch('https://api.perplexity.ai/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${aiApiKey.trim()}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: 'llama-3.1-sonar-small-128k-online',
-          messages: [
-            {
-              role: 'system',
-              content: 'You are a helpful assistant that creates personal and friendly birthday messages in English. Create 1 message that is warm, personal and suitable for SMS. The message should be 1-2 sentences long and include appropriate emojis.'
-            },
-            {
-              role: 'user',
-              content: `Create a personalized birthday message for ${selectedPersonName}. The message should be in English, friendly and appropriate for SMS. Include suitable emojis.`
-            }
-          ],
-          temperature: 0.7,
-          top_p: 0.9,
-          max_tokens: 150,
-          return_images: false,
-          return_related_questions: false,
-          frequency_penalty: 1,
-          presence_penalty: 0
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const content = data.choices[0]?.message?.content || "";
-      
-      if (content.trim()) {
-        setNewTemplate(prev => ({
-          ...prev,
-          message: content.trim(),
-          name: prev.name || `AI Message for ${selectedPersonName}`
-        }));
-        
-        toast({
-          title: "AI message generated!",
-          description: "Personalized message created successfully",
-        });
-      } else {
-        throw new Error("No message could be generated");
-      }
-
-    } catch (error) {
-      console.error('AI generation error:', error);
-      toast({
-        title: "Could not generate AI message",
-        description: "Check your API key and try again",
-        variant: "destructive"
-      });
-    } finally {
-      setIsGeneratingAI(false);
-    }
-  };
+  // Removed AI generation for better UX - no API keys needed
 
   const startEditing = (template: any) => {
     setEditingId(template.id);
@@ -182,7 +96,6 @@ export const MessageTemplateManager = ({ open, onOpenChange }: MessageTemplateMa
 
     setTemplates([...templates, template]);
     setNewTemplate({ name: "", message: "" });
-    setSelectedPersonName("");
     
     toast({
       title: "Template added!",
@@ -335,52 +248,6 @@ export const MessageTemplateManager = ({ open, onOpenChange }: MessageTemplateMa
                 />
               </div>
 
-              {/* AI Message Generator */}
-              <Card className="bg-pastel-lavender/20 border-primary/10">
-                <CardHeader>
-                  <CardTitle className="text-xs flex items-center">
-                    <Sparkles className="w-3 h-3 mr-2" />
-                    AI Message Generator
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="grid grid-cols-2 gap-2">
-                    <Input
-                      value={selectedPersonName}
-                      onChange={(e) => setSelectedPersonName(e.target.value)}
-                      placeholder="Person's name"
-                      className="text-xs h-8"
-                    />
-                    <Input
-                      type="password"
-                      value={aiApiKey}
-                      onChange={(e) => setAiApiKey(e.target.value)}
-                      placeholder="Perplexity API key"
-                      className="text-xs h-8"
-                    />
-                  </div>
-                  
-                  <Button
-                    type="button"
-                    onClick={generateAIMessage}
-                    disabled={isGeneratingAI || !selectedPersonName.trim()}
-                    className="w-full bg-gradient-primary hover:shadow-soft"
-                    size="sm"
-                  >
-                    {isGeneratingAI ? (
-                      <>
-                        <Loader2 className="w-3 h-3 mr-2 animate-spin" />
-                        Generating...
-                      </>
-                    ) : (
-                      <>
-                        <Sparkles className="w-3 h-3 mr-2" />
-                        Generate AI Message
-                      </>
-                    )}
-                  </Button>
-                </CardContent>
-              </Card>
               
               <Button 
                 onClick={addTemplate}
