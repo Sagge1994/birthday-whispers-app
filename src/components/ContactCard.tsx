@@ -188,7 +188,10 @@ export const ContactCard = ({ contact, onDelete, onUpdate, onEdit }: ContactCard
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => onEdit?.(contact)}>
+              <DropdownMenuItem onClick={() => {
+                console.log('Edit button clicked in ContactCard for:', contact.name);
+                onEdit?.(contact);
+              }}>
                 <Edit className="w-4 h-4 mr-2" />
                 Redigera
               </DropdownMenuItem>
