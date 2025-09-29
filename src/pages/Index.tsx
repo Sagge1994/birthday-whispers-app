@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Settings, MessageCircle, List, Calendar } from "lucide-react";
+import { Plus, Settings, MessageCircle, List, Calendar, Download } from "lucide-react";
 import { ContactCard } from "@/components/ContactCard";
 import { AddContactDialog } from "@/components/AddContactDialog";
 import { MessageTemplateManager } from "@/components/MessageTemplateManager";
 import { SettingsPanel } from "@/components/SettingsPanel";
 import { CalendarView } from "@/components/CalendarView";
+import { ContactImporter } from "@/components/ContactImporter";
 
 export interface Contact {
   id: string;
@@ -35,6 +36,7 @@ const Index = () => {
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showMessageManager, setShowMessageManager] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showImporter, setShowImporter] = useState(false);
 
   const addContact = (contact: Omit<Contact, "id">) => {
     const newContact = {
@@ -42,6 +44,14 @@ const Index = () => {
       id: Date.now().toString()
     };
     setContacts([...contacts, newContact]);
+  };
+
+  const addMultipleContacts = (newContacts: Omit<Contact, "id">[]) => {
+    const contactsWithIds = newContacts.map(contact => ({
+      ...contact,
+      id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
+    }));
+    setContacts([...contacts, ...contactsWithIds]);
   };
 
   const deleteContact = (id: string) => {
@@ -92,6 +102,15 @@ const Index = () => {
           >
             <Plus className="w-4 h-4 mr-2" />
             Lägg till person
+          </Button>
+          
+          <Button 
+            variant="outline"
+            onClick={() => setShowImporter(true)}
+            className="border-primary/20 hover:bg-pastel-mint/50 transition-all duration-300"
+          >
+            <Download className="w-4 h-4 mr-2" />
+            Importera kontakter
           </Button>
           
           <Button 
@@ -167,6 +186,13 @@ const Index = () => {
           open={showAddDialog}
           onOpenChange={setShowAddDialog}
           onAddContact={addContact}
+        />
+        
+        <ContactImporter
+          open={showImporter}
+          onOpenChange={setShowImporter}
+          onImportContacts={addMultipleContacts}
+          existingContacts={contacts}
         />
         
         <MessageTemplateManager
