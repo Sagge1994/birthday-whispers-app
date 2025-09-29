@@ -106,8 +106,8 @@ const Landing = () => {
           {/* Stats */}
           <div className="grid grid-cols-3 gap-8 max-w-md mx-auto">
             <div className="text-center">
-              <div className="text-2xl font-bold text-primary">{t('stats.freeTrial')}</div>
-              <div className="text-sm text-muted-foreground">{t('stats.freeTrialText')}</div>
+              <div className="text-2xl font-bold text-primary">{t('stats.freeUsers')}</div>
+              <div className="text-sm text-muted-foreground">{t('stats.freeUsersText')}</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-primary">{t('stats.setupTime')}</div>
@@ -202,11 +202,11 @@ const Landing = () => {
             <div className="flex items-center justify-center space-x-6 text-sm text-muted-foreground">
               <div className="flex items-center">
                 <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-                {t('cta.noCard')}
+                {t('cta.freeForever')}
               </div>
               <div className="flex items-center">
                 <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-                {t('cta.freeTrial')}
+                {t('cta.upgradeAnytime')}
               </div>
               <div className="flex items-center">
                 <CheckCircle className="w-4 h-4 mr-2 text-green-500" />

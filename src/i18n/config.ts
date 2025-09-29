@@ -12,8 +12,8 @@ const resources = {
       "hero.viewFeatures": "Se funktioner",
       
       // Stats
-      "stats.freeTrial": "1 månad",
-      "stats.freeTrialText": "Gratis provperiod",
+      "stats.freeUsers": "1000+",
+      "stats.freeUsersText": "Nöjda användare",
       "stats.setupTime": "2 min",
       "stats.setupTimeText": "Installationstid",
       "stats.birthdays": "∞",
@@ -51,8 +51,8 @@ const resources = {
       "cta.title": "Redo att aldrig glömma igen?",
       "cta.description": "Gå med tusentals människor som har förvandlat sina relationer genom att komma ihåg det som betyder mest. Börja bygga starkare kontakter idag.",
       "cta.startJourney": "Starta din resa",
-      "cta.noCard": "Inget kreditkort krävs",
-      "cta.freeTrial": "1 månad gratis",
+      "cta.freeForever": "Gratis plan finns",
+      "cta.upgradeAnytime": "Uppgradera när du vill",
       "cta.quickSetup": "2-minuters setup",
       
       // Footer
@@ -175,8 +175,8 @@ const resources = {
       "hero.viewFeatures": "View Features",
       
       // Stats
-      "stats.freeTrial": "1 month",
-      "stats.freeTrialText": "Free Trial",
+      "stats.freeUsers": "1000+",
+      "stats.freeUsersText": "Happy Users",
       "stats.setupTime": "2 min",
       "stats.setupTimeText": "Setup Time",
       "stats.birthdays": "∞",
@@ -214,8 +214,8 @@ const resources = {
       "cta.title": "Ready to Never Forget Again?",
       "cta.description": "Join thousands of people who've transformed their relationships by remembering what matters most. Start building stronger connections today.",
       "cta.startJourney": "Start Your Journey",
-      "cta.noCard": "No credit card required",
-      "cta.freeTrial": "1 month free trial",
+      "cta.freeForever": "Free plan available",
+      "cta.upgradeAnytime": "Upgrade anytime",
       "cta.quickSetup": "2-minute setup",
       
       // Footer
@@ -338,8 +338,8 @@ const resources = {
       "hero.viewFeatures": "Ver características",
       
       // Stats
-      "stats.freeTrial": "1 mes",
-      "stats.freeTrialText": "Prueba gratuita",
+      "stats.freeUsers": "1000+",
+      "stats.freeUsersText": "Usuarios felices",
       "stats.setupTime": "2 min",
       "stats.setupTimeText": "Tiempo de configuración",
       "stats.birthdays": "∞",
@@ -377,8 +377,8 @@ const resources = {
       "cta.title": "¿Listo para nunca olvidar de nuevo?",
       "cta.description": "Únete a miles de personas que han transformado sus relaciones recordando lo que más importa. Comienza a construir conexiones más fuertes hoy.",
       "cta.startJourney": "Comienza tu viaje",
-      "cta.noCard": "No se requiere tarjeta de crédito",
-      "cta.freeTrial": "Prueba gratuita de 1 mes",
+      "cta.freeForever": "Plan gratuito disponible",
+      "cta.upgradeAnytime": "Actualizar en cualquier momento",
       "cta.quickSetup": "Configuración de 2 minutos",
       
       // Footer
@@ -501,8 +501,8 @@ const resources = {
       "hero.viewFeatures": "Voir les fonctionnalités",
       
       // Stats  
-      "stats.freeTrial": "1 mois",
-      "stats.freeTrialText": "Essai gratuit",
+      "stats.freeUsers": "1000+",
+      "stats.freeUsersText": "Utilisateurs satisfaits",
       "stats.setupTime": "2 min",
       "stats.setupTimeText": "Temps d'installation",
       "stats.birthdays": "∞",
@@ -540,8 +540,8 @@ const resources = {
       "cta.title": "Prêt à ne plus jamais oublier ?",
       "cta.description": "Rejoignez des milliers de personnes qui ont transformé leurs relations en se souvenant de ce qui compte le plus. Commencez à construire des connexions plus fortes aujourd'hui.",
       "cta.startJourney": "Commencez votre voyage",
-      "cta.noCard": "Aucune carte de crédit requise",
-      "cta.freeTrial": "Essai gratuit d'1 mois",
+      "cta.freeForever": "Plan gratuit disponible",
+      "cta.upgradeAnytime": "Mettre à niveau à tout moment",
       "cta.quickSetup": "Configuration de 2 minutes",
       
       // Footer
