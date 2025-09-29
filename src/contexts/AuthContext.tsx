@@ -87,7 +87,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
 
     return () => subscription.unsubscribe();
-  }, [user]);
+  }, []);
 
   const signOut = async () => {
     await supabase.auth.signOut();
