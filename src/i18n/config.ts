@@ -113,9 +113,11 @@ const resources = {
       
       // ContactCard
       "contact.turnsAge": "Fyller {age} år",
+      "contact.turnsAgeUnknown": "Ålder okänd",
       "contact.delete": "Ta bort",
       "contact.birthdayToday": "🎉 Fyller år idag!",
       "contact.inDays": "📅 Om {days} dagar",
+      "contact.inDay": "📅 Om {days} dag",
       "contact.sendSMS": "Skicka grattis-SMS",
       "contact.smsReady": "SMS förberett!",
       "contact.smsReadyDesc": "Meddelande till {name} är redo att skicka",
@@ -233,9 +235,11 @@ const resources = {
       
       // ContactCard
       "contact.turnsAge": "Turns {age}",
+      "contact.turnsAgeUnknown": "Age unknown",
       "contact.delete": "Delete",
       "contact.birthdayToday": "🎉 Birthday today!",
       "contact.inDays": "📅 In {days} days",
+      "contact.inDay": "📅 In {days} day",
       "contact.sendSMS": "Send Birthday SMS",
       "contact.smsReady": "SMS Ready!",
       "contact.smsReadyDesc": "Message to {name} is ready to send",
@@ -353,9 +357,11 @@ const resources = {
       
       // ContactCard
       "contact.turnsAge": "Cumple {age} años",
+      "contact.turnsAgeUnknown": "Edad desconocida",
       "contact.delete": "Eliminar",
       "contact.birthdayToday": "🎉 ¡Cumpleaños hoy!",
       "contact.inDays": "📅 En {days} días",
+      "contact.inDay": "📅 En {days} día",
       "contact.sendSMS": "Enviar SMS de Cumpleaños",
       "contact.smsReady": "¡SMS Listo!",
       "contact.smsReadyDesc": "Mensaje para {name} está listo para enviar",
@@ -473,9 +479,11 @@ const resources = {
       
       // ContactCard
       "contact.turnsAge": "Aura {age} ans",
+      "contact.turnsAgeUnknown": "Âge inconnu",
       "contact.delete": "Supprimer",
       "contact.birthdayToday": "🎉 Anniversaire aujourd'hui!",
       "contact.inDays": "📅 Dans {days} jours",
+      "contact.inDay": "📅 Dans {days} jour",
       "contact.sendSMS": "Envoyer SMS d'Anniversaire",
       "contact.smsReady": "SMS Prêt!",
       "contact.smsReadyDesc": "Message pour {name} est prêt à envoyer",

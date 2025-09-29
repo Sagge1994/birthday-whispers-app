@@ -62,7 +62,14 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
   const getAge = () => {
     const today = new Date();
     const birthDate = new Date(contact.birthday);
-    let age = today.getFullYear() - birthDate.getFullYear();
+    
+    // Check if birthday has a valid year (not just month-day)
+    const birthYear = birthDate.getFullYear();
+    if (birthYear < 1900 || birthYear > today.getFullYear()) {
+      return null; // Invalid or missing year
+    }
+    
+    let age = today.getFullYear() - birthYear;
     const monthDiff = today.getMonth() - birthDate.getMonth();
     
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
@@ -70,6 +77,21 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
     }
     
     return age + (isToday ? 0 : 1);
+  };
+
+  const getAgeText = () => {
+    const age = getAge();
+    if (age === null) {
+      return t('contact.turnsAgeUnknown');
+    }
+    return t('contact.turnsAge', { age });
+  };
+
+  const getDaysText = () => {
+    if (daysUntil === 1) {
+      return t('contact.inDay', { days: daysUntil });
+    }
+    return t('contact.inDays', { days: daysUntil });
   };
 
   const sendSMS = () => {
@@ -99,7 +121,7 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
               {formatBirthday()}
             </div>
             <p className="text-sm text-muted-foreground">
-              {t('contact.turnsAge', { age: getAge() })}
+              {getAgeText()}
             </p>
           </div>
           
@@ -126,11 +148,11 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
             </Badge>
           ) : isSoon ? (
             <Badge variant="secondary" className="bg-pastel-peach/50">
-              {t('contact.inDays', { days: daysUntil })}
+              {getDaysText()}
             </Badge>
           ) : (
             <Badge variant="outline" className="border-primary/20">
-              {t('contact.inDays', { days: daysUntil })}
+              {getDaysText()}
             </Badge>
           )}
         </div>
