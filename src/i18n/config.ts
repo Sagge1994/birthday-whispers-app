@@ -109,7 +109,17 @@ const resources = {
       "actions.aiMessages": "AI-meddelanden",
       "actions.aiMessagesDesc": "Generera personliga önskningar",
       "actions.aiMessagesTitle": "AI-meddelanden",
-      "actions.aiMessagesAlert": "Lägg till en kontakt först, använd sedan AI-förslag i kalendervyn!"
+      "actions.aiMessagesAlert": "Lägg till en kontakt först, använd sedan AI-förslag i kalendervyn!",
+      
+      // ContactCard
+      "contact.turnsAge": "Fyller {age} år",
+      "contact.delete": "Ta bort",
+      "contact.birthdayToday": "🎉 Fyller år idag!",
+      "contact.inDays": "📅 Om {days} dagar",
+      "contact.sendSMS": "Skicka grattis-SMS",
+      "contact.smsReady": "SMS förberett!",
+      "contact.smsReadyDesc": "Meddelande till {name} är redo att skicka",
+      "contact.defaultMessage": "Grattis på födelsedagen! 🎉 Hoppas du får en fantastisk dag! 🎂"
     }
   },
   en: {
@@ -219,7 +229,17 @@ const resources = {
       "actions.aiMessages": "AI Messages",
       "actions.aiMessagesDesc": "Generate personal wishes",
       "actions.aiMessagesTitle": "AI Messages",
-      "actions.aiMessagesAlert": "Add a contact first, then use AI suggestions in the calendar view!"
+      "actions.aiMessagesAlert": "Add a contact first, then use AI suggestions in the calendar view!",
+      
+      // ContactCard
+      "contact.turnsAge": "Turns {age}",
+      "contact.delete": "Delete",
+      "contact.birthdayToday": "🎉 Birthday today!",
+      "contact.inDays": "📅 In {days} days",
+      "contact.sendSMS": "Send Birthday SMS",
+      "contact.smsReady": "SMS Ready!",
+      "contact.smsReadyDesc": "Message to {name} is ready to send",
+      "contact.defaultMessage": "Happy Birthday! 🎉 Hope you have a fantastic day! 🎂"
     }
   },
   es: {
@@ -329,7 +349,17 @@ const resources = {
       "actions.aiMessages": "Mensajes IA",
       "actions.aiMessagesDesc": "Generar deseos personales",
       "actions.aiMessagesTitle": "Mensajes IA",
-      "actions.aiMessagesAlert": "¡Agrega un contacto primero, luego usa sugerencias de IA en la vista de calendario!"
+      "actions.aiMessagesAlert": "¡Agrega un contacto primero, luego usa sugerencias de IA en la vista de calendario!",
+      
+      // ContactCard
+      "contact.turnsAge": "Cumple {age} años",
+      "contact.delete": "Eliminar",
+      "contact.birthdayToday": "🎉 ¡Cumpleaños hoy!",
+      "contact.inDays": "📅 En {days} días",
+      "contact.sendSMS": "Enviar SMS de Cumpleaños",
+      "contact.smsReady": "¡SMS Listo!",
+      "contact.smsReadyDesc": "Mensaje para {name} está listo para enviar",
+      "contact.defaultMessage": "¡Feliz Cumpleaños! 🎉 ¡Espero que tengas un día fantástico! 🎂"
     }
   },
   fr: {
@@ -439,7 +469,17 @@ const resources = {
       "actions.aiMessages": "Messages IA",
       "actions.aiMessagesDesc": "Générer des vœux personnels",
       "actions.aiMessagesTitle": "Messages IA",
-      "actions.aiMessagesAlert": "Ajoutez d'abord un contact, puis utilisez les suggestions IA dans la vue calendrier !"
+      "actions.aiMessagesAlert": "Ajoutez d'abord un contact, puis utilisez les suggestions IA dans la vue calendrier !",
+      
+      // ContactCard
+      "contact.turnsAge": "Aura {age} ans",
+      "contact.delete": "Supprimer",
+      "contact.birthdayToday": "🎉 Anniversaire aujourd'hui!",
+      "contact.inDays": "📅 Dans {days} jours",
+      "contact.sendSMS": "Envoyer SMS d'Anniversaire",
+      "contact.smsReady": "SMS Prêt!",
+      "contact.smsReadyDesc": "Message pour {name} est prêt à envoyer",
+      "contact.defaultMessage": "Joyeux Anniversaire! 🎉 J'espère que vous passerez une journée fantastique! 🎂"
     }
   }
 };

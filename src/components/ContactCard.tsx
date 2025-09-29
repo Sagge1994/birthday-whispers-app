@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Contact } from "@/pages/Index";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 
 interface ContactCardProps {
   contact: Contact;
@@ -20,6 +21,7 @@ interface ContactCardProps {
 
 export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) => {
   const { toast } = useToast();
+  const { t, i18n } = useTranslation();
   
   const calculateDaysUntilBirthday = () => {
     const today = new Date();
@@ -46,7 +48,12 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
 
   const formatBirthday = () => {
     const date = new Date(contact.birthday);
-    return date.toLocaleDateString('sv-SE', { 
+    // Use current language for date formatting
+    const locale = i18n.language === 'sv' ? 'sv-SE' : 
+                  i18n.language === 'es' ? 'es-ES' :
+                  i18n.language === 'fr' ? 'fr-FR' : 'en-US';
+                  
+    return date.toLocaleDateString(locale, { 
       day: 'numeric', 
       month: 'long' 
     });
@@ -66,7 +73,7 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
   };
 
   const sendSMS = () => {
-    const defaultMessage = `Grattis på födelsedagen! 🎉 Hoppas du får en fantastisk dag! 🎂`;
+    const defaultMessage = t('contact.defaultMessage');
     const message = contact.customMessage || defaultMessage;
     
     // Create SMS URL
@@ -76,8 +83,8 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
     window.location.href = smsUrl;
     
     toast({
-      title: "SMS förberett!",
-      description: `Meddelande till ${contact.name} är redo att skicka`,
+      title: t('contact.smsReady'),
+      description: t('contact.smsReadyDesc', { name: contact.name }),
     });
   };
 
@@ -92,7 +99,7 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
               {formatBirthday()}
             </div>
             <p className="text-sm text-muted-foreground">
-              Fyller {getAge()} år
+              {t('contact.turnsAge', { age: getAge() })}
             </p>
           </div>
           
@@ -105,7 +112,7 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={() => onDelete(contact.id)} className="text-destructive">
                 <Trash2 className="w-4 h-4 mr-2" />
-                Ta bort
+                {t('contact.delete')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -115,15 +122,15 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
         <div className="mb-4">
           {isToday ? (
             <Badge className="bg-gradient-accent text-accent-foreground border-0">
-              🎉 Fyller år idag!
+              {t('contact.birthdayToday')}
             </Badge>
           ) : isSoon ? (
             <Badge variant="secondary" className="bg-pastel-peach/50">
-              📅 Om {daysUntil} dagar
+              {t('contact.inDays', { days: daysUntil })}
             </Badge>
           ) : (
             <Badge variant="outline" className="border-primary/20">
-              📅 Om {daysUntil} dagar
+              {t('contact.inDays', { days: daysUntil })}
             </Badge>
           )}
         </div>
@@ -135,7 +142,7 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
           size="sm"
         >
           <MessageSquare className="w-4 h-4 mr-2" />
-          Skicka grattis-SMS
+          {t('contact.sendSMS')}
         </Button>
       </CardContent>
     </Card>
