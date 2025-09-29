@@ -13,12 +13,15 @@ import {
   Bell, 
   Users,
   Gift,
-  Tag
+  Tag,
+  AlertTriangle,
+  ArrowLeft
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 interface SubscriptionStatus {
   subscribed: boolean;
@@ -31,6 +34,7 @@ export const SubscriptionManager = () => {
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   const [subscriptionStatus, setSubscriptionStatus] = useState<SubscriptionStatus | null>(null);
   const [loading, setLoading] = useState(false);
@@ -246,7 +250,7 @@ export const SubscriptionManager = () => {
               <div className="text-3xl font-bold mb-4">
                 Gratis
               </div>
-              <ul className="space-y-2 mb-6">
+              <ul className="space-y-2 mb-4">
                 <li className="flex items-center gap-2 text-sm">
                   <Check className="w-4 h-4 text-primary" />
                   Upp till 5 kontakter
@@ -256,6 +260,32 @@ export const SubscriptionManager = () => {
                   Grundläggande påminnelser
                 </li>
               </ul>
+              
+              {/* Warning about limitations */}
+              <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 mb-4">
+                <div className="flex items-start gap-2">
+                  <AlertTriangle className="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" />
+                  <div className="text-sm">
+                    <p className="font-medium text-orange-800 mb-1">Begränsningar med gratis-planen:</p>
+                    <ul className="text-orange-700 space-y-1">
+                      <li>• Max 5 kontakter totalt</li>
+                      <li>• Kan inte lägga till fler kontakter när gränsen nås</li>
+                      <li>• Begränsade påminnelsefunktioner</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Button 
+                  onClick={() => navigate('/dashboard')}
+                  variant="outline"
+                  className="w-full"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Fortsätt med gratis
+                </Button>
+              </div>
             </CardContent>
           </Card>
 
