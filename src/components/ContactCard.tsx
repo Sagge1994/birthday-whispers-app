@@ -191,6 +191,7 @@ export const ContactCard = ({ contact, onDelete, onUpdate, onEdit }: ContactCard
               <DropdownMenuItem onClick={() => {
                 console.log('Edit button clicked in ContactCard for:', contact.name);
                 console.log('onEdit function exists:', !!onEdit);
+                alert(`Test: Trycker redigera för ${contact.name}`);
                 if (onEdit) {
                   console.log('Calling onEdit function');
                   onEdit(contact);
