@@ -61,8 +61,8 @@ export const SettingsPanel = ({ open, onOpenChange, contacts }: SettingsPanelPro
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] bg-gradient-card border-0">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-[700px] max-h-[85vh] bg-gradient-card border-0 overflow-hidden flex flex-col">
+        <DialogHeader className="flex-shrink-0">
           <DialogTitle className="text-xl flex items-center">
             <Bell className="w-5 h-5 mr-2" />
             Inställningar
@@ -72,14 +72,16 @@ export const SettingsPanel = ({ open, onOpenChange, contacts }: SettingsPanelPro
           </DialogDescription>
         </DialogHeader>
         
-        <div className="space-y-6">
+        <div className="flex-1 overflow-y-auto space-y-6 pr-2">
           <NotificationManager contacts={contacts} />
           
           <WeeklyReminderSettings />
           
           <CronJobInfo />
+        </div>
 
-          {/* Save Button */}
+        {/* Save Button - Fixed at bottom */}
+        <div className="flex-shrink-0 pt-4 border-t">
           <Button 
             onClick={() => onOpenChange(false)}
             className="w-full bg-gradient-primary hover:shadow-soft"
