@@ -15,7 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Contact } from "@/pages/Index";
 import { useToast } from "@/hooks/use-toast";
-import { Calendar, Sparkles, Loader2, RefreshCw } from "lucide-react";
+import { Calendar, Sparkles, Loader2, Users } from "lucide-react";
 import { format } from "date-fns";
 import { sv } from "date-fns/locale";
 
@@ -45,8 +45,8 @@ export const QuickAddBirthdayDialog = ({
   const generateAISuggestions = async () => {
     if (!formData.name.trim()) {
       toast({
-        title: "Ange ett namn först",
-        description: "AI behöver ett namn för att skapa personliga förslag",
+        title: "Enter a name first",
+        description: "AI needs a name to create personalized suggestions",
         variant: "destructive"
       });
       return;
@@ -54,8 +54,8 @@ export const QuickAddBirthdayDialog = ({
 
     if (!apiKey.trim()) {
       toast({
-        title: "API-nyckel saknas",
-        description: "Ange din Perplexity API-nyckel för AI-förslag",
+        title: "API key missing",
+        description: "Enter your Perplexity API key for AI suggestions",
         variant: "destructive"
       });
       return;
@@ -75,11 +75,11 @@ export const QuickAddBirthdayDialog = ({
           messages: [
             {
               role: 'system',
-              content: 'Du är en hjälpsam assistent som skapar personliga och vänliga födelsedagsmeddelanden på svenska. Skapa 3 olika meddelanden som är varma, personliga och passar för SMS. Varje meddelande ska vara 1-2 meningar långt och inkludera lämpliga emojis.'
+              content: 'You are a helpful assistant that creates personal and friendly birthday messages in English. Create 3 different messages that are warm, personal and suitable for SMS. Each message should be 1-2 sentences long and include appropriate emojis.'
             },
             {
               role: 'user',
-              content: `Skapa 3 personliga födelsedagsmeddelanden för ${formData.name}. Meddelandena ska vara på svenska, vänliga och lämpliga för SMS. Inkludera passande emojis.`
+              content: `Create 3 personalized birthday messages for ${formData.name}. The messages should be in English, friendly and appropriate for SMS. Include suitable emojis.`
             }
           ],
           temperature: 0.7,
@@ -107,18 +107,18 @@ export const QuickAddBirthdayDialog = ({
       if (messages.length > 0) {
         setAiSuggestions(messages);
         toast({
-          title: "AI-förslag genererade!",
-          description: `${messages.length} personliga meddelanden skapade`,
+          title: "AI suggestions generated!",
+          description: `${messages.length} personalized messages created`,
         });
       } else {
-        throw new Error("Inga meddelanden kunde genereras");
+        throw new Error("No messages could be generated");
       }
 
     } catch (error) {
       console.error('AI generation error:', error);
       toast({
-        title: "Kunde inte generera AI-förslag",
-        description: "Kontrollera din API-nyckel och försök igen",
+        title: "Could not generate AI suggestions",
+        description: "Check your API key and try again",
         variant: "destructive"
       });
     } finally {
@@ -135,8 +135,8 @@ export const QuickAddBirthdayDialog = ({
     
     if (!formData.name || !formData.phone || !selectedDate) {
       toast({
-        title: "Fyll i alla fält",
-        description: "Namn och telefonnummer krävs",
+        title: "Fill in all fields",
+        description: "Name and phone number are required",
         variant: "destructive"
       });
       return;
@@ -150,8 +150,8 @@ export const QuickAddBirthdayDialog = ({
     });
 
     toast({
-      title: "Födelsedag tillagd!",
-      description: `${formData.name} har lagts till för ${format(selectedDate, 'd MMMM', { locale: sv })}`,
+      title: "Birthday added!",
+      description: `${formData.name} has been added for ${format(selectedDate, 'MMMM d')}`,
     });
 
     // Reset form
@@ -185,52 +185,68 @@ export const QuickAddBirthdayDialog = ({
         <DialogHeader>
           <DialogTitle className="text-xl flex items-center">
             <Calendar className="w-5 h-5 mr-2" />
-            Lägg till födelsedag
+            Add Birthday
           </DialogTitle>
           <DialogDescription>
-            Lägg till en födelsedag för {format(selectedDate, 'd MMMM yyyy', { locale: sv })}
+            Add a birthday for {format(selectedDate, 'MMMM d, yyyy')}
           </DialogDescription>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Namn *</Label>
+              <Label htmlFor="name">Name *</Label>
               <Input
                 id="name"
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
-                placeholder="Ange namn"
+                placeholder="Enter name"
                 className="bg-background/50"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="phone">Telefonnummer *</Label>
+              <Label htmlFor="phone">Phone Number *</Label>
               <Input
                 id="phone"
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                placeholder="+46701234567"
+                placeholder="+1234567890"
                 className="bg-background/50"
               />
             </div>
           </div>
 
+          {/* Add via Contact List Button */}
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full border-primary/20 hover:bg-pastel-mint/50"
+            onClick={() => {
+              toast({
+                title: "Contact picker",
+                description: "This feature requires device permissions and works best in native mobile apps",
+              });
+            }}
+          >
+            <Users className="w-4 h-4 mr-2" />
+            Add via Your Contact List
+          </Button>
+
           {/* AI API Key Input */}
           <div className="space-y-2">
-            <Label htmlFor="apiKey">Perplexity API-nyckel (för AI-förslag)</Label>
+            <Label htmlFor="apiKey">Perplexity API Key (for AI suggestions)</Label>
             <Input
               id="apiKey"
               type="password"
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
-              placeholder="Ange din Perplexity API-nyckel"
+              placeholder="Enter your Perplexity API key"
               className="bg-background/50"
             />
             <p className="text-xs text-muted-foreground">
-              Behövs endast för AI-genererade meddelandeförslag
+              Only needed for AI-generated message suggestions
             </p>
           </div>
 
@@ -239,7 +255,7 @@ export const QuickAddBirthdayDialog = ({
             <CardHeader>
               <CardTitle className="text-sm flex items-center">
                 <Sparkles className="w-4 h-4 mr-2" />
-                AI-genererade meddelandeförslag
+                AI Message Suggestions
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -253,19 +269,19 @@ export const QuickAddBirthdayDialog = ({
                 {isGeneratingAI ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Genererar förslag...
+                    Generating suggestions...
                   </>
                 ) : (
                   <>
                     <Sparkles className="w-4 h-4 mr-2" />
-                    Skapa AI-förslag för {formData.name || 'personen'}
+                    Create AI suggestions for {formData.name || 'person'}
                   </>
                 )}
               </Button>
 
               {aiSuggestions.length > 0 && (
                 <div className="space-y-2">
-                  <p className="text-sm font-medium">Klicka för att använda:</p>
+                  <p className="text-sm font-medium">Click to use:</p>
                   {aiSuggestions.map((suggestion, index) => (
                     <Card 
                       key={index} 
@@ -283,12 +299,12 @@ export const QuickAddBirthdayDialog = ({
           </Card>
           
           <div className="space-y-2">
-            <Label htmlFor="customMessage">Meddelande (valfritt)</Label>
+            <Label htmlFor="customMessage">Message (optional)</Label>
             <Textarea
               id="customMessage"
               value={formData.customMessage}
               onChange={(e) => setFormData({...formData, customMessage: e.target.value})}
-              placeholder="Skriv ett personligt födelsedagsmeddelande eller använd AI-förslag ovan..."
+              placeholder="Write a personal birthday message or use AI suggestions above..."
               className="bg-background/50 min-h-[80px]"
             />
           </div>
@@ -300,10 +316,10 @@ export const QuickAddBirthdayDialog = ({
               onClick={() => onOpenChange(false)}
               className="border-primary/20"
             >
-              Avbryt
+              Cancel
             </Button>
             <Button type="submit" className="bg-gradient-primary hover:shadow-soft">
-              Lägg till födelsedag
+              Add Birthday
             </Button>
           </DialogFooter>
         </form>

@@ -34,8 +34,8 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
     
     if (!formData.name || !formData.birthday || !formData.phone) {
       toast({
-        title: "Fyll i alla fält",
-        description: "Namn, födelsedag och telefonnummer krävs",
+        title: "Fill in all fields",
+        description: "Name, birthday and phone number are required",
         variant: "destructive"
       });
       return;
@@ -49,8 +49,8 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
     });
 
     toast({
-      title: "Kontakt tillagd!",
-      description: `${formData.name} har lagts till i din lista`,
+      title: "Contact added!",
+      description: `${formData.name} has been added to your list`,
     });
 
     // Reset form
@@ -68,26 +68,26 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px] bg-gradient-card border-0">
         <DialogHeader>
-          <DialogTitle className="text-xl">Lägg till ny person</DialogTitle>
+          <DialogTitle className="text-xl">Add New Person</DialogTitle>
           <DialogDescription>
-            Fyll i personens information för att komma ihåg deras födelsedag
+            Fill in the person's information to remember their birthday
           </DialogDescription>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Namn *</Label>
+            <Label htmlFor="name">Name *</Label>
             <Input
               id="name"
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
-              placeholder="Ange namn"
+              placeholder="Enter name"
               className="bg-background/50"
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="birthday">Födelsedag *</Label>
+            <Label htmlFor="birthday">Birthday *</Label>
             <Input
               id="birthday"
               type="date"
@@ -98,24 +98,24 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="phone">Telefonnummer *</Label>
+            <Label htmlFor="phone">Phone Number *</Label>
             <Input
               id="phone"
               type="tel"
               value={formData.phone}
               onChange={(e) => setFormData({...formData, phone: e.target.value})}
-              placeholder="+46701234567"
+              placeholder="+1234567890"
               className="bg-background/50"
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="customMessage">Anpassat meddelande (valfritt)</Label>
+            <Label htmlFor="customMessage">Custom Message (optional)</Label>
             <Textarea
               id="customMessage"
               value={formData.customMessage}
               onChange={(e) => setFormData({...formData, customMessage: e.target.value})}
-              placeholder="Skriv ett personligt födelsedagsmeddelande..."
+              placeholder="Write a personal birthday message..."
               className="bg-background/50 min-h-[80px]"
             />
           </div>
@@ -127,10 +127,10 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
               onClick={() => onOpenChange(false)}
               className="border-primary/20"
             >
-              Avbryt
+              Cancel
             </Button>
             <Button type="submit" className="bg-gradient-primary hover:shadow-soft">
-              Lägg till
+              Add Contact
             </Button>
           </DialogFooter>
         </form>

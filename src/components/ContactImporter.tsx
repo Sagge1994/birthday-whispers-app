@@ -82,14 +82,14 @@ export const ContactImporter = ({
       setStep('select');
       
       toast({
-        title: "Kontakter hämtade!",
-        description: `Hittade ${newContacts.length} nya kontakter`,
+        title: "Contacts retrieved!",
+        description: `Found ${newContacts.length} new contacts`,
       });
       
     } catch (error) {
       toast({
-        title: "Kunde inte komma åt kontakter",
-        description: "Kontrollera att du har gett appen behörighet",
+        title: "Could not access contacts",
+        description: "Check that you have given the app permission",
         variant: "destructive"
       });
     } finally {
@@ -123,8 +123,8 @@ export const ContactImporter = ({
     setStep('complete');
     
     toast({
-      title: "Kontakter importerade!",
-      description: `${contactsToImport.length} kontakter har lagts till`,
+      title: "Contacts imported!",
+      description: `${contactsToImport.length} contacts have been added`,
     });
 
     setTimeout(() => {
@@ -147,21 +147,21 @@ export const ContactImporter = ({
       <DialogContent className="sm:max-w-[600px] max-h-[700px] overflow-y-auto bg-gradient-card border-0">
         {step === 'request' && (
           <>
-            <DialogHeader>
-              <DialogTitle className="text-xl flex items-center">
-                <Users className="w-5 h-5 mr-2" />
-                Importera kontakter
-              </DialogTitle>
-              <DialogDescription>
-                Hämta kontakter från din telefon som har födelsedagar sparade
-              </DialogDescription>
-            </DialogHeader>
+        <DialogHeader>
+          <DialogTitle className="text-xl flex items-center">
+            <Users className="w-5 h-5 mr-2" />
+            Import Contacts
+          </DialogTitle>
+          <DialogDescription>
+            Import contacts from your phone that have saved birthdays
+          </DialogDescription>
+        </DialogHeader>
             
             <div className="text-center py-8">
               <div className="text-6xl mb-4">📱</div>
-              <h3 className="text-lg font-semibold mb-2">Kom åt dina kontakter</h3>
+              <h3 className="text-lg font-semibold mb-2">Access Your Contacts</h3>
               <p className="text-muted-foreground mb-6 text-sm">
-                Vi söker igenom dina kontakter efter födelsedagar och låter dig välja vilka du vill lägga till
+                We'll search through your contacts for birthdays and let you choose which ones to add
               </p>
               
               <Button 
@@ -172,18 +172,18 @@ export const ContactImporter = ({
                 {isLoading ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Hämtar kontakter...
+                    Importing contacts...
                   </>
                 ) : (
                   <>
                     <Phone className="w-4 h-4 mr-2" />
-                    Hämta kontakter
+                    Import Contacts
                   </>
                 )}
               </Button>
               
               <p className="text-xs text-muted-foreground mt-4">
-                Dina kontakter lämnar aldrig din enhet. Vi läser bara födelsedagar.
+                Your contacts never leave your device. We only read birthday information.
               </p>
             </div>
           </>
@@ -192,9 +192,9 @@ export const ContactImporter = ({
         {step === 'select' && (
           <>
             <DialogHeader>
-              <DialogTitle className="text-xl">Välj kontakter att importera</DialogTitle>
+              <DialogTitle className="text-xl">Select contacts to import</DialogTitle>
               <DialogDescription>
-                {availableContacts.length} kontakter hittades. Välj vilka du vill lägga till.
+                {availableContacts.length} contacts found. Choose which ones to add.
               </DialogDescription>
             </DialogHeader>
             
@@ -221,11 +221,11 @@ export const ContactImporter = ({
                               {hasBirthday ? (
                                 <Badge className="bg-gradient-accent text-accent-foreground border-0 text-xs">
                                   <Calendar className="w-3 h-3 mr-1" />
-                                  Födelsedag
+                                  Birthday
                                 </Badge>
                               ) : (
                                 <Badge variant="outline" className="border-primary/20 text-xs">
-                                  Ingen födelsedag
+                                  No Birthday
                                 </Badge>
                               )}
                             </div>
@@ -235,7 +235,7 @@ export const ContactImporter = ({
                           
                           {contact.birthday && (
                             <p className="text-sm text-muted-foreground">
-                              Födelsedag: {new Date(contact.birthday).toLocaleDateString('sv-SE', { 
+                              Birthday: {new Date(contact.birthday).toLocaleDateString('en-US', { 
                                 day: 'numeric', 
                                 month: 'long',
                                 year: 'numeric'
@@ -256,14 +256,14 @@ export const ContactImporter = ({
                 onClick={handleClose}
                 className="flex-1 border-primary/20"
               >
-                Avbryt
+                Cancel
               </Button>
               <Button 
                 onClick={importSelectedContacts}
                 disabled={selectedContacts.size === 0}
                 className="flex-1 bg-gradient-primary hover:shadow-soft"
               >
-                Importera {selectedContacts.size} kontakter
+                Import {selectedContacts.size} contacts
               </Button>
             </div>
           </>
@@ -274,14 +274,14 @@ export const ContactImporter = ({
             <DialogHeader>
               <DialogTitle className="text-xl flex items-center text-green-600">
                 <CheckCircle2 className="w-5 h-5 mr-2" />
-                Kontakter importerade!
+                Contacts imported!
               </DialogTitle>
             </DialogHeader>
             
             <div className="text-center py-8">
               <div className="text-6xl mb-4">🎉</div>
               <p className="text-muted-foreground">
-                Dina kontakter har lagts till och du kommer nu få påminnelser om deras födelsedagar!
+                Your contacts have been added and you'll now get reminders about their birthdays!
               </p>
             </div>
           </>

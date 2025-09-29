@@ -13,7 +13,8 @@ import {
   Sparkles,
   Heart,
   Clock,
-  Gift
+  Gift,
+  Facebook
 } from "lucide-react";
 import { Contact } from "@/pages/Index";
 import { ContactCard } from "@/components/ContactCard";
@@ -21,6 +22,7 @@ import { AddContactDialog } from "@/components/AddContactDialog";
 import { MessageTemplateManager } from "@/components/MessageTemplateManager";
 import { SettingsPanel } from "@/components/SettingsPanel";
 import { ContactImporter } from "@/components/ContactImporter";
+import { FacebookImporter } from "@/components/FacebookImporter";
 import { CalendarView } from "@/components/CalendarView";
 import { useToast } from "@/hooks/use-toast";
 
@@ -45,6 +47,7 @@ const Dashboard = () => {
   const [showMessageManager, setShowMessageManager] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showImporter, setShowImporter] = useState(false);
+  const [showFacebookImporter, setShowFacebookImporter] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
 
   const addContact = (contact: Omit<Contact, "id">) => {
@@ -108,6 +111,13 @@ const Dashboard = () => {
       color: "bg-pastel-mint"
     },
     {
+      icon: Facebook,
+      title: "Facebook Import", 
+      description: "Import from Facebook",
+      action: () => setShowFacebookImporter(true),
+      color: "bg-blue-500"
+    },
+    {
       icon: Calendar,
       title: "Calendar View",
       description: "See all birthdays visually",
@@ -146,7 +156,7 @@ const Dashboard = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-pastel-pink/20 to-pastel-lavender/30">
         <div className="container mx-auto px-4 py-8">
-          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
                 🗓️ Birthday Calendar
@@ -175,12 +185,12 @@ const Dashboard = () => {
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
-            🎂 Birthday Dashboard
-          </h1>
-          <p className="text-xl text-muted-foreground">
-            Your command center for never missing a special moment
-          </p>
+            <h3 className="font-semibold text-lg mb-3 bg-gradient-primary bg-clip-text text-transparent">
+              🎂 Birthday Dashboard
+            </h3>
+            <p className="text-xl text-muted-foreground">
+              Your command center for never missing a special moment
+            </p>
         </div>
 
         {/* Quick Stats */}
@@ -329,6 +339,11 @@ const Dashboard = () => {
           onOpenChange={setShowImporter}
           onImportContacts={addMultipleContacts}
           existingContacts={contacts}
+        />
+        
+        <FacebookImporter
+          open={showFacebookImporter}
+          onOpenChange={setShowFacebookImporter}
         />
         
         <MessageTemplateManager
