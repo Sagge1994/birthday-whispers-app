@@ -14,7 +14,8 @@ import {
   Heart,
   Clock,
   Gift,
-  Facebook
+  Facebook,
+  Crown
 } from "lucide-react";
 import { Contact } from "@/pages/Index";
 import { ContactCard } from "@/components/ContactCard";
@@ -24,9 +25,11 @@ import { SettingsPanel } from "@/components/SettingsPanel";
 import { ContactImporter } from "@/components/ContactImporter";
 import { FacebookImporter } from "@/components/FacebookImporter";
 import { CalendarView } from "@/components/CalendarView";
-import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useAuth } from "@/contexts/AuthContext";
+import { Link } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 const Dashboard = () => {
   const { toast } = useToast();
@@ -158,6 +161,14 @@ const Dashboard = () => {
         });
       },
       color: "bg-gradient-accent"
+    },
+    {
+      icon: Crown,
+      title: "Premium",
+      description: "Uppgradera till Premium-funktioner",
+      action: () => {},
+      color: "bg-gradient-primary",
+      link: "/subscription"
     }
   ];
 
@@ -238,23 +249,41 @@ const Dashboard = () => {
             {t('dashboard.quickActions')}
           </h2>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {quickActions.map((action, index) => (
-              <Card
-                key={index}
-                className="bg-gradient-card border-0 shadow-card hover:shadow-lg transition-all duration-300 transform hover:scale-105 cursor-pointer group"
-                onClick={action.action}
-              >
-                <CardContent className="p-6 text-center">
-                  <div className={`w-12 h-12 rounded-lg ${action.color} flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300`}>
-                    <action.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="font-semibold text-sm mb-1">{action.title}</h3>
-                  <p className="text-xs text-muted-foreground">{action.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+             {quickActions.map((action, index) => {
+               if (action.link) {
+                 return (
+                   <Link key={index} to={action.link}>
+                     <Card className="bg-gradient-card border-0 shadow-card hover:shadow-lg transition-all duration-300 transform hover:scale-105 cursor-pointer group">
+                       <CardContent className="p-6 text-center">
+                         <div className={`w-12 h-12 rounded-lg ${action.color} flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300`}>
+                           <action.icon className="w-6 h-6 text-white" />
+                         </div>
+                         <h3 className="font-semibold text-sm mb-1">{action.title}</h3>
+                         <p className="text-xs text-muted-foreground">{action.description}</p>
+                       </CardContent>
+                     </Card>
+                   </Link>
+                 );
+               }
+               
+               return (
+                 <Card
+                   key={index}
+                   className="bg-gradient-card border-0 shadow-card hover:shadow-lg transition-all duration-300 transform hover:scale-105 cursor-pointer group"
+                   onClick={action.action}
+                 >
+                   <CardContent className="p-6 text-center">
+                     <div className={`w-12 h-12 rounded-lg ${action.color} flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300`}>
+                       <action.icon className="w-6 h-6 text-white" />
+                     </div>
+                     <h3 className="font-semibold text-sm mb-1">{action.title}</h3>
+                     <p className="text-xs text-muted-foreground">{action.description}</p>
+                   </CardContent>
+                 </Card>
+               );
+             })}
+           </div>
         </div>
 
         {/* Upcoming Birthdays */}
