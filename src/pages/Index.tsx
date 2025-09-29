@@ -31,10 +31,10 @@ const Index = () => {
   };
 
   const handleEditContact = (contact: Contact) => {
-    console.log('Edit contact clicked:', contact.name);
+    console.log('handleEditContact called with:', contact.name);
     setEditingContact(contact);
     setShowAddDialog(true);
-    console.log('Dialog should open now, editing contact:', contact.name);
+    console.log('Dialog state set - editing contact:', contact.name);
   };
 
   const handleDialogClose = (open: boolean) => {
@@ -149,15 +149,18 @@ const Index = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {sortedContacts.map((contact) => (
-                  <ContactCard
-                    key={contact.id}
-                    contact={contact}
-                    onDelete={deleteContact}
-                    onUpdate={updateContact}
-                    onEdit={handleEditContact}
-                  />
-                ))}
+                {sortedContacts.map((contact) => {
+                  console.log('Rendering ContactCard with onEdit:', !!handleEditContact);
+                  return (
+                    <ContactCard
+                      key={contact.id}
+                      contact={contact}
+                      onDelete={deleteContact}
+                      onUpdate={updateContact}
+                      onEdit={handleEditContact}
+                    />
+                  );
+                })}
               </div>
             )}
           </TabsContent>
