@@ -330,6 +330,7 @@ export const SubscriptionManager = () => {
                   disabled={loading}
                   className="w-full bg-white text-primary hover:bg-white/90"
                 >
+                  <Sparkles className="w-4 h-4 mr-2" />
                   {t('subscription.upgradeNow')} - {t('subscription.monthly')}
                 </Button>
                 <Button 
@@ -338,6 +339,7 @@ export const SubscriptionManager = () => {
                   variant="outline"
                   className="w-full border-white/20 text-white hover:bg-white/10"
                 >
+                  <Crown className="w-4 h-4 mr-2" />
                   {t('subscription.upgradeNow')} - {t('subscription.yearly')}
                 </Button>
               </div>

@@ -32,10 +32,10 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.name || !formData.birthday || !formData.phone) {
+    if (!formData.name.trim()) {
       toast({
-        title: "Fill in all fields",
-        description: "Name, birthday and phone number are required",
+        title: "Name is required",
+        description: "Please enter a name for the contact",
         variant: "destructive"
       });
       return;
@@ -87,7 +87,7 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="birthday">Birthday *</Label>
+            <Label htmlFor="birthday">Birthday (optional)</Label>
             <Input
               id="birthday"
               type="date"
@@ -98,7 +98,7 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="phone">Phone Number *</Label>
+            <Label htmlFor="phone">Phone Number (optional)</Label>
             <Input
               id="phone"
               type="tel"
