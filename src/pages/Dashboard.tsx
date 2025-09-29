@@ -154,6 +154,7 @@ const Dashboard = () => {
       action: () => setShowImporter(true),
     },
     {
+      icon: Calendar,
       title: t('actions.calendarView'),
       description: t('actions.calendarViewDesc'),
       action: () => setShowCalendar(true),
