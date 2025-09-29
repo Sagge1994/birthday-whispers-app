@@ -44,10 +44,10 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
 
     onAddContact({
       name: formData.name,
-      birthday: formData.birthday,
-      phone: formData.phone,
-      custom_message: formData.custom_message || undefined,
-      yearly_messages: Object.keys(formData.yearly_messages).length > 0 ? formData.yearly_messages : undefined
+      birthday: formData.birthday || null,
+      phone: formData.phone || null,
+      custom_message: formData.custom_message || null,
+      yearly_messages: Object.keys(formData.yearly_messages).length > 0 ? formData.yearly_messages : null
     });
 
     toast({

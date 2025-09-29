@@ -29,6 +29,8 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
   const { scheduleLocalNotification } = usePushNotifications();
   
   const calculateDaysUntilBirthday = () => {
+    if (!contact.birthday) return null;
+    
     const today = new Date();
     const birthday = new Date(contact.birthday);
     const currentYear = today.getFullYear();
@@ -49,9 +51,11 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
 
   const daysUntil = calculateDaysUntilBirthday();
   const isToday = daysUntil === 0;
-  const isSoon = daysUntil <= 7 && daysUntil > 0;
+  const isSoon = daysUntil !== null && daysUntil <= 7 && daysUntil > 0;
 
   const formatBirthday = () => {
+    if (!contact.birthday) return t('contact.noBirthdaySet') || 'Ingen födelsedag angiven';
+    
     const date = new Date(contact.birthday);
     // Use current language for date formatting
     const locale = i18n.language === 'sv' ? 'sv-SE' : 
@@ -65,6 +69,8 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
   };
 
   const getAge = () => {
+    if (!contact.birthday) return null;
+    
     const today = new Date();
     const birthDate = new Date(contact.birthday);
     
@@ -109,12 +115,30 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
       return;
     }
 
+    if (!contact.birthday) {
+      toast({
+        title: "Ingen födelsedag",
+        description: "Denna kontakt har ingen födelsedag angiven för att skicka meddelande",
+        variant: "destructive"
+      });
+      return;
+    }
+
     const birthdayYear = getBirthdayYear(contact.birthday);
     const message = getContactMessage(contact, birthdayYear);
     sendSMS(contact.phone, message);
   };
 
   const scheduleNotification = () => {
+    if (!contact.birthday) {
+      toast({
+        title: "Ingen födelsedag",
+        description: "Denna kontakt har ingen födelsedag angiven för att ställa in påminnelse",
+        variant: "destructive"
+      });
+      return;
+    }
+    
     const birthdayDate = new Date(contact.birthday);
     const birthdayYear = getBirthdayYear(contact.birthday);
     const message = getContactMessage(contact, birthdayYear);
@@ -164,17 +188,23 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
 
         {/* Status Badge */}
         <div className="mb-4">
-          {isToday ? (
-            <Badge className="bg-gradient-accent text-accent-foreground border-0">
-              {t('contact.birthdayToday')}
-            </Badge>
-          ) : isSoon ? (
-            <Badge variant="secondary" className="bg-pastel-peach/50">
-              {getDaysText()}
-            </Badge>
+          {contact.birthday ? (
+            isToday ? (
+              <Badge className="bg-gradient-accent text-accent-foreground border-0">
+                {t('contact.birthdayToday')}
+              </Badge>
+            ) : isSoon ? (
+              <Badge variant="secondary" className="bg-pastel-peach/50">
+                {getDaysText()}
+              </Badge>
+            ) : (
+              <Badge variant="outline" className="border-primary/20">
+                {getDaysText()}
+              </Badge>
+            )
           ) : (
-            <Badge variant="outline" className="border-primary/20">
-              {getDaysText()}
+            <Badge variant="outline" className="border-muted/30 text-muted-foreground">
+              Ingen födelsedag angiven
             </Badge>
           )}
         </div>

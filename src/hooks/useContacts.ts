@@ -6,10 +6,10 @@ import { useToast } from '@/hooks/use-toast';
 export interface Contact {
   id: string;
   name: string;
-  birthday: string;
-  phone?: string;
-  custom_message?: string;
-  yearly_messages?: Record<string, string>;
+  birthday: string | null;
+  phone?: string | null;
+  custom_message?: string | null;
+  yearly_messages?: Record<string, string> | null;
 }
 
 export const useContacts = () => {

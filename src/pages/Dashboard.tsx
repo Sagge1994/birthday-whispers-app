@@ -104,6 +104,9 @@ const Dashboard = () => {
   const getUpcomingBirthdays = () => {
     const today = new Date();
     const upcoming = contacts.filter(contact => {
+      // Skip contacts without birthday
+      if (!contact.birthday) return false;
+      
       const birthday = new Date(contact.birthday);
       const currentYear = today.getFullYear();
       birthday.setFullYear(currentYear);

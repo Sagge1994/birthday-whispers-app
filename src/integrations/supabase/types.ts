@@ -16,7 +16,7 @@ export type Database = {
     Tables: {
       contacts: {
         Row: {
-          birthday: string
+          birthday: string | null
           created_at: string
           custom_message: string | null
           id: string
@@ -27,7 +27,7 @@ export type Database = {
           yearly_messages: Json | null
         }
         Insert: {
-          birthday: string
+          birthday?: string | null
           created_at?: string
           custom_message?: string | null
           id?: string
@@ -38,7 +38,7 @@ export type Database = {
           yearly_messages?: Json | null
         }
         Update: {
-          birthday?: string
+          birthday?: string | null
           created_at?: string
           custom_message?: string | null
           id?: string
