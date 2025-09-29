@@ -181,15 +181,15 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-pastel-pink/20 to-pastel-lavender/30">
+    <div className="min-h-screen bg-gradient-to-br from-pastel-pink via-background to-pastel-blue p-4">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-12">
-            <h3 className="font-semibold text-lg mb-3 bg-gradient-primary bg-clip-text text-transparent">
-              🎂 Birthday Dashboard
+            <h3 className="font-bold text-4xl mb-3 bg-gradient-primary bg-clip-text text-transparent">
+              🎉 Födelsedagspåminnelser
             </h3>
             <p className="text-xl text-muted-foreground">
-              Your command center for never missing a special moment
+              Håll koll på alla viktiga födelsedagar
             </p>
         </div>
 
