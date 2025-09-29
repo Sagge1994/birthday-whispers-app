@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Smartphone, Bell, MessageSquare, Download } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Smartphone, Bell, MessageSquare, Download, CheckCircle } from "lucide-react";
 import { Capacitor } from "@capacitor/core";
 
 export const MobileAppInfo = () => {
@@ -28,35 +29,41 @@ export const MobileAppInfo = () => {
     );
   }
 
+  // Check if browser supports notifications
+  const supportsNotifications = 'Notification' in window;
+  const supportsSMS = 'navigator' in window && 'share' in navigator;
+
   return (
     <Card className="bg-gradient-card border-0 shadow-card mb-6">
       <CardHeader className="pb-3">
         <CardTitle className="text-lg flex items-center gap-2">
-          <Download className="w-5 h-5 text-primary" />
-          Gör din app till en mobilapp
+          <Smartphone className="w-5 h-5 text-primary" />
+          Mobilfunktioner aktiverade
         </CardTitle>
       </CardHeader>
       <CardContent className="pt-0">
-        <p className="text-sm text-muted-foreground mb-4">
-          För att få SMS-integration och push-notifikationer:
-        </p>
-        <div className="space-y-2 text-sm">
+        <div className="space-y-3 text-sm">
           <div className="flex items-center gap-2">
-            <MessageSquare className="w-4 h-4 text-primary" />
-            <span>Skicka SMS direkt från appen</span>
+            <CheckCircle className="w-4 h-4 text-green-600" />
+            <span>SMS-integration aktiverad</span>
           </div>
+          {supportsNotifications && (
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-green-600" />
+              <span>Push-notifikationer tillgängliga</span>
+            </div>
+          )}
           <div className="flex items-center gap-2">
-            <Bell className="w-4 h-4 text-primary" />
-            <span>Få automatiska påminnelser</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Smartphone className="w-4 h-4 text-primary" />
-            <span>Fungerar offline</span>
+            <CheckCircle className="w-4 h-4 text-green-600" />
+            <span>Kalender och påminnelser</span>
           </div>
         </div>
-        <p className="text-xs text-muted-foreground mt-3">
-          Exportera projektet till GitHub och följ Capacitor-instruktionerna för att köra som mobilapp.
-        </p>
+        
+        <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+          <p className="text-sm text-green-800">
+            ✅ <strong>Allt fungerar automatiskt!</strong> SMS öppnas i din telefons meddelandeapp och påminnelser visas som webbnotifikationer.
+          </p>
+        </div>
       </CardContent>
     </Card>
   );
