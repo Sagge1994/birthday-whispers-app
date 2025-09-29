@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Plus, Settings, MessageCircle } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Plus, Settings, MessageCircle, List, Calendar } from "lucide-react";
 import { ContactCard } from "@/components/ContactCard";
 import { AddContactDialog } from "@/components/AddContactDialog";
 import { MessageTemplateManager } from "@/components/MessageTemplateManager";
 import { SettingsPanel } from "@/components/SettingsPanel";
+import { CalendarView } from "@/components/CalendarView";
 
 export interface Contact {
   id: string;
@@ -111,34 +113,54 @@ const Index = () => {
           </Button>
         </div>
 
-        {/* Contacts Grid */}
-        {sortedContacts.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="text-6xl mb-4">🎈</div>
-            <h3 className="text-xl font-semibold mb-2">Inga kontakter än</h3>
-            <p className="text-muted-foreground mb-6">
-              Lägg till dina vänner och familj för att komma ihåg deras födelsedagar
-            </p>
-            <Button 
-              onClick={() => setShowAddDialog(true)}
-              className="bg-gradient-primary hover:shadow-soft"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Lägg till första personen
-            </Button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sortedContacts.map((contact) => (
-              <ContactCard
-                key={contact.id}
-                contact={contact}
-                onDelete={deleteContact}
-                onUpdate={updateContact}
-              />
-            ))}
-          </div>
-        )}
+        {/* Main Content Tabs */}
+        <Tabs defaultValue="list" className="w-full">
+          <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8 bg-background/50 border border-primary/10">
+            <TabsTrigger value="list" className="flex items-center gap-2">
+              <List className="w-4 h-4" />
+              Lista
+            </TabsTrigger>
+            <TabsTrigger value="calendar" className="flex items-center gap-2">
+              <Calendar className="w-4 h-4" />
+              Kalender
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="list" className="mt-0">
+            {/* Contacts Grid */}
+            {sortedContacts.length === 0 ? (
+              <div className="text-center py-16">
+                <div className="text-6xl mb-4">🎈</div>
+                <h3 className="text-xl font-semibold mb-2">Inga kontakter än</h3>
+                <p className="text-muted-foreground mb-6">
+                  Lägg till dina vänner och familj för att komma ihåg deras födelsedagar
+                </p>
+                <Button 
+                  onClick={() => setShowAddDialog(true)}
+                  className="bg-gradient-primary hover:shadow-soft"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Lägg till första personen
+                </Button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {sortedContacts.map((contact) => (
+                  <ContactCard
+                    key={contact.id}
+                    contact={contact}
+                    onDelete={deleteContact}
+                    onUpdate={updateContact}
+                  />
+                ))}
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="calendar" className="mt-0">
+            <CalendarView contacts={contacts} />
+          </TabsContent>
+        </Tabs>
 
         {/* Dialogs */}
         <AddContactDialog
