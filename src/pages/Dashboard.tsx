@@ -14,7 +14,9 @@ import {
   Heart,
   Clock,
   Gift,
-  Crown
+  Crown,
+  LogOut,
+  User
 } from "lucide-react";
 import { ContactCard } from "@/components/ContactCard";
 import { AddContactDialog } from "@/components/AddContactDialog";
@@ -37,7 +39,7 @@ const FREE_CONTACT_LIMIT = 5;
 const Dashboard = () => {
   const { toast } = useToast();
   const { t } = useTranslation();
-  const { subscriptionStatus } = useAuth();
+  const { subscriptionStatus, user, signOut } = useAuth();
   const { contacts, loading, addContact, addMultipleContacts, deleteContact, updateContact } = useContacts();
   
   const { isPremium, checkLimitAndShowUpgrade, getWarningMessage } = useSubscriptionLimits(contacts.length);
@@ -199,13 +201,31 @@ const Dashboard = () => {
       <LanguageSwitcher />
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="flex items-center justify-between mb-8">
+          <div className="text-center flex-1">
             <h3 className="font-bold text-4xl mb-3 bg-gradient-primary bg-clip-text text-transparent">
               {t('dashboard.title')}
             </h3>
             <p className="text-xl text-muted-foreground">
               {t('dashboard.subtitle')}
             </p>
+          </div>
+          
+          {/* User Menu */}
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="border-primary/20">
+              <User className="w-3 h-3 mr-1" />
+              {user?.email?.split('@')[0]}
+            </Badge>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={signOut}
+              className="text-muted-foreground hover:text-foreground"
+            >
+              <LogOut className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
 
 
