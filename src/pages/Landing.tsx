@@ -5,9 +5,21 @@ import { Calendar, MessageSquare, Bell, Users, Sparkles, Heart, ArrowRight, Chec
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useAuth } from "@/contexts/AuthContext";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
   const { t } = useTranslation();
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+
+  // Redirect to dashboard if already logged in
+  useEffect(() => {
+    if (!loading && user) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [user, loading, navigate]);
 
   const features = [
     {
