@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +10,7 @@ export const useSubscriptionLimits = (currentContactCount: number) => {
   const { subscriptionStatus } = useAuth();
   const { toast } = useToast();
   const { t } = useTranslation();
+  const navigate = useNavigate();
   
   // Check if user has family access
   const [hasFamilyAccess, setHasFamilyAccess] = useState(false);
@@ -34,6 +36,11 @@ export const useSubscriptionLimits = (currentContactCount: number) => {
       description: t('subscription.upgradeToAddMore'),
       variant: "destructive",
     });
+
+    // Redirect to subscription page
+    setTimeout(() => {
+      navigate('/subscription');
+    }, 1000); // Small delay to let user see the toast
 
     return false;
   };
