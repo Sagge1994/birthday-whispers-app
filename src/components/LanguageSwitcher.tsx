@@ -26,7 +26,7 @@ export const LanguageSwitcher = () => {
     setIsOpen(false);
   };
 
-  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[1];
 
   return (
     <div className="fixed top-4 right-4 z-50">
