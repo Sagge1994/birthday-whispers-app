@@ -73,7 +73,43 @@ const resources = {
       "auth.creatingAccount": "Skapar konto...",
       
       // Navigation
-      "nav.backToHome": "Tillbaka till startsidan"
+      "nav.backToHome": "Tillbaka till startsidan",
+      
+      // Dashboard
+      "dashboard.title": "🎉 Födelsedagspåminnelser",
+      "dashboard.subtitle": "Håll koll på alla viktiga födelsedagar",
+      "dashboard.totalContacts": "Totala kontakter",
+      "dashboard.upcomingThisMonth": "Kommande denna månad",
+      "dashboard.birthdaysToday": "Födelsedagar idag",
+      "dashboard.quickActions": "Snabba åtgärder",
+      "dashboard.upcomingBirthdays": "Kommande födelsedagar",
+      "dashboard.yourContacts": "Dina kontakter",
+      "dashboard.noContacts": "Inga kontakter än",
+      "dashboard.noContactsDesc": "Kom igång genom att lägga till dina vänner och familj för att aldrig missa deras speciella dagar",
+      "dashboard.addFirstContact": "Lägg till din första kontakt",
+      "dashboard.importFromPhone": "Importera från telefon",
+      "dashboard.viewAllContacts": "Visa alla {count} kontakter",
+      "dashboard.backToDashboard": "Tillbaka till instrumentpanel",
+      "dashboard.birthdayCalendar": "🗓️ Födelsedagskalender",
+      "dashboard.calendarSubtitle": "Visuell översikt av alla dina viktiga datum",
+      
+      // Quick Actions
+      "actions.addBirthday": "Lägg till födelsedag",
+      "actions.addBirthdayDesc": "Lägg snabbt till någon ny",
+      "actions.importContacts": "Importera kontakter",
+      "actions.importContactsDesc": "Synka från din telefon",
+      "actions.facebookImport": "Facebook-import",
+      "actions.facebookImportDesc": "Importera från Facebook",
+      "actions.calendarView": "Kalendervy",
+      "actions.calendarViewDesc": "Se alla födelsedagar visuellt",
+      "actions.messageTemplates": "Meddelandemallar",
+      "actions.messageTemplatesDesc": "Hantera dina meddelanden",
+      "actions.notifications": "Notifikationer",
+      "actions.notificationsDesc": "Ställ in påminnelser",
+      "actions.aiMessages": "AI-meddelanden",
+      "actions.aiMessagesDesc": "Generera personliga önskningar",
+      "actions.aiMessagesTitle": "AI-meddelanden",
+      "actions.aiMessagesAlert": "Lägg till en kontakt först, använd sedan AI-förslag i kalendervyn!"
     }
   },
   en: {
@@ -147,7 +183,43 @@ const resources = {
       "auth.creatingAccount": "Creating account...",
       
       // Navigation
-      "nav.backToHome": "Back to Home"
+      "nav.backToHome": "Back to Home",
+      
+      // Dashboard
+      "dashboard.title": "🎉 Birthday Reminders",
+      "dashboard.subtitle": "Keep track of all important birthdays",
+      "dashboard.totalContacts": "Total Contacts",
+      "dashboard.upcomingThisMonth": "Upcoming This Month",
+      "dashboard.birthdaysToday": "Birthdays Today",
+      "dashboard.quickActions": "Quick Actions",
+      "dashboard.upcomingBirthdays": "Upcoming Birthdays",
+      "dashboard.yourContacts": "Your Contacts",
+      "dashboard.noContacts": "No contacts yet",
+      "dashboard.noContactsDesc": "Get started by adding your friends and family to never miss their special days",
+      "dashboard.addFirstContact": "Add Your First Contact",
+      "dashboard.importFromPhone": "Import from Phone",
+      "dashboard.viewAllContacts": "View All {count} Contacts",
+      "dashboard.backToDashboard": "Back to Dashboard",
+      "dashboard.birthdayCalendar": "🗓️ Birthday Calendar",
+      "dashboard.calendarSubtitle": "Visual overview of all your important dates",
+      
+      // Quick Actions
+      "actions.addBirthday": "Add Birthday",
+      "actions.addBirthdayDesc": "Quickly add someone new",
+      "actions.importContacts": "Import Contacts",
+      "actions.importContactsDesc": "Sync from your phone",
+      "actions.facebookImport": "Facebook Import",
+      "actions.facebookImportDesc": "Import from Facebook",
+      "actions.calendarView": "Calendar View",
+      "actions.calendarViewDesc": "See all birthdays visually",
+      "actions.messageTemplates": "Message Templates",
+      "actions.messageTemplatesDesc": "Manage your messages",
+      "actions.notifications": "Notifications",
+      "actions.notificationsDesc": "Set up reminders",
+      "actions.aiMessages": "AI Messages",
+      "actions.aiMessagesDesc": "Generate personal wishes",
+      "actions.aiMessagesTitle": "AI Messages",
+      "actions.aiMessagesAlert": "Add a contact first, then use AI suggestions in the calendar view!"
     }
   },
   es: {
@@ -221,7 +293,43 @@ const resources = {
       "auth.creatingAccount": "Creando cuenta...",
       
       // Navigation
-      "nav.backToHome": "Volver al inicio"
+      "nav.backToHome": "Volver al inicio",
+      
+      // Dashboard
+      "dashboard.title": "🎉 Recordatorios de Cumpleaños",
+      "dashboard.subtitle": "Mantén registro de todos los cumpleaños importantes",
+      "dashboard.totalContacts": "Contactos Totales",
+      "dashboard.upcomingThisMonth": "Próximos Este Mes",
+      "dashboard.birthdaysToday": "Cumpleaños Hoy",
+      "dashboard.quickActions": "Acciones Rápidas",
+      "dashboard.upcomingBirthdays": "Próximos Cumpleaños",
+      "dashboard.yourContacts": "Tus Contactos",
+      "dashboard.noContacts": "Sin contactos aún",
+      "dashboard.noContactsDesc": "Comienza agregando a tus amigos y familia para nunca perderte sus días especiales",
+      "dashboard.addFirstContact": "Agregar Tu Primer Contacto",
+      "dashboard.importFromPhone": "Importar desde Teléfono",
+      "dashboard.viewAllContacts": "Ver Todos los {count} Contactos",
+      "dashboard.backToDashboard": "Volver al Panel",
+      "dashboard.birthdayCalendar": "🗓️ Calendario de Cumpleaños",
+      "dashboard.calendarSubtitle": "Vista general visual de todas tus fechas importantes",
+      
+      // Quick Actions
+      "actions.addBirthday": "Agregar Cumpleaños",
+      "actions.addBirthdayDesc": "Agregar rápidamente a alguien nuevo",
+      "actions.importContacts": "Importar Contactos",
+      "actions.importContactsDesc": "Sincronizar desde tu teléfono",
+      "actions.facebookImport": "Importar Facebook",
+      "actions.facebookImportDesc": "Importar desde Facebook",
+      "actions.calendarView": "Vista de Calendario",
+      "actions.calendarViewDesc": "Ver todos los cumpleaños visualmente",
+      "actions.messageTemplates": "Plantillas de Mensajes",
+      "actions.messageTemplatesDesc": "Administrar tus mensajes",
+      "actions.notifications": "Notificaciones",
+      "actions.notificationsDesc": "Configurar recordatorios",
+      "actions.aiMessages": "Mensajes IA",
+      "actions.aiMessagesDesc": "Generar deseos personales",
+      "actions.aiMessagesTitle": "Mensajes IA",
+      "actions.aiMessagesAlert": "¡Agrega un contacto primero, luego usa sugerencias de IA en la vista de calendario!"
     }
   },
   fr: {
@@ -295,7 +403,43 @@ const resources = {
       "auth.creatingAccount": "Création du compte...",
       
       // Navigation
-      "nav.backToHome": "Retour à l'accueil"
+      "nav.backToHome": "Retour à l'accueil",
+      
+      // Dashboard
+      "dashboard.title": "🎉 Rappels d'Anniversaires",
+      "dashboard.subtitle": "Gardez le suivi de tous les anniversaires importants",
+      "dashboard.totalContacts": "Contacts Totaux",
+      "dashboard.upcomingThisMonth": "À Venir Ce Mois",
+      "dashboard.birthdaysToday": "Anniversaires Aujourd'hui",
+      "dashboard.quickActions": "Actions Rapides",
+      "dashboard.upcomingBirthdays": "Anniversaires À Venir",
+      "dashboard.yourContacts": "Vos Contacts",
+      "dashboard.noContacts": "Aucun contact encore",
+      "dashboard.noContactsDesc": "Commencez en ajoutant vos amis et famille pour ne jamais manquer leurs jours spéciaux",
+      "dashboard.addFirstContact": "Ajouter Votre Premier Contact",
+      "dashboard.importFromPhone": "Importer depuis Téléphone",
+      "dashboard.viewAllContacts": "Voir Tous les {count} Contacts",
+      "dashboard.backToDashboard": "Retour au Tableau de Bord",
+      "dashboard.birthdayCalendar": "🗓️ Calendrier des Anniversaires",
+      "dashboard.calendarSubtitle": "Vue d'ensemble visuelle de toutes vos dates importantes",
+      
+      // Quick Actions
+      "actions.addBirthday": "Ajouter Anniversaire",
+      "actions.addBirthdayDesc": "Ajouter rapidement quelqu'un de nouveau",
+      "actions.importContacts": "Importer Contacts",
+      "actions.importContactsDesc": "Synchroniser depuis votre téléphone",
+      "actions.facebookImport": "Import Facebook",
+      "actions.facebookImportDesc": "Importer depuis Facebook",
+      "actions.calendarView": "Vue Calendrier",
+      "actions.calendarViewDesc": "Voir tous les anniversaires visuellement",
+      "actions.messageTemplates": "Modèles de Messages",
+      "actions.messageTemplatesDesc": "Gérer vos messages",
+      "actions.notifications": "Notifications",
+      "actions.notificationsDesc": "Configurer rappels",
+      "actions.aiMessages": "Messages IA",
+      "actions.aiMessagesDesc": "Générer des vœux personnels",
+      "actions.aiMessagesTitle": "Messages IA",
+      "actions.aiMessagesAlert": "Ajoutez d'abord un contact, puis utilisez les suggestions IA dans la vue calendrier !"
     }
   }
 };

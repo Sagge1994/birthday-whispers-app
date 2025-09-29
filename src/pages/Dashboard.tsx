@@ -25,9 +25,12 @@ import { ContactImporter } from "@/components/ContactImporter";
 import { FacebookImporter } from "@/components/FacebookImporter";
 import { CalendarView } from "@/components/CalendarView";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 const Dashboard = () => {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [contacts, setContacts] = useState<Contact[]>([
     {
       id: "1",
@@ -98,54 +101,54 @@ const Dashboard = () => {
   const quickActions = [
     {
       icon: Plus,
-      title: "Add Birthday",
-      description: "Quickly add someone new",
+      title: t('actions.addBirthday'),
+      description: t('actions.addBirthdayDesc'),
       action: () => setShowAddDialog(true),
       color: "bg-gradient-primary"
     },
     {
       icon: Download,
-      title: "Import Contacts", 
-      description: "Sync from your phone",
+      title: t('actions.importContacts'), 
+      description: t('actions.importContactsDesc'),
       action: () => setShowImporter(true),
       color: "bg-pastel-mint"
     },
     {
       icon: Facebook,
-      title: "Facebook Import", 
-      description: "Import from Facebook",
+      title: t('actions.facebookImport'), 
+      description: t('actions.facebookImportDesc'),
       action: () => setShowFacebookImporter(true),
       color: "bg-blue-500"
     },
     {
       icon: Calendar,
-      title: "Calendar View",
-      description: "See all birthdays visually",
+      title: t('actions.calendarView'),
+      description: t('actions.calendarViewDesc'),
       action: () => setShowCalendar(true),
       color: "bg-pastel-lavender"
     },
     {
       icon: MessageSquare,
-      title: "Message Templates",
-      description: "Manage your messages",
+      title: t('actions.messageTemplates'),
+      description: t('actions.messageTemplatesDesc'),
       action: () => setShowMessageManager(true),
       color: "bg-pastel-peach"
     },
     {
       icon: Bell,
-      title: "Notifications",
-      description: "Set up reminders",
+      title: t('actions.notifications'),
+      description: t('actions.notificationsDesc'),
       action: () => setShowSettings(true),
       color: "bg-pastel-blue"
     },
     {
       icon: Sparkles,
-      title: "AI Messages",
-      description: "Generate personal wishes",
+      title: t('actions.aiMessages'),
+      description: t('actions.aiMessagesDesc'),
       action: () => {
         toast({
-          title: "AI Messages",
-          description: "Add a contact first, then use AI suggestions in the calendar view!",
+          title: t('actions.aiMessagesTitle'),
+          description: t('actions.aiMessagesAlert'),
         });
       },
       color: "bg-gradient-accent"
@@ -155,14 +158,15 @@ const Dashboard = () => {
   if (showCalendar) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-pastel-pink/20 to-pastel-lavender/30">
+        <LanguageSwitcher />
         <div className="container mx-auto px-4 py-8">
             <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                🗓️ Birthday Calendar
+                {t('dashboard.birthdayCalendar')}
               </h1>
               <p className="text-muted-foreground">
-                Visual overview of all your important dates
+                {t('dashboard.calendarSubtitle')}
               </p>
             </div>
             <Button
@@ -170,7 +174,7 @@ const Dashboard = () => {
               variant="outline"
               className="border-primary/20"
             >
-              Back to Dashboard
+              {t('dashboard.backToDashboard')}
             </Button>
           </div>
           
@@ -182,14 +186,15 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pastel-pink via-background to-pastel-blue p-4">
+      <LanguageSwitcher />
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-12">
             <h3 className="font-bold text-4xl mb-3 bg-gradient-primary bg-clip-text text-transparent">
-              🎉 Födelsedagspåminnelser
+              {t('dashboard.title')}
             </h3>
             <p className="text-xl text-muted-foreground">
-              Håll koll på alla viktiga födelsedagar
+              {t('dashboard.subtitle')}
             </p>
         </div>
 
@@ -199,7 +204,7 @@ const Dashboard = () => {
             <CardContent className="p-6 text-center">
               <Users className="w-8 h-8 text-primary mx-auto mb-2" />
               <div className="text-2xl font-bold text-primary">{contacts.length}</div>
-              <div className="text-sm text-muted-foreground">Total Contacts</div>
+              <div className="text-sm text-muted-foreground">{t('dashboard.totalContacts')}</div>
             </CardContent>
           </Card>
           
@@ -207,7 +212,7 @@ const Dashboard = () => {
             <CardContent className="p-6 text-center">
               <Clock className="w-8 h-8 text-primary mx-auto mb-2" />
               <div className="text-2xl font-bold text-primary">{upcomingBirthdays.length}</div>
-              <div className="text-sm text-muted-foreground">Upcoming This Month</div>
+              <div className="text-sm text-muted-foreground">{t('dashboard.upcomingThisMonth')}</div>
             </CardContent>
           </Card>
           
@@ -215,7 +220,7 @@ const Dashboard = () => {
             <CardContent className="p-6 text-center">
               <Gift className="w-8 h-8 text-primary mx-auto mb-2" />
               <div className="text-2xl font-bold text-primary">0</div>
-              <div className="text-sm text-muted-foreground">Birthdays Today</div>
+              <div className="text-sm text-muted-foreground">{t('dashboard.birthdaysToday')}</div>
             </CardContent>
           </Card>
         </div>
@@ -224,7 +229,7 @@ const Dashboard = () => {
         <div className="mb-12">
           <h2 className="text-2xl font-semibold mb-6 flex items-center">
             <Sparkles className="w-6 h-6 mr-2 text-primary" />
-            Quick Actions
+            {t('dashboard.quickActions')}
           </h2>
           
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -251,7 +256,7 @@ const Dashboard = () => {
           <div className="mb-12">
             <h2 className="text-2xl font-semibold mb-6 flex items-center">
               <Calendar className="w-6 h-6 mr-2 text-primary" />
-              Upcoming Birthdays
+              {t('dashboard.upcomingBirthdays')}
             </h2>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -272,9 +277,9 @@ const Dashboard = () => {
           <Card className="bg-gradient-card border-0 shadow-card">
             <CardContent className="p-12 text-center">
               <div className="text-6xl mb-4">🎈</div>
-              <h3 className="text-xl font-semibold mb-2">No contacts yet</h3>
+              <h3 className="text-xl font-semibold mb-2">{t('dashboard.noContacts')}</h3>
               <p className="text-muted-foreground mb-6">
-                Get started by adding your friends and family to never miss their special days
+                {t('dashboard.noContactsDesc')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 
@@ -282,7 +287,7 @@ const Dashboard = () => {
                   className="bg-gradient-primary hover:shadow-soft"
                 >
                   <Plus className="w-4 h-4 mr-2" />
-                  Add Your First Contact
+                  {t('dashboard.addFirstContact')}
                 </Button>
                 <Button 
                   onClick={() => setShowImporter(true)}
@@ -290,7 +295,7 @@ const Dashboard = () => {
                   className="border-primary/20"
                 >
                   <Download className="w-4 h-4 mr-2" />
-                  Import from Phone
+                  {t('dashboard.importFromPhone')}
                 </Button>
               </div>
             </CardContent>
@@ -299,7 +304,7 @@ const Dashboard = () => {
           <div>
             <h2 className="text-2xl font-semibold mb-6 flex items-center">
               <Heart className="w-6 h-6 mr-2 text-primary" />
-              Your Contacts ({contacts.length})
+              {t('dashboard.yourContacts')} ({contacts.length})
             </h2>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -320,7 +325,7 @@ const Dashboard = () => {
                   variant="outline"
                   className="border-primary/20"
                 >
-                  View All {contacts.length} Contacts
+                  {t('dashboard.viewAllContacts', { count: contacts.length })}
                 </Button>
               </div>
             )}
