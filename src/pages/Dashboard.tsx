@@ -14,7 +14,6 @@ import {
   Heart,
   Clock,
   Gift,
-  Facebook,
   Crown
 } from "lucide-react";
 import { Contact } from "@/pages/Index";
@@ -23,17 +22,20 @@ import { AddContactDialog } from "@/components/AddContactDialog";
 import { MessageTemplateManager } from "@/components/MessageTemplateManager";
 import { SettingsPanel } from "@/components/SettingsPanel";
 import { ContactImporter } from "@/components/ContactImporter";
-import { FacebookImporter } from "@/components/FacebookImporter";
 import { CalendarView } from "@/components/CalendarView";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { useSubscriptionLimits } from "@/hooks/useSubscriptionLimits";
+
+const FREE_CONTACT_LIMIT = 5;
 
 const Dashboard = () => {
   const { toast } = useToast();
   const { t } = useTranslation();
+  const { subscriptionStatus } = useAuth();
   const [contacts, setContacts] = useState<Contact[]>([
     {
       id: "1",
@@ -55,6 +57,8 @@ const Dashboard = () => {
     }
   ]);
   
+  const { isPremium, checkLimitAndShowUpgrade, getWarningMessage } = useSubscriptionLimits(contacts.length);
+  
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showMessageManager, setShowMessageManager] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -63,14 +67,42 @@ const Dashboard = () => {
   const [showCalendar, setShowCalendar] = useState(false);
 
   const addContact = (contact: Omit<Contact, "id">) => {
+    // Check subscription limits before adding
+    if (!checkLimitAndShowUpgrade()) {
+      return;
+    }
+    
     const newContact = {
       ...contact,
       id: Date.now().toString()
     };
     setContacts([...contacts, newContact]);
+    
+    // Show warning if approaching limit
+    const warningMessage = getWarningMessage();
+    if (warningMessage && contacts.length + 1 >= FREE_CONTACT_LIMIT - 1) {
+      toast({
+        title: t('subscription.almostAtLimit'),
+        description: warningMessage,
+      });
+    }
   };
 
   const addMultipleContacts = (newContacts: Omit<Contact, "id">[]) => {
+    // Check if adding these contacts would exceed the limit
+    const totalAfterImport = contacts.length + newContacts.length;
+    
+    if (!isPremium && totalAfterImport > FREE_CONTACT_LIMIT) {
+      toast({
+        title: t('subscription.importLimitReached'),
+        description: t('subscription.canOnlyImport', { 
+          count: Math.max(0, FREE_CONTACT_LIMIT - contacts.length) 
+        }),
+        variant: "destructive",
+      });
+      return;
+    }
+    
     const contactsWithIds = newContacts.map(contact => ({
       ...contact,
       id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
@@ -211,8 +243,23 @@ const Dashboard = () => {
           <Card className="bg-gradient-card border-0 shadow-card">
             <CardContent className="p-6 text-center">
               <Users className="w-8 h-8 text-primary mx-auto mb-2" />
-              <div className="text-2xl font-bold text-primary">{contacts.length}</div>
+              <div className="text-2xl font-bold text-primary">
+                {contacts.length}
+                {!isPremium && (
+                  <span className="text-sm font-normal text-muted-foreground">
+                    /{FREE_CONTACT_LIMIT}
+                  </span>
+                )}
+              </div>
               <div className="text-sm text-muted-foreground">{t('dashboard.totalContacts')}</div>
+              {!isPremium && contacts.length >= FREE_CONTACT_LIMIT - 1 && (
+                <Badge variant="outline" className="mt-2 text-xs">
+                  {contacts.length >= FREE_CONTACT_LIMIT ? 
+                    t('subscription.limitReached') : 
+                    t('subscription.contactsRemaining', { count: FREE_CONTACT_LIMIT - contacts.length })
+                  }
+                </Badge>
+              )}
             </CardContent>
           </Card>
           
