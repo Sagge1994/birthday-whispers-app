@@ -245,6 +245,15 @@ const Dashboard = () => {
               <User className="w-3 h-3 mr-1" />
               {user?.email?.split('@')[0]}
             </Badge>
+            <Link to="/subscription">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <Crown className="w-4 h-4" />
+              </Button>
+            </Link>
             <Button
               variant="ghost"
               size="sm"
