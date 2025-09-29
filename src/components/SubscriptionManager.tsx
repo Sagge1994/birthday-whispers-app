@@ -100,18 +100,29 @@ export const SubscriptionManager = () => {
   const handleManageSubscription = async () => {
     if (!user) return;
     
+    // Show loading toast
+    toast({
+      title: "Öppnar Stripe hanteringspanel...",
+      description: "Du kommer att skickas till Stripe för att hantera din prenumeration",
+    });
+    
     try {
       const { data, error } = await supabase.functions.invoke('customer-portal');
       if (error) throw error;
       
       if (data?.url) {
+        // Open in new tab and show instruction
         window.open(data.url, '_blank');
+        toast({
+          title: "Stripe hanteringspanel öppnad!",
+          description: "Kolla efter en ny flik där du kan hantera prenumeration, fakturor och betalmetoder",
+        });
       }
     } catch (error) {
       console.error('Error creating portal session:', error);
       toast({
-        title: "Fel", 
-        description: "Kunde inte öppna hanteringspanelen. Försök igen.",
+        title: "Kunde inte öppna hanteringspanelen", 
+        description: "Detta kan bero på att du inte har en aktiv Stripe-prenumeration eller att Stripe Customer Portal inte är aktiverat.",
         variant: "destructive"
       });
     }
@@ -191,22 +202,32 @@ export const SubscriptionManager = () => {
               </div>
               <div className="flex gap-2">
                 {subscriptionStatus?.subscribed && !hasFamilyAccess && (
-                  <Button 
-                    onClick={handleManageSubscription}
-                    variant="outline"
-                    className="border-accent-foreground/20 text-accent-foreground hover:bg-accent-foreground/10"
-                  >
-                    {t('subscription.manageSubscription')}
-                  </Button>
+                  <>
+                    <Button 
+                      onClick={handleManageSubscription}
+                      variant="outline"
+                      className="border-accent-foreground/20 text-accent-foreground hover:bg-accent-foreground/10"
+                    >
+                      {t('subscription.manageSubscription')}
+                    </Button>
+                    <div className="text-xs text-accent-foreground/60 mt-2">
+                      Öppnar Stripe där du kan se fakturor, ändra betalmetod och säga upp
+                    </div>
+                  </>
                 )}
                 {hasFamilyAccess && (
-                  <Button 
-                    onClick={removeFamilyAccess}
-                    variant="outline"
-                    className="border-accent-foreground/20 text-accent-foreground hover:bg-accent-foreground/10"
-                  >
-                    Avsluta familjerabatt
-                  </Button>
+                  <>
+                    <Button 
+                      onClick={removeFamilyAccess}
+                      variant="outline"
+                      className="border-accent-foreground/20 text-accent-foreground hover:bg-accent-foreground/10"
+                    >
+                      Avsluta familjerabatt
+                    </Button>
+                    <div className="text-xs text-accent-foreground/60 mt-2">
+                      Tar bort gratiskoden från denna enhet
+                    </div>
+                  </>
                 )}
               </div>
             </div>
