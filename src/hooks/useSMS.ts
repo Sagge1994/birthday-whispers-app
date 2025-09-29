@@ -6,28 +6,46 @@ export const useSMS = () => {
 
   const sendSMS = async (phoneNumber: string, message: string) => {
     try {
-      if (Capacitor.isNativePlatform()) {
-        // Use native SMS on mobile devices
-        const smsUrl = Capacitor.getPlatform() === 'ios' 
-          ? `sms:${phoneNumber}&body=${encodeURIComponent(message)}`
-          : `sms:${phoneNumber}?body=${encodeURIComponent(message)}`;
-        
-        window.open(smsUrl, '_self');
+      // Format phone number - remove spaces and ensure correct format
+      const cleanPhone = phoneNumber.replace(/\s+/g, '').replace(/[^\d+]/g, '');
+      
+      // Create SMS URL - works on both mobile and desktop
+      const smsUrl = `sms:${cleanPhone}${Capacitor.getPlatform() === 'ios' ? '&' : '?'}body=${encodeURIComponent(message)}`;
+      
+      // Try to open SMS app
+      const opened = window.open(smsUrl, '_self');
+      
+      if (opened || Capacitor.isNativePlatform()) {
+        toast({
+          title: "SMS öppnad",
+          description: "SMS-appen öppnades med ditt meddelande",
+        });
       } else {
-        // Fallback for web - copy message to clipboard
-        await navigator.clipboard.writeText(`${phoneNumber}: ${message}`);
+        // Fallback if SMS app doesn't open - copy to clipboard
+        await navigator.clipboard.writeText(`Till: ${cleanPhone}\nMeddelande: ${message}`);
         toast({
           title: "SMS-text kopierat",
-          description: "Meddelandet har kopierats till urklipp",
+          description: "Kunde inte öppna SMS-app, meddelandet kopierat till urklipp",
+          variant: "destructive",
         });
       }
     } catch (error) {
       console.error('Error sending SMS:', error);
-      toast({
-        title: "Kunde inte skicka SMS",
-        description: "Kontrollera att telefonnumret är korrekt",
-        variant: "destructive",
-      });
+      // Final fallback - copy to clipboard
+      try {
+        await navigator.clipboard.writeText(`Till: ${phoneNumber}\nMeddelande: ${message}`);
+        toast({
+          title: "SMS-text kopierat", 
+          description: "Kunde inte öppna SMS-app, meddelandet kopierat till urklipp",
+          variant: "destructive",
+        });
+      } catch (clipboardError) {
+        toast({
+          title: "Kunde inte skicka SMS",
+          description: "Kontrollera att telefonnumret är korrekt",
+          variant: "destructive",
+        });
+      }
     }
   };
 
