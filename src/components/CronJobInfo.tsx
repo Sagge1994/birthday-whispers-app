@@ -44,13 +44,19 @@ export const CronJobInfo = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <h4 className="font-semibold text-blue-800 mb-2">Hur det fungerar:</h4>
+          <h4 className="font-semibold text-blue-800 mb-2">Automatiska påminnelser:</h4>
           <ul className="text-sm text-blue-700 space-y-1">
-            <li>• Varje söndag kl 18:00 körs ett automatiskt jobb</li>
-            <li>• Jobbet kollar vilka användare som har vecko-påminnelser aktiverade</li>
-            <li>• De får en sammanfattning av kommande veckas födelsedagar</li>
-            <li>• Perfekt för att planera inför veckan</li>
+            <li>• Webbnotifikationer fungerar automatiskt i din webbläsare</li>
+            <li>• Du får påminnelser även när appen är stängd (om godkänt i inställningar)</li>
+            <li>• Perfekt för att aldrig missa en födelsedag</li>
+            <li>• Anpassar sig automatiskt till din tidszon</li>
           </ul>
+        </div>
+
+        <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+          <p className="text-sm text-green-800">
+            <strong>✅ Allt fungerar automatiskt!</strong> Du behöver bara välja dina inställningar och godkänna notifikationer.
+          </p>
         </div>
 
         <div className="space-y-3">
@@ -93,13 +99,11 @@ export const CronJobInfo = () => {
 
           <div className="bg-orange-50 border border-orange-200 rounded-lg p-3">
             <p className="text-sm text-orange-800">
-              <strong>Notera:</strong> För att aktivera automatiska påminnelser behöver du:
+              <strong>För utvecklare:</strong> Avancerade påminnelser kräver server-setup.
             </p>
-            <ol className="text-xs text-orange-700 mt-2 space-y-1 ml-4 list-decimal">
-              <li>Aktivera pg_cron och pg_net extensions i Supabase</li>
-              <li>Kör SQL-kommandot ovan i Supabase SQL Editor</li>
-              <li>Användare ställer in sina vecko-påminnelser här i appen</li>
-            </ol>
+            <p className="text-xs text-orange-700 mt-1">
+              Webbnotifikationer fungerar automatiskt, men för schemalagda påminnelser behövs backend-konfiguration.
+            </p>
           </div>
 
           <Button
