@@ -60,6 +60,7 @@ const Dashboard = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [showImporter, setShowImporter] = useState(false);
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
+  const [showAllContacts, setShowAllContacts] = useState(false);
   
   const [showCalendar, setShowCalendar] = useState(false);
 
@@ -399,7 +400,7 @@ const Dashboard = () => {
             </h2>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {contacts.slice(0, 6).map((contact) => (
+              {(showAllContacts ? contacts : contacts.slice(0, 6)).map((contact) => (
                 <ContactCard
                   key={contact.id}
                   contact={contact}
@@ -411,13 +412,23 @@ const Dashboard = () => {
             
             {contacts.length > 6 && (
               <div className="text-center mt-8">
-                <Button
-                  onClick={() => setShowCalendar(true)}
-                  variant="outline"
-                  className="border-primary/20"
-                >
-                  {t('dashboard.viewAllContacts', { count: contacts.length })}
-                </Button>
+                {!showAllContacts ? (
+                  <Button
+                    onClick={() => setShowAllContacts(true)}
+                    variant="outline"
+                    className="border-primary/20"
+                  >
+                    {t('dashboard.viewAllContacts', { count: contacts.length })}
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => setShowAllContacts(false)}
+                    variant="outline"
+                    className="border-primary/20"
+                  >
+                    Visa färre kontakter
+                  </Button>
+                )}
               </div>
             )}
           </div>
