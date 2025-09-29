@@ -3,20 +3,24 @@ import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Cake, MessageSquare } from "lucide-react";
+import { ChevronLeft, ChevronRight, Cake, MessageSquare, Plus } from "lucide-react";
 import { Contact } from "@/pages/Index";
 import { format, isSameDay, startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
 import { sv } from "date-fns/locale";
 import { useToast } from "@/hooks/use-toast";
+import { QuickAddBirthdayDialog } from "@/components/QuickAddBirthdayDialog";
 
 interface CalendarViewProps {
   contacts: Contact[];
+  onAddContact: (contact: Omit<Contact, "id">) => void;
 }
 
-export const CalendarView = ({ contacts }: CalendarViewProps) => {
+export const CalendarView = ({ contacts, onAddContact }: CalendarViewProps) => {
   const { toast } = useToast();
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
+  const [showQuickAdd, setShowQuickAdd] = useState(false);
+  const [quickAddDate, setQuickAddDate] = useState<Date | null>(null);
 
   // Get birthdays for the current month
   const getBirthdaysForDate = (date: Date) => {
@@ -38,6 +42,11 @@ export const CalendarView = ({ contacts }: CalendarViewProps) => {
 
   const birthdayDates = getBirthdayDates();
   const selectedDateBirthdays = getBirthdaysForDate(selectedDate);
+
+  const handleQuickAdd = (date: Date) => {
+    setQuickAddDate(date);
+    setShowQuickAdd(true);
+  };
 
   const sendSMS = (contact: Contact) => {
     const defaultMessage = `Grattis på födelsedagen! 🎉 Hoppas du får en fantastisk dag! 🎂`;
@@ -129,10 +138,23 @@ export const CalendarView = ({ contacts }: CalendarViewProps) => {
                     const hasBirthday = dayBirthdays.length > 0;
                     
                     return (
-                      <div className="relative w-full h-full flex items-center justify-center">
+                      <div className="relative w-full h-full flex items-center justify-center group">
                         <span>{date.getDate()}</span>
                         {hasBirthday && (
                           <div className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full animate-pulse" />
+                        )}
+                        {!hasBirthday && (
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleQuickAdd(date);
+                            }}
+                            className="absolute inset-0 w-full h-full opacity-0 group-hover:opacity-100 transition-opacity p-0 hover:bg-pastel-mint/30"
+                          >
+                            <Plus className="w-3 h-3" />
+                          </Button>
                         )}
                       </div>
                     );
@@ -227,6 +249,14 @@ export const CalendarView = ({ contacts }: CalendarViewProps) => {
           )}
         </div>
       </div>
+      
+      {/* Quick Add Dialog */}
+      <QuickAddBirthdayDialog
+        open={showQuickAdd}
+        onOpenChange={setShowQuickAdd}
+        selectedDate={quickAddDate}
+        onAddContact={onAddContact}
+      />
     </div>
   );
 };

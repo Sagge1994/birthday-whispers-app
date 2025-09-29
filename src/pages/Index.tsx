@@ -177,7 +177,7 @@ const Index = () => {
           </TabsContent>
 
           <TabsContent value="calendar" className="mt-0">
-            <CalendarView contacts={contacts} />
+            <CalendarView contacts={contacts} onAddContact={addContact} />
           </TabsContent>
         </Tabs>
 
@@ -203,6 +203,7 @@ const Index = () => {
         <SettingsPanel
           open={showSettings}
           onOpenChange={setShowSettings}
+          contacts={contacts}
         />
       </div>
     </div>
