@@ -152,9 +152,15 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
     const reminderDate = new Date(birthdayDate);
     reminderDate.setDate(reminderDate.getDate() - 1);
     
+    // Create different notification messages based on whether phone exists
+    const notificationTitle = `${contact.name}s födelsedag imorgon!`;
+    const notificationMessage = contact.phone 
+      ? `${message} (Tryck för att skicka SMS)`
+      : `Glöm inte gratta ${contact.name} imorgon! ${message}`;
+    
     scheduleLocalNotification(
-      `${contact.name}s födelsedag imorgon!`,
-      message,
+      notificationTitle,
+      notificationMessage,
       reminderDate
     );
   };
@@ -214,7 +220,7 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
 
         {/* Action Buttons */}
         <div className="space-y-2">
-          {contact.phone && (
+          {contact.phone ? (
             <Button 
               onClick={handleSendSMS}
               className="w-full bg-gradient-primary hover:shadow-soft transition-all duration-300"
@@ -223,17 +229,28 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
               <MessageSquare className="w-4 h-4 mr-2" />
               {t('contact.sendSMS')}
             </Button>
+          ) : (
+            <Button 
+              onClick={scheduleNotification}
+              className="w-full bg-gradient-primary hover:shadow-soft transition-all duration-300"
+              size="sm"
+            >
+              <Bell className="w-4 h-4 mr-2" />
+              Ställ in påminnelse
+            </Button>
           )}
           
-          <Button 
-            onClick={scheduleNotification}
-            variant="outline"
-            className="w-full border-primary/20"
-            size="sm"
-          >
-            <Bell className="w-4 h-4 mr-2" />
-            Ställ in påminnelse
-          </Button>
+          {contact.phone && (
+            <Button 
+              onClick={scheduleNotification}
+              variant="outline"
+              className="w-full border-primary/20"
+              size="sm"
+            >
+              <Bell className="w-4 h-4 mr-2" />
+              Ställ in påminnelse
+            </Button>
+          )}
         </div>
       </CardContent>
     </Card>
