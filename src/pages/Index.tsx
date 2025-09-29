@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Settings, MessageCircle, List, Calendar, Download } from "lucide-react";
@@ -30,12 +30,12 @@ const Index = () => {
     await addMultipleContacts(newContacts);
   };
 
-  const handleEditContact = (contact: Contact) => {
-    console.log('handleEditContact called with:', contact.name);
+  const handleEditContact = useCallback((contact: Contact) => {
+    console.log('🟢 handleEditContact called with:', contact.name);
     setEditingContact(contact);
     setShowAddDialog(true);
-    console.log('Dialog state set - editing contact:', contact.name);
-  };
+    console.log('🟢 Dialog state set - editing contact:', contact.name);
+  }, []);
 
   const handleDialogClose = (open: boolean) => {
     console.log('Dialog close called with:', open);
@@ -150,14 +150,15 @@ const Index = () => {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {sortedContacts.map((contact) => {
-                  console.log('Rendering ContactCard with onEdit:', !!handleEditContact);
+                  const editCallback = handleEditContact;
+                  console.log('🔵 Rendering ContactCard for:', contact.name, 'onEdit exists:', !!editCallback);
                   return (
                     <ContactCard
                       key={contact.id}
                       contact={contact}
                       onDelete={deleteContact}
                       onUpdate={updateContact}
-                      onEdit={handleEditContact}
+                      onEdit={editCallback}
                     />
                   );
                 })}

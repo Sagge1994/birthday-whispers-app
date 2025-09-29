@@ -24,6 +24,7 @@ interface ContactCardProps {
 }
 
 export const ContactCard = ({ contact, onDelete, onUpdate, onEdit }: ContactCardProps) => {
+  console.log('🟡 ContactCard rendered for:', contact.name, 'onEdit received:', !!onEdit);
   const { toast } = useToast();
   const { t, i18n } = useTranslation();
   const { sendSMS } = useSMS();
@@ -195,11 +196,12 @@ export const ContactCard = ({ contact, onDelete, onUpdate, onEdit }: ContactCard
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  console.log('Edit button clicked for:', contact.name);
+                  console.log('🔴 Edit button clicked for:', contact.name, 'onEdit available:', !!onEdit);
                   if (onEdit) {
+                    console.log('🔴 Calling onEdit callback');
                     onEdit(contact);
                   } else {
-                    console.error('onEdit callback is missing');
+                    console.error('🔴 onEdit callback is missing!');
                   }
                 }}
                 className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer"
