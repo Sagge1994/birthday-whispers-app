@@ -55,6 +55,7 @@ export const NotificationManager = ({ contacts }: NotificationManagerProps) => {
   });
 
   const [permissionStatus, setPermissionStatus] = useState<"default" | "granted" | "denied">("default");
+  const [userTimezone, setUserTimezone] = useState<string>('');
 
   const daysOfWeek = [
     { value: 0, label: "Söndag" },
@@ -71,6 +72,10 @@ export const NotificationManager = ({ contacts }: NotificationManagerProps) => {
     if ('Notification' in window) {
       setPermissionStatus(Notification.permission);
     }
+
+    // Upptäck användarens tidszon
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    setUserTimezone(timezone);
 
     // Ladda sparade inställningar
     const saved = localStorage.getItem('notificationSettings');
@@ -346,10 +351,22 @@ export const NotificationManager = ({ contacts }: NotificationManagerProps) => {
           )}
         </div>
 
+        {/* Tidszons-info */}
+        <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+          <h4 className="text-sm font-medium text-green-800 mb-2">
+            Din tidszon:
+          </h4>
+          <div className="text-xs text-green-700">
+            <div>• Upptäckt tidszon: {userTimezone}</div>
+            <div>• Alla påminnelser kommer att visas i din lokala tid</div>
+            <div>• Nuvarande tid: {new Date().toLocaleTimeString('sv-SE')}</div>
+          </div>
+        </div>
+
         {/* Info om aktiva påminnelser */}
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
           <h4 className="text-sm font-medium text-blue-800 mb-2">
-            Aktiva påminnelser:
+            Aktiva påminnelser (i din lokala tid):
           </h4>
           <div className="space-y-1 text-xs text-blue-700">
             {settings.birthdayDayEnabled && (

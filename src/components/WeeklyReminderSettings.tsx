@@ -27,6 +27,7 @@ export const WeeklyReminderSettings = () => {
   });
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [userTimezone, setUserTimezone] = useState<string>('');
 
   const daysOfWeek = [
     { value: 0, label: "Söndag" },
@@ -39,6 +40,10 @@ export const WeeklyReminderSettings = () => {
   ];
 
   useEffect(() => {
+    // Upptäck användarens tidszon
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    setUserTimezone(timezone);
+    
     loadSettings();
   }, [user]);
 
@@ -87,7 +92,8 @@ export const WeeklyReminderSettings = () => {
         user_id: user.id,
         enabled: settings.enabled,
         day_of_week: settings.dayOfWeek,
-        time_of_day: `${settings.timeOfDay}:00`
+        time_of_day: `${settings.timeOfDay}:00`,
+        timezone: userTimezone
       };
 
       let result;
@@ -226,6 +232,20 @@ export const WeeklyReminderSettings = () => {
                 }
                 className="bg-background/50"
               />
+            </div>
+
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+              <div className="flex items-start gap-2">
+                <Clock className="w-4 h-4 text-green-600 mt-0.5" />
+                <div className="text-sm">
+                  <p className="font-medium text-green-800 mb-1">Tidszon</p>
+                  <ul className="text-green-700 space-y-1">
+                    <li>• Din tidszon: {userTimezone}</li>
+                    <li>• Påminnelser skickas i din lokala tid</li>
+                    <li>• Nuvarande tid: {new Date().toLocaleTimeString('sv-SE')}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">

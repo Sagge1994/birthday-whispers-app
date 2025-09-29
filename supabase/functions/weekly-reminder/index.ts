@@ -26,21 +26,16 @@ serve(async (req) => {
       { auth: { persistSession: false } }
     );
 
-    // Get current day (0 = Sunday, 1 = Monday, etc.)
-    const currentDay = new Date().getDay();
-    const currentTime = new Date().toTimeString().slice(0, 8); // HH:MM:SS format
+    logStep("Checking for weekly reminders");
 
-    logStep("Checking for weekly reminders", { currentDay, currentTime });
-
-    // Get all users who have weekly reminders enabled for today
+    // Get all users who have weekly reminders enabled
     const { data: reminders, error: remindersError } = await supabaseClient
       .from('weekly_reminders')
       .select(`
         *,
         profiles!inner(user_id, display_name)
       `)
-      .eq('enabled', true)
-      .eq('day_of_week', currentDay);
+      .eq('enabled', true);
 
     if (remindersError) {
       logStep("Error fetching reminders", remindersError);
@@ -63,7 +58,42 @@ serve(async (req) => {
     const results = [];
     
     for (const reminder of reminders) {
-      logStep("Processing reminder for user", { userId: reminder.user_id });
+      const userTimezone = reminder.timezone || 'Europe/Stockholm';
+      
+      // Get current time in user's timezone
+      const now = new Date();
+      const userDate = new Date(now.toLocaleString("en-US", { timeZone: userTimezone }));
+      const currentDay = userDate.getDay();
+      const currentTime = userDate.toTimeString().slice(0, 8);
+      
+      // Check if it's the right day and time for this user
+      const reminderTime = reminder.time_of_day;
+      const isRightDay = currentDay === reminder.day_of_week;
+      const isRightTime = currentTime >= reminderTime && currentTime < reminderTime.replace(/(\d{2}):(\d{2})/, (_: string, h: string, m: string) => {
+        const hour = parseInt(h);
+        const minute = parseInt(m) + 30; // 30 minute window
+        return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+      });
+
+      if (!isRightDay || !isRightTime) {
+        logStep("Skipping reminder - not the right time", { 
+          userId: reminder.user_id, 
+          userTimezone,
+          currentDay,
+          expectedDay: reminder.day_of_week,
+          currentTime,
+          expectedTime: reminderTime,
+          isRightDay,
+          isRightTime
+        });
+        continue;
+      }
+
+      logStep("Processing reminder for user", { 
+        userId: reminder.user_id, 
+        userTimezone,
+        localTime: userDate.toLocaleString('sv-SE', { timeZone: userTimezone })
+      });
 
       // Get upcoming birthdays for the next 7 days
       const { data: contacts, error: contactsError } = await supabaseClient
