@@ -20,6 +20,7 @@ const Index = () => {
   const [showMessageManager, setShowMessageManager] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showImporter, setShowImporter] = useState(false);
+  const [editingContact, setEditingContact] = useState<Contact | null>(null);
 
   const handleAddContact = async (contact: Omit<Contact, "id">) => {
     await addContact(contact);
@@ -27,6 +28,18 @@ const Index = () => {
 
   const handleAddMultipleContacts = async (newContacts: Omit<Contact, "id">[]) => {
     await addMultipleContacts(newContacts);
+  };
+
+  const handleEditContact = (contact: Contact) => {
+    setEditingContact(contact);
+    setShowAddDialog(true);
+  };
+
+  const handleDialogClose = (open: boolean) => {
+    setShowAddDialog(open);
+    if (!open) {
+      setEditingContact(null);
+    }
   };
 
   // Sort contacts by upcoming birthdays
@@ -138,6 +151,7 @@ const Index = () => {
                     contact={contact}
                     onDelete={deleteContact}
                     onUpdate={updateContact}
+                    onEdit={handleEditContact}
                   />
                 ))}
               </div>
@@ -152,8 +166,10 @@ const Index = () => {
         {/* Dialogs */}
         <AddContactDialog
           open={showAddDialog}
-          onOpenChange={setShowAddDialog}
+          onOpenChange={handleDialogClose}
           onAddContact={handleAddContact}
+          onUpdateContact={updateContact}
+          editingContact={editingContact}
         />
         
         <ContactImporter

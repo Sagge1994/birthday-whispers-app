@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -18,9 +18,11 @@ interface AddContactDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onAddContact: (contact: Omit<Contact, "id">) => void;
+  onUpdateContact?: (id: string, updates: Partial<Contact>) => void;
+  editingContact?: Contact | null;
 }
 
-export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContactDialogProps) => {
+export const AddContactDialog = ({ open, onOpenChange, onAddContact, onUpdateContact, editingContact }: AddContactDialogProps) => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
@@ -29,6 +31,30 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
     custom_message: "",
     yearly_messages: {} as Record<string, string>
   });
+
+  // Update form data when editing contact changes
+  useEffect(() => {
+    if (editingContact && open) {
+      setFormData({
+        name: editingContact.name || "",
+        birthday: editingContact.birthday || "",
+        phone: editingContact.phone || "",
+        custom_message: editingContact.custom_message || "",
+        yearly_messages: editingContact.yearly_messages || {}
+      });
+    } else if (!editingContact && open) {
+      // Reset form when adding new contact
+      setFormData({
+        name: "",
+        birthday: "",
+        phone: "",
+        custom_message: "",
+        yearly_messages: {}
+      });
+    }
+  }, [editingContact, open]);
+
+  const isEditing = !!editingContact;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,18 +68,27 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
       return;
     }
 
-    onAddContact({
+    const contactData = {
       name: formData.name,
       birthday: formData.birthday || null,
       phone: formData.phone || null,
       custom_message: formData.custom_message || null,
       yearly_messages: Object.keys(formData.yearly_messages).length > 0 ? formData.yearly_messages : null
-    });
+    };
 
-    toast({
-      title: "Person tillagd!",
-      description: `${formData.name} har lagts till i din lista`,
-    });
+    if (isEditing && onUpdateContact && editingContact) {
+      onUpdateContact(editingContact.id, contactData);
+      toast({
+        title: "Kontakt uppdaterad!",
+        description: `${formData.name} har uppdaterats`,
+      });
+    } else {
+      onAddContact(contactData);
+      toast({
+        title: "Person tillagd!",
+        description: `${formData.name} har lagts till i din lista`,
+      });
+    }
 
     // Reset form
     setFormData({
@@ -71,9 +106,14 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px] bg-gradient-card border-0">
         <DialogHeader>
-          <DialogTitle className="text-xl">Lägg till person</DialogTitle>
+          <DialogTitle className="text-xl">
+            {isEditing ? "Redigera kontakt" : "Lägg till person"}
+          </DialogTitle>
           <DialogDescription>
-            Fyll i personens information för att komma ihåg deras födelsedag
+            {isEditing 
+              ? "Uppdatera personens information" 
+              : "Fyll i personens information för att komma ihåg deras födelsedag"
+            }
           </DialogDescription>
         </DialogHeader>
         
@@ -160,7 +200,7 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
               Avbryt
             </Button>
             <Button type="submit" className="bg-gradient-primary hover:shadow-soft">
-              Lägg till person
+              {isEditing ? "Uppdatera kontakt" : "Lägg till person"}
             </Button>
           </DialogFooter>
         </form>

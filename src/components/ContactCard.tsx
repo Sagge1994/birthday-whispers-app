@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MoreHorizontal, MessageSquare, Trash2, Calendar, Bell } from "lucide-react";
+import { MoreHorizontal, MessageSquare, Trash2, Calendar, Bell, Edit } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,9 +20,10 @@ interface ContactCardProps {
   contact: Contact;
   onDelete: (id: string) => void;
   onUpdate: (id: string, updates: Partial<Contact>) => void;
+  onEdit?: (contact: Contact) => void;
 }
 
-export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) => {
+export const ContactCard = ({ contact, onDelete, onUpdate, onEdit }: ContactCardProps) => {
   const { toast } = useToast();
   const { t, i18n } = useTranslation();
   const { sendSMS } = useSMS();
@@ -187,6 +188,12 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
+              {onEdit && (
+                <DropdownMenuItem onClick={() => onEdit(contact)}>
+                  <Edit className="w-4 h-4 mr-2" />
+                  {t('contact.edit')}
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem onClick={() => onDelete(contact.id)} className="text-destructive">
                 <Trash2 className="w-4 h-4 mr-2" />
                 {t('contact.delete')}
