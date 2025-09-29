@@ -188,12 +188,10 @@ export const ContactCard = ({ contact, onDelete, onUpdate, onEdit }: ContactCard
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              {onEdit && (
-                <DropdownMenuItem onClick={() => onEdit(contact)}>
-                  <Edit className="w-4 h-4 mr-2" />
-                  {t('contact.edit')}
-                </DropdownMenuItem>
-              )}
+              <DropdownMenuItem onClick={() => onEdit?.(contact)}>
+                <Edit className="w-4 h-4 mr-2" />
+                Redigera
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={() => onDelete(contact.id)} className="text-destructive">
                 <Trash2 className="w-4 h-4 mr-2" />
                 {t('contact.delete')}
