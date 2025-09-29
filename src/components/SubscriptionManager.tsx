@@ -15,7 +15,10 @@ import {
   Gift,
   Tag,
   AlertTriangle,
-  ArrowLeft
+  ArrowLeft,
+  AlertCircle,
+  Settings,
+  X
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
@@ -177,59 +180,131 @@ export const SubscriptionManager = () => {
 
       {/* Current Plan Status */}
       {isPremium && (
-        <Card className="bg-gradient-accent border-0 shadow-card">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center">
+        <Card className="bg-gradient-accent border-0 shadow-card mb-8">
+          <CardContent className="p-8">
+            <div className="flex items-start justify-between">
+              <div className="flex items-start gap-4">
+                <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center">
                   {hasFamilyAccess ? (
-                    <Gift className="w-6 h-6 text-accent-foreground" />
+                    <Gift className="w-8 h-8 text-accent-foreground" />
                   ) : (
-                    <Crown className="w-6 h-6 text-accent-foreground" />
+                    <Crown className="w-8 h-8 text-accent-foreground" />
                   )}
                 </div>
-                <div>
-                  <h3 className="font-semibold text-accent-foreground">
-                    {t('subscription.currentPlan')}
-                  </h3>
-                  <p className="text-sm text-accent-foreground/70">
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className="text-2xl font-bold text-accent-foreground">
+                      {hasFamilyAccess ? 'Familjerabatt Aktiv' : 'Premium Plan'}
+                    </h3>
+                    <Badge className="bg-green-100 text-green-800 border-green-200">
+                      ✓ Aktiv
+                    </Badge>
+                  </div>
+                  <p className="text-lg text-accent-foreground/80 mb-4">
                     {hasFamilyAccess ? 
-                      t('subscription.freeForFamily') : 
-                      `Premium ${subscriptionStatus?.plan_type || ''}`
+                      'Du har full tillgång till alla Premium-funktioner gratis!' : 
+                      `Premium ${subscriptionStatus?.plan_type || ''} - Fullständig tillgång`
                     }
                   </p>
+                  
+                  {/* Benefits List */}
+                  <div className="grid md:grid-cols-2 gap-3 mb-6">
+                    <div className="flex items-center gap-2 text-accent-foreground/90">
+                      <Check className="w-4 h-4 text-green-600" />
+                      <span className="text-sm">Obegränsade kontakter</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-accent-foreground/90">
+                      <Check className="w-4 h-4 text-green-600" />
+                      <span className="text-sm">AI-meddelanden</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-accent-foreground/90">
+                      <Check className="w-4 h-4 text-green-600" />
+                      <span className="text-sm">SMS-integration</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-accent-foreground/90">
+                      <Check className="w-4 h-4 text-green-600" />
+                      <span className="text-sm">Avancerade påminnelser</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-accent-foreground/90">
+                      <Check className="w-4 h-4 text-green-600" />
+                      <span className="text-sm">Anpassade meddelanden</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-accent-foreground/90">
+                      <Check className="w-4 h-4 text-green-600" />
+                      <span className="text-sm">Prioritetsupport</span>
+                    </div>
+                  </div>
+
+                  {/* Plan Details */}
+                  {hasFamilyAccess && (
+                    <div className="bg-accent-foreground/10 rounded-lg p-3 mb-4">
+                      <h4 className="font-semibold text-accent-foreground mb-2">Om din familjerabatt:</h4>
+                      <ul className="text-sm text-accent-foreground/80 space-y-1">
+                        <li>• Giltig så länge du har tillgång till koden</li>
+                        <li>• Kan användas på flera enheter med samma kod</li>
+                        <li>• Samma funktioner som Premium månadsplan</li>
+                        <li>• Ingen automatisk förnyelse eller fakturering</li>
+                      </ul>
+                    </div>
+                  )}
+
+                  {subscriptionStatus?.subscribed && subscriptionStatus?.subscription_end && (
+                    <div className="bg-accent-foreground/10 rounded-lg p-3 mb-4">
+                      <h4 className="font-semibold text-accent-foreground mb-2">Prenumerationsdetaljer:</h4>
+                      <div className="text-sm text-accent-foreground/80 space-y-1">
+                        <div>Nästa faktura: {new Date(subscriptionStatus.subscription_end).toLocaleDateString('sv-SE')}</div>
+                        <div>Plan: {subscriptionStatus.plan_type === 'yearly' ? 'Årlig' : 'Månadsvis'}</div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
-              <div className="flex gap-2">
+              
+              <div className="flex flex-col gap-3">
                 {subscriptionStatus?.subscribed && !hasFamilyAccess && (
-                  <>
-                    <Button 
-                      onClick={handleManageSubscription}
-                      variant="outline"
-                      className="border-accent-foreground/20 text-accent-foreground hover:bg-accent-foreground/10"
-                    >
-                      {t('subscription.manageSubscription')}
-                    </Button>
-                    <div className="text-xs text-accent-foreground/60 mt-2">
-                      Öppnar Stripe där du kan se fakturor, ändra betalmetod och säga upp
-                    </div>
-                  </>
+                  <Button 
+                    onClick={handleManageSubscription}
+                    variant="outline"
+                    className="border-accent-foreground/20 text-accent-foreground hover:bg-accent-foreground/10"
+                  >
+                    <Settings className="w-4 h-4 mr-2" />
+                    Hantera prenumeration
+                  </Button>
                 )}
                 {hasFamilyAccess && (
-                  <>
-                    <Button 
-                      onClick={removeFamilyAccess}
-                      variant="outline"
-                      className="border-accent-foreground/20 text-accent-foreground hover:bg-accent-foreground/10"
-                    >
-                      Avsluta familjerabatt
-                    </Button>
-                    <div className="text-xs text-accent-foreground/60 mt-2">
-                      Tar bort gratiskoden från denna enhet
-                    </div>
-                  </>
+                  <Button 
+                    onClick={removeFamilyAccess}
+                    variant="outline"
+                    className="border-red-300 text-red-700 hover:bg-red-50"
+                  >
+                    <X className="w-4 h-4 mr-2" />
+                    Avsluta rabatt
+                  </Button>
                 )}
               </div>
+            </div>
+
+            {/* Action descriptions */}
+            <div className="border-t border-accent-foreground/20 pt-4 mt-6">
+              {subscriptionStatus?.subscribed && !hasFamilyAccess && (
+                <div className="flex items-start gap-2 text-sm text-accent-foreground/70">
+                  <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <strong>Hantera prenumeration:</strong> Öppnar Stripe där du kan se fakturor, ändra betalmetod, 
+                    ladda ner kvitton och säga upp prenumerationen.
+                  </div>
+                </div>
+              )}
+              {hasFamilyAccess && (
+                <div className="flex items-start gap-2 text-sm text-accent-foreground/70">
+                  <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <strong>Avsluta rabatt:</strong> Tar bort gratiskoden från denna enhet. 
+                    Du kommer att begränsas till gratis-planen (5 kontakter) men kan återaktivera 
+                    rabatten när som helst med samma kod.
+                  </div>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
