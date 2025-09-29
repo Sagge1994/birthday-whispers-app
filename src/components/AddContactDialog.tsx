@@ -126,10 +126,13 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
           {/* Yearly Messages Section */}
           <div className="space-y-2">
             <Label>Yearly Messages (optional)</Label>
+            <div className="text-xs text-muted-foreground mb-2">
+              Planera meddelanden för kommande år - skriv bara för de år du vill
+            </div>
             <div className="space-y-2 max-h-32 overflow-y-auto">
-              {[2025, 2026, 2027, 2028, 2029].map(year => (
+              {[2025, 2026, 2027, 2028, 2029, 2030].map(year => (
                 <div key={year} className="flex gap-2 items-center">
-                  <Label className="w-12 text-xs">{year}:</Label>
+                  <Label className="w-12 text-xs font-medium">{year}:</Label>
                   <Input
                     value={formData.yearly_messages[year] || ""}
                     onChange={(e) => setFormData({
@@ -139,7 +142,7 @@ export const AddContactDialog = ({ open, onOpenChange, onAddContact }: AddContac
                         [year]: e.target.value
                       }
                     })}
-                    placeholder={`Message for ${year}...`}
+                    placeholder={year === 2025 ? "Meddelande för i år..." : `Meddelande för ${year}...`}
                     className="bg-background/50 text-xs h-8"
                   />
                 </div>

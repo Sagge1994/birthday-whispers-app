@@ -14,6 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import { useSMS } from "@/hooks/useSMS";
 import { usePushNotifications } from "@/hooks/usePushNotifications";
+import { getContactMessage, getBirthdayYear } from '@/lib/messageUtils';
 
 interface ContactCardProps {
   contact: Contact;
@@ -108,20 +109,17 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
       return;
     }
 
-    const defaultMessage = t('contact.defaultMessage');
-    const message = contact.custom_message || defaultMessage;
+    const birthdayYear = getBirthdayYear(contact.birthday);
+    const message = getContactMessage(contact, birthdayYear);
     sendSMS(contact.phone, message);
   };
 
   const scheduleNotification = () => {
     const birthdayDate = new Date(contact.birthday);
-    const currentYear = new Date().getFullYear();
-    birthdayDate.setFullYear(currentYear);
+    const birthdayYear = getBirthdayYear(contact.birthday);
+    const message = getContactMessage(contact, birthdayYear);
     
-    // If birthday has passed this year, schedule for next year
-    if (birthdayDate < new Date()) {
-      birthdayDate.setFullYear(currentYear + 1);
-    }
+    birthdayDate.setFullYear(birthdayYear);
     
     // Schedule notification for the day before
     const reminderDate = new Date(birthdayDate);
@@ -129,7 +127,7 @@ export const ContactCard = ({ contact, onDelete, onUpdate }: ContactCardProps) =
     
     scheduleLocalNotification(
       `${contact.name}s födelsedag imorgon!`,
-      `Glöm inte att gratulera ${contact.name} som fyller år imorgon`,
+      message,
       reminderDate
     );
   };

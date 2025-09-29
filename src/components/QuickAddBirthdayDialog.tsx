@@ -15,6 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Contact } from "@/hooks/useContacts";
 import { useToast } from "@/hooks/use-toast";
+import { getContactMessage, getBirthdayYear } from '@/lib/messageUtils';
 import { Calendar, Sparkles, Loader2, Users } from "lucide-react";
 import { format } from "date-fns";
 import { sv } from "date-fns/locale";

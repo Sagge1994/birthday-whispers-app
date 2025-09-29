@@ -8,6 +8,7 @@ import { Contact } from "@/hooks/useContacts";
 import { format, isSameDay, startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
 import { sv } from "date-fns/locale";
 import { useToast } from "@/hooks/use-toast";
+import { getContactMessage, getBirthdayYear } from '@/lib/messageUtils';
 import { QuickAddBirthdayDialog } from "@/components/QuickAddBirthdayDialog";
 
 interface CalendarViewProps {
@@ -49,8 +50,8 @@ export const CalendarView = ({ contacts, onAddContact }: CalendarViewProps) => {
   };
 
   const sendSMS = (contact: Contact) => {
-    const defaultMessage = `Grattis på födelsedagen! 🎉 Hoppas du får en fantastisk dag! 🎂`;
-    const message = contact.custom_message || defaultMessage;
+    const birthdayYear = getBirthdayYear(contact.birthday);
+    const message = getContactMessage(contact, birthdayYear);
     const smsUrl = `sms:${contact.phone}?body=${encodeURIComponent(message)}`;
     window.location.href = smsUrl;
     

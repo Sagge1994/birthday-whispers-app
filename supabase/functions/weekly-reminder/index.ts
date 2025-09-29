@@ -141,11 +141,22 @@ serve(async (req) => {
             birthday.setFullYear(currentYear + 1);
           }
           
+          // Get yearly message if available, fallback to custom_message
+          const yearForBirthday = birthday.getFullYear();
+          let message = "Grattis på födelsedagen! 🎉 Hoppas du får en fantastisk dag! 🎂";
+          
+          if (contact.yearly_messages && contact.yearly_messages[yearForBirthday.toString()]) {
+            message = contact.yearly_messages[yearForBirthday.toString()];
+          } else if (contact.custom_message) {
+            message = contact.custom_message;
+          }
+          
           return {
             name: contact.name,
             date: birthday.toLocaleDateString('sv-SE'),
             phone: contact.phone,
-            hasPhone: !!contact.phone
+            hasPhone: !!contact.phone,
+            message: message
           };
         });
 
