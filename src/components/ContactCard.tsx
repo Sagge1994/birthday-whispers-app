@@ -195,14 +195,11 @@ export const ContactCard = ({ contact, onDelete, onUpdate, onEdit }: ContactCard
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  console.log('Edit button clicked in ContactCard for:', contact.name);
-                  console.log('onEdit function exists:', !!onEdit);
-                  alert(`Test: Trycker redigera för ${contact.name}`);
+                  console.log('Edit button clicked for:', contact.name);
                   if (onEdit) {
-                    console.log('Calling onEdit function');
                     onEdit(contact);
                   } else {
-                    console.log('onEdit function is not available');
+                    console.error('onEdit callback is missing');
                   }
                 }}
                 className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer"
