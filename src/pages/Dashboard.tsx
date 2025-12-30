@@ -158,6 +158,30 @@ const Dashboard = () => {
   const birthdaysToday = getBirthdaysToday();
   const upcomingBirthdays = getUpcomingBirthdays();
 
+  // Sort all contacts by upcoming birthday
+  const sortedContacts = [...contacts].sort((a, b) => {
+    // Contacts without birthday go to the end
+    if (!a.birthday && !b.birthday) return 0;
+    if (!a.birthday) return 1;
+    if (!b.birthday) return -1;
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const currentYear = today.getFullYear();
+    
+    const aDate = new Date(a.birthday);
+    aDate.setFullYear(currentYear);
+    aDate.setHours(0, 0, 0, 0);
+    if (aDate < today) aDate.setFullYear(currentYear + 1);
+    
+    const bDate = new Date(b.birthday);
+    bDate.setFullYear(currentYear);
+    bDate.setHours(0, 0, 0, 0);
+    if (bDate < today) bDate.setFullYear(currentYear + 1);
+    
+    return aDate.getTime() - bDate.getTime();
+  });
+
   const quickActions = [
     {
       icon: Plus,
@@ -430,7 +454,7 @@ const Dashboard = () => {
             </h2>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {(showAllContacts ? contacts : contacts.slice(0, 6)).map((contact) => (
+              {(showAllContacts ? sortedContacts : sortedContacts.slice(0, 6)).map((contact) => (
                 <ContactCard
                   key={contact.id}
                   contact={contact}
