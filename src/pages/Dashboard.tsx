@@ -127,60 +127,46 @@ const Dashboard = () => {
     });
   };
 
-  // Get upcoming birthdays (sorted by closest first)
+  // Get upcoming birthdays (all birthdays this month, sorted by day)
   const getUpcomingBirthdays = () => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const currentMonth = today.getMonth();
     
     const upcoming = contacts
-      .filter(contact => contact.birthday) // Only contacts with birthdays
+      .filter(contact => {
+        if (!contact.birthday) return false;
+        const birthday = new Date(contact.birthday);
+        return birthday.getMonth() === currentMonth;
+      })
       .map(contact => {
         const birthday = new Date(contact.birthday!);
-        const currentYear = today.getFullYear();
-        birthday.setFullYear(currentYear);
-        birthday.setHours(0, 0, 0, 0);
-        
-        if (birthday < today) {
-          birthday.setFullYear(currentYear + 1);
-        }
-        
-        const daysUntil = Math.ceil((birthday.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-        return { contact, daysUntil };
+        return { contact, day: birthday.getDate() };
       })
-      .filter(item => item.daysUntil <= 30) // Next 30 days
-      .sort((a, b) => a.daysUntil - b.daysUntil) // Sort by closest first
-      .slice(0, 3) // Show max 3
+      .sort((a, b) => a.day - b.day) // Sort by day of month
       .map(item => item.contact);
     
     return upcoming;
   };
 
-  // Get next month's birthdays (31-60 days away)
+  // Get next month's birthdays (sorted by day)
   const getNextMonthBirthdays = () => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const nextMonth = (today.getMonth() + 1) % 12;
     
-    const nextMonth = contacts
-      .filter(contact => contact.birthday)
+    const birthdays = contacts
+      .filter(contact => {
+        if (!contact.birthday) return false;
+        const birthday = new Date(contact.birthday);
+        return birthday.getMonth() === nextMonth;
+      })
       .map(contact => {
         const birthday = new Date(contact.birthday!);
-        const currentYear = today.getFullYear();
-        birthday.setFullYear(currentYear);
-        birthday.setHours(0, 0, 0, 0);
-        
-        if (birthday < today) {
-          birthday.setFullYear(currentYear + 1);
-        }
-        
-        const daysUntil = Math.ceil((birthday.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-        return { contact, daysUntil };
+        return { contact, day: birthday.getDate() };
       })
-      .filter(item => item.daysUntil > 30 && item.daysUntil <= 60) // 31-60 days
-      .sort((a, b) => a.daysUntil - b.daysUntil)
-      .slice(0, 3)
+      .sort((a, b) => a.day - b.day) // Sort by day of month
       .map(item => item.contact);
     
-    return nextMonth;
+    return birthdays;
   };
 
   const birthdaysToday = getBirthdaysToday();
