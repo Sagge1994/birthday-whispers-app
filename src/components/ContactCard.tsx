@@ -183,14 +183,14 @@ export const ContactCard = ({ contact, onDelete, onUpdate, onEdit }: ContactCard
               <div className="flex items-center gap-3">
                 <div className="flex-1 min-w-0">
                   <h3 className="font-medium text-base truncate">{contact.name}</h3>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="text-sm text-muted-foreground">{formatBirthday()}</span>
-                    {contact.birthday && (
-                      <Badge variant="secondary" className="text-xs font-normal">
-                        {isToday ? "Idag!" : getDaysText()}
-                      </Badge>
-                    )}
-                  </div>
+                    <div className="flex flex-wrap items-center gap-2 mt-1">
+                      <span className="text-sm text-muted-foreground">{formatBirthday()}</span>
+                      {contact.birthday && (
+                        <Badge variant="secondary" className="text-xs font-normal px-2 py-0.5 whitespace-nowrap">
+                          {isToday ? "🎉 Idag!" : getDaysText()}
+                        </Badge>
+                      )}
+                    </div>
                 </div>
               </div>
             </div>

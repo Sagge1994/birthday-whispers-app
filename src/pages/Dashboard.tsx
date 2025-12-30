@@ -269,8 +269,8 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gradient-to-br from-[hsl(350_80%_97%)] via-background to-[hsl(270_60%_97%)] pb-20 md:pb-0">
       <LanguageSwitcher />
       
-      {/* Mobile Header - Warm and friendly */}
-      <div className="sticky top-0 z-10 bg-gradient-to-r from-[hsl(350_70%_96%)] to-[hsl(350_60%_98%)] border-b border-[hsl(350_60%_90%)] px-4 py-4 md:hidden backdrop-blur-sm">
+      {/* Mobile Header - With safe area for iPhone notch */}
+      <div className="sticky top-0 z-10 bg-gradient-to-r from-[hsl(350_70%_96%)] to-[hsl(350_60%_98%)] border-b border-[hsl(350_60%_90%)] px-4 pt-12 pb-4 md:hidden backdrop-blur-sm">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-2xl">🎂</span>
