@@ -284,39 +284,49 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pastel-pink via-background to-pastel-blue">
+    <div className="min-h-screen bg-gradient-to-br from-pastel-pink via-background to-pastel-blue pb-20 md:pb-0">
       <LanguageSwitcher />
       
-      {/* Mobile-optimized Header */}
-      <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-md border-b border-border/50 px-4 py-3 md:hidden">
+      {/* Mobile-optimized Header - Bigger and clearer */}
+      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-md border-b border-border/50 px-4 py-4 md:hidden shadow-sm">
         <div className="flex items-center justify-between">
-          <h1 className="text-lg font-bold bg-gradient-primary bg-clip-text text-transparent">
-            🎂 {t('dashboard.title')}
-          </h1>
+          <div>
+            <h1 className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+              Födelsedagar
+            </h1>
+            <p className="text-xs text-muted-foreground">Glöm aldrig en födelsedag</p>
+          </div>
           <div className="flex items-center gap-1">
-            <Link to="/subscription">
-              <Button variant="ghost" size="icon" className="h-8 w-8">
-                <Crown className="w-4 h-4 text-primary" />
-              </Button>
-            </Link>
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8"
+              className="h-10 w-10"
               onClick={() => setShowSettings(true)}
             >
-              <Settings className="w-4 h-4" />
+              <Settings className="w-5 h-5" />
             </Button>
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8"
+              className="h-10 w-10"
               onClick={() => setShowLogoutDialog(true)}
             >
-              <LogOut className="w-4 h-4" />
+              <LogOut className="w-5 h-5" />
             </Button>
           </div>
         </div>
+      </div>
+
+      {/* Mobile Quick Add Button - Fixed at bottom */}
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-20 md:hidden">
+        <Button 
+          onClick={() => setShowAddDialog(true)}
+          className="bg-gradient-primary hover:shadow-lg shadow-xl rounded-full h-14 px-6 text-base font-semibold"
+          size="lg"
+        >
+          <Plus className="w-5 h-5 mr-2" />
+          Lägg till
+        </Button>
       </div>
 
       <div className="container mx-auto px-3 py-4 md:px-4 md:py-8 max-w-7xl">
@@ -358,36 +368,31 @@ const Dashboard = () => {
         </div>
 
 
-        {/* Quick Stats - More compact on mobile */}
-        <div className="grid grid-cols-3 gap-2 md:gap-6 mb-6 md:mb-12">
+        {/* Quick Stats - Bigger on mobile */}
+        <div className="grid grid-cols-3 gap-3 md:gap-6 mb-6 md:mb-12">
           <Card className="bg-gradient-card border-0 shadow-card">
-            <CardContent className="p-3 md:p-6 text-center">
-              <Users className="w-5 h-5 md:w-8 md:h-8 text-primary mx-auto mb-1 md:mb-2" />
-              <div className="text-lg md:text-2xl font-bold text-primary">
+            <CardContent className="p-4 md:p-6 text-center">
+              <Users className="w-6 h-6 md:w-8 md:h-8 text-primary mx-auto mb-2" />
+              <div className="text-xl md:text-2xl font-bold text-primary">
                 {contacts.length}
-                {!isPremium && (
-                  <span className="text-xs md:text-sm font-normal text-muted-foreground">
-                    /{FREE_CONTACT_LIMIT}
-                  </span>
-                )}
               </div>
-              <div className="text-xs md:text-sm text-muted-foreground">{t('dashboard.totalContacts')}</div>
+              <div className="text-xs md:text-sm text-muted-foreground font-medium">Kontakter</div>
             </CardContent>
           </Card>
           
           <Card className="bg-gradient-card border-0 shadow-card">
-            <CardContent className="p-3 md:p-6 text-center">
-              <Clock className="w-5 h-5 md:w-8 md:h-8 text-primary mx-auto mb-1 md:mb-2" />
-              <div className="text-lg md:text-2xl font-bold text-primary">{upcomingBirthdays.length}</div>
-              <div className="text-xs md:text-sm text-muted-foreground">{t('dashboard.upcomingThisMonth')}</div>
+            <CardContent className="p-4 md:p-6 text-center">
+              <Calendar className="w-6 h-6 md:w-8 md:h-8 text-primary mx-auto mb-2" />
+              <div className="text-xl md:text-2xl font-bold text-primary">{upcomingBirthdays.length}</div>
+              <div className="text-xs md:text-sm text-muted-foreground font-medium">Denna månad</div>
             </CardContent>
           </Card>
           
           <Card className="bg-gradient-card border-0 shadow-card">
-            <CardContent className="p-3 md:p-6 text-center">
-              <Gift className="w-5 h-5 md:w-8 md:h-8 text-primary mx-auto mb-1 md:mb-2" />
-              <div className="text-lg md:text-2xl font-bold text-primary">{birthdaysToday.length}</div>
-              <div className="text-xs md:text-sm text-muted-foreground">{t('dashboard.birthdaysToday')}</div>
+            <CardContent className="p-4 md:p-6 text-center">
+              <Gift className="w-6 h-6 md:w-8 md:h-8 text-primary mx-auto mb-2" />
+              <div className="text-xl md:text-2xl font-bold text-primary">{birthdaysToday.length}</div>
+              <div className="text-xs md:text-sm text-muted-foreground font-medium">Idag</div>
             </CardContent>
           </Card>
         </div>
