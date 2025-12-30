@@ -366,13 +366,13 @@ const Dashboard = () => {
 
         {/* This Month Section */}
         {upcomingBirthdays.length > 0 && (
-          <section className="mb-6 p-4 rounded-xl bg-accent/50 border border-accent">
+          <section className="mb-6 p-4 rounded-xl bg-[hsl(350_70%_95%)] border border-[hsl(350_60%_90%)]">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
                 <Gift className="w-4 h-4 text-primary" />
               </div>
               <h2 className="text-lg font-semibold text-foreground">Denna månad</h2>
-              <Badge className="bg-primary/10 text-primary border-0">{upcomingBirthdays.length}</Badge>
+              <Badge className="bg-primary text-primary-foreground">{upcomingBirthdays.length}</Badge>
             </div>
             
             <div className="space-y-3">
@@ -391,13 +391,13 @@ const Dashboard = () => {
 
         {/* Next Month Section */}
         {nextMonthBirthdays.length > 0 && (
-          <section className="mb-6 p-4 rounded-xl bg-secondary border border-border">
+          <section className="mb-6 p-4 rounded-xl bg-[hsl(270_50%_96%)] border border-[hsl(270_40%_90%)]">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
-                <Clock className="w-4 h-4 text-muted-foreground" />
+              <div className="w-8 h-8 rounded-full bg-[hsl(270_50%_85%)] flex items-center justify-center">
+                <Clock className="w-4 h-4 text-[hsl(270_40%_40%)]" />
               </div>
               <h2 className="text-lg font-semibold text-foreground">Nästa månad</h2>
-              <Badge variant="secondary">{nextMonthBirthdays.length}</Badge>
+              <Badge className="bg-[hsl(270_50%_85%)] text-[hsl(270_40%_30%)]">{nextMonthBirthdays.length}</Badge>
             </div>
             
             <div className="space-y-3">
@@ -424,7 +424,7 @@ const Dashboard = () => {
             {quickActions.map((action, index) => (
               <Card
                 key={index}
-                className="border-2 hover:border-primary/30 hover:bg-accent/30 transition-all cursor-pointer"
+                className="border-2 border-[hsl(350_60%_92%)] hover:border-primary/40 hover:bg-[hsl(350_70%_97%)] transition-all cursor-pointer"
                 onClick={action.action}
               >
                 <CardContent className="p-4 flex items-center gap-3">
