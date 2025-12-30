@@ -203,7 +203,12 @@ const Dashboard = () => {
       title: t('actions.addBirthday'),
       description: t('actions.addBirthdayDesc'),
       action: () => setShowAddDialog(true),
-      color: "bg-gradient-primary"
+    },
+    {
+      icon: Users,
+      title: "Dina kontakter",
+      description: "Visa alla dina kontakter",
+      action: () => setShowAllContacts(true),
     },
     {
       icon: Download,
@@ -216,42 +221,19 @@ const Dashboard = () => {
       title: t('actions.calendarView'),
       description: t('actions.calendarViewDesc'),
       action: () => setShowCalendar(true),
-      color: "bg-pastel-lavender"
     },
     {
       icon: MessageSquare,
       title: t('actions.messageTemplates'),
       description: t('actions.messageTemplatesDesc'),
       action: () => setShowMessageManager(true),
-      color: "bg-pastel-peach"
     },
     {
       icon: Bell,
       title: t('actions.notifications'),
       description: t('actions.notificationsDesc'),
       action: () => setShowSettings(true),
-      color: "bg-pastel-blue"
     },
-    {
-      icon: Sparkles,
-      title: t('actions.aiMessages'),
-      description: t('actions.aiMessagesDesc'),
-      action: () => {
-        toast({
-          title: t('actions.aiMessagesTitle'),
-          description: t('actions.aiMessagesAlert'),
-        });
-      },
-      color: "bg-gradient-accent"
-    },
-    {
-      icon: Crown,
-      title: "Premium",
-      description: "Uppgradera till Premium-funktioner",
-      action: () => {},
-      color: "bg-gradient-primary",
-      link: "/subscription"
-    }
   ];
 
   if (showCalendar) {
@@ -432,38 +414,21 @@ const Dashboard = () => {
             <h2 className="text-lg font-medium text-foreground">Snabbåtgärder</h2>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {quickActions.slice(0, 4).map((action, index) => {
-              if (action.link) {
-                return (
-                  <Link key={index} to={action.link}>
-                    <Card className="border shadow-soft hover:shadow-card transition-shadow cursor-pointer h-full">
-                      <CardContent className="p-4 flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center">
-                          <action.icon className="w-5 h-5 text-foreground" />
-                        </div>
-                        <span className="text-sm font-medium">{action.title}</span>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                );
-              }
-              
-              return (
-                <Card
-                  key={index}
-                  className="border shadow-soft hover:shadow-card transition-shadow cursor-pointer"
-                  onClick={action.action}
-                >
-                  <CardContent className="p-4 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center">
-                      <action.icon className="w-5 h-5 text-foreground" />
-                    </div>
-                    <span className="text-sm font-medium">{action.title}</span>
-                  </CardContent>
-                </Card>
-              );
-            })}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {quickActions.map((action, index) => (
+              <Card
+                key={index}
+                className="border shadow-soft hover:shadow-card transition-shadow cursor-pointer"
+                onClick={action.action}
+              >
+                <CardContent className="p-4 flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center">
+                    <action.icon className="w-5 h-5 text-foreground" />
+                  </div>
+                  <span className="text-sm font-medium">{action.title}</span>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </section>
 
@@ -490,27 +455,25 @@ const Dashboard = () => {
           </Card>
         )}
 
-        {/* All Contacts */}
-        {contacts.length > 0 && (
+        {/* All Contacts Modal View */}
+        {showAllContacts && contacts.length > 0 && (
           <section className="mb-8">
             <div className="flex items-center justify-between mb-4 pb-2 border-b border-border">
               <div className="flex items-center gap-2">
                 <h2 className="text-lg font-medium text-foreground">Alla kontakter</h2>
                 <Badge variant="secondary" className="text-xs">{contacts.length}</Badge>
               </div>
-              {sortedContacts.length > 6 && (
-                <Button 
-                  variant="ghost" 
-                  size="sm"
-                  onClick={() => setShowAllContacts(!showAllContacts)}
-                >
-                  {showAllContacts ? "Visa mindre" : "Visa alla"}
-                </Button>
-              )}
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => setShowAllContacts(false)}
+              >
+                Dölj
+              </Button>
             </div>
             
             <div className="space-y-3">
-              {(showAllContacts ? sortedContacts : sortedContacts.slice(0, 6)).map((contact) => (
+              {sortedContacts.map((contact) => (
                 <ContactCard
                   key={contact.id}
                   contact={contact}
