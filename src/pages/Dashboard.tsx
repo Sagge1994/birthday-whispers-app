@@ -127,26 +127,32 @@ const Dashboard = () => {
     });
   };
 
-  // Get upcoming birthdays
+  // Get upcoming birthdays (sorted by closest first)
   const getUpcomingBirthdays = () => {
     const today = new Date();
-    const upcoming = contacts.filter(contact => {
-      // Skip contacts without birthday
-      if (!contact.birthday) return false;
-      
-      const birthday = new Date(contact.birthday);
-      const currentYear = today.getFullYear();
-      birthday.setFullYear(currentYear);
-      
-      if (birthday < today) {
-        birthday.setFullYear(currentYear + 1);
-      }
-      
-      const daysUntil = Math.ceil((birthday.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-      return daysUntil <= 30; // Next 30 days
-    });
+    today.setHours(0, 0, 0, 0);
     
-    return upcoming.slice(0, 3); // Show max 3
+    const upcoming = contacts
+      .filter(contact => contact.birthday) // Only contacts with birthdays
+      .map(contact => {
+        const birthday = new Date(contact.birthday!);
+        const currentYear = today.getFullYear();
+        birthday.setFullYear(currentYear);
+        birthday.setHours(0, 0, 0, 0);
+        
+        if (birthday < today) {
+          birthday.setFullYear(currentYear + 1);
+        }
+        
+        const daysUntil = Math.ceil((birthday.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+        return { contact, daysUntil };
+      })
+      .filter(item => item.daysUntil <= 30) // Next 30 days
+      .sort((a, b) => a.daysUntil - b.daysUntil) // Sort by closest first
+      .slice(0, 3) // Show max 3
+      .map(item => item.contact);
+    
+    return upcoming;
   };
 
   const birthdaysToday = getBirthdaysToday();
