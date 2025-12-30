@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'app.lovable.ec3546893af547c58b51d8494bbf5834',
-  appName: 'birthday-whispers-app',
+  appName: 'Födelsedagar',
   webDir: 'dist',
   plugins: {
     PushNotifications: {
