@@ -168,23 +168,23 @@ export const ContactCard = ({ contact, onDelete, onUpdate, onEdit }: ContactCard
   };
 
   return (
-    <Card className="bg-gradient-card border-0 shadow-card hover:shadow-lg transition-all duration-300 transform hover:scale-105 overflow-hidden">
-      <CardContent className="p-6">
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex-1">
-            <h3 className="font-semibold text-lg mb-1">{contact.name}</h3>
-            <div className="flex items-center text-sm text-muted-foreground mb-2">
-              <Calendar className="w-4 h-4 mr-1" />
+    <Card className="bg-gradient-card border-0 shadow-card hover:shadow-lg transition-all duration-300 overflow-hidden">
+      <CardContent className="p-3 md:p-6">
+        <div className="flex items-start justify-between mb-2 md:mb-4">
+          <div className="flex-1 min-w-0">
+            <h3 className="font-semibold text-base md:text-lg mb-0.5 md:mb-1 truncate">{contact.name}</h3>
+            <div className="flex items-center text-xs md:text-sm text-muted-foreground mb-1 md:mb-2">
+              <Calendar className="w-3 h-3 md:w-4 md:h-4 mr-1 flex-shrink-0" />
               {formatBirthday()}
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs md:text-sm text-muted-foreground">
               {getAgeText()}
             </p>
           </div>
           
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+              <Button variant="ghost" size="sm" className="h-7 w-7 md:h-8 md:w-8 p-0 flex-shrink-0">
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -221,47 +221,49 @@ export const ContactCard = ({ contact, onDelete, onUpdate, onEdit }: ContactCard
         </div>
 
         {/* Status Badge */}
-        <div className="mb-4">
+        <div className="mb-2 md:mb-4">
           {contact.birthday ? (
             isToday ? (
-              <Badge className="bg-gradient-accent text-accent-foreground border-0">
+              <Badge className="bg-gradient-accent text-accent-foreground border-0 text-xs">
                 {t('contact.birthdayToday')}
               </Badge>
             ) : isSoon ? (
-              <Badge variant="secondary" className="bg-pastel-peach/50">
+              <Badge variant="secondary" className="bg-pastel-peach/50 text-xs">
                 {getDaysText()}
               </Badge>
             ) : (
-              <Badge variant="outline" className="border-primary/20">
+              <Badge variant="outline" className="border-primary/20 text-xs">
                 {getDaysText()}
               </Badge>
             )
           ) : (
-            <Badge variant="outline" className="border-muted/30 text-muted-foreground">
+            <Badge variant="outline" className="border-muted/30 text-muted-foreground text-xs">
               Ingen födelsedag angiven
             </Badge>
           )}
         </div>
 
-        {/* Action Buttons */}
-        <div className="space-y-2">
+        {/* Action Buttons - More compact on mobile */}
+        <div className="flex gap-2 md:flex-col md:space-y-2 md:gap-0">
           {contact.phone ? (
             <Button 
               onClick={handleSendSMS}
-              className="w-full bg-gradient-primary hover:shadow-soft transition-all duration-300"
+              className="flex-1 md:w-full bg-gradient-primary hover:shadow-soft transition-all duration-300 h-8 md:h-9 text-xs md:text-sm"
               size="sm"
             >
-              <MessageSquare className="w-4 h-4 mr-2" />
-              {t('contact.sendSMS')}
+              <MessageSquare className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+              <span className="hidden sm:inline">{t('contact.sendSMS')}</span>
+              <span className="sm:hidden">SMS</span>
             </Button>
           ) : (
             <Button 
               onClick={scheduleNotification}
-              className="w-full bg-gradient-primary hover:shadow-soft transition-all duration-300"
+              className="flex-1 md:w-full bg-gradient-primary hover:shadow-soft transition-all duration-300 h-8 md:h-9 text-xs md:text-sm"
               size="sm"
             >
-              <Bell className="w-4 h-4 mr-2" />
-              Ställ in påminnelse
+              <Bell className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+              <span className="hidden sm:inline">Påminnelse</span>
+              <span className="sm:hidden">🔔</span>
             </Button>
           )}
           
@@ -269,11 +271,12 @@ export const ContactCard = ({ contact, onDelete, onUpdate, onEdit }: ContactCard
             <Button 
               onClick={scheduleNotification}
               variant="outline"
-              className="w-full border-primary/20"
+              className="flex-1 md:w-full border-primary/20 h-8 md:h-9 text-xs md:text-sm"
               size="sm"
             >
-              <Bell className="w-4 h-4 mr-2" />
-              Ställ in påminnelse
+              <Bell className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+              <span className="hidden sm:inline">Påminnelse</span>
+              <span className="sm:hidden">🔔</span>
             </Button>
           )}
         </div>
