@@ -74,31 +74,45 @@ export const CalendarView = ({ contacts, onAddContact }: CalendarViewProps) => {
     return age + 1; // Next birthday age
   };
 
+  const today = new Date();
+  const isToday = isSameDay(selectedDate, today);
+
   return (
     <div className="space-y-6">
-      {/* Calendar Header */}
-      <div className="text-center">
-        <div className="flex items-center justify-center gap-4 mb-4">
+      {/* iPhone-style Calendar Header */}
+      <div className="text-center space-y-2">
+        {/* Current date display - iPhone style */}
+        <div className="flex flex-col items-center">
+          <span className="text-xs font-semibold uppercase tracking-widest text-destructive">
+            {format(today, 'EEEE', { locale: sv })}
+          </span>
+          <span className="text-5xl font-light text-foreground">
+            {format(today, 'd')}
+          </span>
+        </div>
+
+        {/* Month/Year Navigation */}
+        <div className="flex items-center justify-center gap-4 pt-4 border-t border-border/50">
           <Button
-            variant="outline"
+            variant="ghost"
             size="icon"
             onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))}
-            className="border-primary/20"
+            className="h-8 w-8"
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-5 w-5" />
           </Button>
           
-          <h2 className="text-2xl font-semibold bg-gradient-primary bg-clip-text text-transparent">
+          <h2 className="text-lg font-semibold min-w-[160px]">
             {format(currentMonth, 'MMMM yyyy', { locale: sv })}
           </h2>
           
           <Button
-            variant="outline" 
+            variant="ghost" 
             size="icon"
             onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))}
-            className="border-primary/20"
+            className="h-8 w-8"
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-5 w-5" />
           </Button>
         </div>
         
