@@ -155,8 +155,37 @@ const Dashboard = () => {
     return upcoming;
   };
 
+  // Get next month's birthdays (31-60 days away)
+  const getNextMonthBirthdays = () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const nextMonth = contacts
+      .filter(contact => contact.birthday)
+      .map(contact => {
+        const birthday = new Date(contact.birthday!);
+        const currentYear = today.getFullYear();
+        birthday.setFullYear(currentYear);
+        birthday.setHours(0, 0, 0, 0);
+        
+        if (birthday < today) {
+          birthday.setFullYear(currentYear + 1);
+        }
+        
+        const daysUntil = Math.ceil((birthday.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+        return { contact, daysUntil };
+      })
+      .filter(item => item.daysUntil > 30 && item.daysUntil <= 60) // 31-60 days
+      .sort((a, b) => a.daysUntil - b.daysUntil)
+      .slice(0, 3)
+      .map(item => item.contact);
+    
+    return nextMonth;
+  };
+
   const birthdaysToday = getBirthdaysToday();
   const upcomingBirthdays = getUpcomingBirthdays();
+  const nextMonthBirthdays = getNextMonthBirthdays();
 
   // Sort all contacts by upcoming birthday
   const sortedContacts = [...contacts].sort((a, b) => {
@@ -418,7 +447,29 @@ const Dashboard = () => {
           </div>
         )}
 
-        {/* Recent Contacts */}
+        {/* Next Month Birthdays */}
+        {nextMonthBirthdays.length > 0 && (
+          <div className="mb-12">
+            <h2 className="text-2xl font-semibold mb-6 flex items-center">
+              <Clock className="w-6 h-6 mr-2 text-primary" />
+              {t('dashboard.nextMonthBirthdays')}
+            </h2>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {nextMonthBirthdays.map((contact) => (
+                <ContactCard
+                  key={contact.id}
+                  contact={contact}
+                  onDelete={deleteContact}
+                  onUpdate={updateContact}
+                  onEdit={handleEditContact}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Your Contacts */}
         {contacts.length === 0 ? (
           <Card className="bg-gradient-card border-0 shadow-card">
             <CardContent className="p-12 text-center">
