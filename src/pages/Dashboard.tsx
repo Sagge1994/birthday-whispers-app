@@ -419,7 +419,29 @@ const Dashboard = () => {
           </div>
         )}
 
-        {/* Quick Actions - Compact on mobile */}
+        {/* Next Month Birthdays */}
+        {nextMonthBirthdays.length > 0 && (
+          <div className="mb-6 md:mb-12">
+            <h2 className="text-lg md:text-2xl font-semibold mb-3 md:mb-6 flex items-center">
+              <Clock className="w-5 h-5 md:w-6 md:h-6 mr-2 text-primary" />
+              {t('dashboard.nextMonthBirthdays')}
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
+              {nextMonthBirthdays.map((contact) => (
+                <ContactCard
+                  key={contact.id}
+                  contact={contact}
+                  onDelete={deleteContact}
+                  onUpdate={updateContact}
+                  onEdit={handleEditContact}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Quick Actions - Now after birthdays */}
         <div className="mb-6 md:mb-12">
           <h2 className="text-lg md:text-2xl font-semibold mb-3 md:mb-6 flex items-center">
             <Sparkles className="w-5 h-5 md:w-6 md:h-6 mr-2 text-primary" />
@@ -462,28 +484,6 @@ const Dashboard = () => {
             })}
           </div>
         </div>
-        {/* Next Month Birthdays */}
-        {nextMonthBirthdays.length > 0 && (
-          <div className="mb-6 md:mb-12">
-            <h2 className="text-lg md:text-2xl font-semibold mb-3 md:mb-6 flex items-center">
-              <Clock className="w-5 h-5 md:w-6 md:h-6 mr-2 text-primary" />
-              {t('dashboard.nextMonthBirthdays')}
-            </h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
-              {nextMonthBirthdays.map((contact) => (
-                <ContactCard
-                  key={contact.id}
-                  contact={contact}
-                  onDelete={deleteContact}
-                  onUpdate={updateContact}
-                  onEdit={handleEditContact}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
         {/* Your Contacts */}
         {contacts.length === 0 ? (
           <Card className="bg-gradient-card border-0 shadow-card">
