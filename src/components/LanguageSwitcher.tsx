@@ -29,7 +29,7 @@ export const LanguageSwitcher = () => {
   const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[1];
 
   return (
-    <div className="fixed top-4 right-4 z-50">
+    <div className="fixed top-14 right-4 z-50 md:top-4">
       <Button
         onClick={() => setIsOpen(!isOpen)}
         variant="outline"
