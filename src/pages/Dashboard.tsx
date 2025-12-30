@@ -284,11 +284,44 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pastel-pink via-background to-pastel-blue p-4">
+    <div className="min-h-screen bg-gradient-to-br from-pastel-pink via-background to-pastel-blue">
       <LanguageSwitcher />
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+      
+      {/* Mobile-optimized Header */}
+      <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-md border-b border-border/50 px-4 py-3 md:hidden">
+        <div className="flex items-center justify-between">
+          <h1 className="text-lg font-bold bg-gradient-primary bg-clip-text text-transparent">
+            🎂 {t('dashboard.title')}
+          </h1>
+          <div className="flex items-center gap-1">
+            <Link to="/subscription">
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Crown className="w-4 h-4 text-primary" />
+              </Button>
+            </Link>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8"
+              onClick={() => setShowSettings(true)}
+            >
+              <Settings className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8"
+              onClick={() => setShowLogoutDialog(true)}
+            >
+              <LogOut className="w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-3 py-4 md:px-4 md:py-8 max-w-7xl">
+        {/* Desktop Header */}
+        <div className="hidden md:flex items-center justify-between mb-8">
           <div className="text-center flex-1">
             <h3 className="font-bold text-4xl mb-3 bg-gradient-primary bg-clip-text text-transparent">
               {t('dashboard.title')}
@@ -325,101 +358,93 @@ const Dashboard = () => {
         </div>
 
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        {/* Quick Stats - More compact on mobile */}
+        <div className="grid grid-cols-3 gap-2 md:gap-6 mb-6 md:mb-12">
           <Card className="bg-gradient-card border-0 shadow-card">
-            <CardContent className="p-6 text-center">
-              <Users className="w-8 h-8 text-primary mx-auto mb-2" />
-              <div className="text-2xl font-bold text-primary">
+            <CardContent className="p-3 md:p-6 text-center">
+              <Users className="w-5 h-5 md:w-8 md:h-8 text-primary mx-auto mb-1 md:mb-2" />
+              <div className="text-lg md:text-2xl font-bold text-primary">
                 {contacts.length}
                 {!isPremium && (
-                  <span className="text-sm font-normal text-muted-foreground">
+                  <span className="text-xs md:text-sm font-normal text-muted-foreground">
                     /{FREE_CONTACT_LIMIT}
                   </span>
                 )}
               </div>
-              <div className="text-sm text-muted-foreground">{t('dashboard.totalContacts')}</div>
-              {!isPremium && contacts.length >= FREE_CONTACT_LIMIT - 1 && (
-                <Badge variant="outline" className="mt-2 text-xs">
-                  {contacts.length >= FREE_CONTACT_LIMIT ? 
-                    t('subscription.limitReached') : 
-                    t('subscription.contactsRemaining', { count: FREE_CONTACT_LIMIT - contacts.length })
-                  }
-                </Badge>
-              )}
+              <div className="text-xs md:text-sm text-muted-foreground">{t('dashboard.totalContacts')}</div>
             </CardContent>
           </Card>
           
           <Card className="bg-gradient-card border-0 shadow-card">
-            <CardContent className="p-6 text-center">
-              <Clock className="w-8 h-8 text-primary mx-auto mb-2" />
-              <div className="text-2xl font-bold text-primary">{upcomingBirthdays.length}</div>
-              <div className="text-sm text-muted-foreground">{t('dashboard.upcomingThisMonth')}</div>
+            <CardContent className="p-3 md:p-6 text-center">
+              <Clock className="w-5 h-5 md:w-8 md:h-8 text-primary mx-auto mb-1 md:mb-2" />
+              <div className="text-lg md:text-2xl font-bold text-primary">{upcomingBirthdays.length}</div>
+              <div className="text-xs md:text-sm text-muted-foreground">{t('dashboard.upcomingThisMonth')}</div>
             </CardContent>
           </Card>
           
           <Card className="bg-gradient-card border-0 shadow-card">
-            <CardContent className="p-6 text-center">
-              <Gift className="w-8 h-8 text-primary mx-auto mb-2" />
-              <div className="text-2xl font-bold text-primary">{birthdaysToday.length}</div>
-              <div className="text-sm text-muted-foreground">{t('dashboard.birthdaysToday')}</div>
+            <CardContent className="p-3 md:p-6 text-center">
+              <Gift className="w-5 h-5 md:w-8 md:h-8 text-primary mx-auto mb-1 md:mb-2" />
+              <div className="text-lg md:text-2xl font-bold text-primary">{birthdaysToday.length}</div>
+              <div className="text-xs md:text-sm text-muted-foreground">{t('dashboard.birthdaysToday')}</div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Quick Actions */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-semibold mb-6 flex items-center">
-            <Sparkles className="w-6 h-6 mr-2 text-primary" />
+        {/* Quick Actions - Compact on mobile */}
+        <div className="mb-6 md:mb-12">
+          <h2 className="text-lg md:text-2xl font-semibold mb-3 md:mb-6 flex items-center">
+            <Sparkles className="w-5 h-5 md:w-6 md:h-6 mr-2 text-primary" />
             {t('dashboard.quickActions')}
           </h2>
           
-           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-             {quickActions.map((action, index) => {
-               if (action.link) {
-                 return (
-                   <Link key={index} to={action.link}>
-                     <Card className="bg-gradient-card border-0 shadow-card hover:shadow-lg transition-all duration-300 transform hover:scale-105 cursor-pointer group">
-                       <CardContent className="p-6 text-center">
-                         <div className={`w-12 h-12 rounded-lg ${action.color} flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300`}>
-                           <action.icon className="w-6 h-6 text-white" />
-                         </div>
-                         <h3 className="font-semibold text-sm mb-1">{action.title}</h3>
-                         <p className="text-xs text-muted-foreground">{action.description}</p>
-                       </CardContent>
-                     </Card>
-                   </Link>
-                 );
-               }
-               
-               return (
-                 <Card
-                   key={index}
-                   className="bg-gradient-card border-0 shadow-card hover:shadow-lg transition-all duration-300 transform hover:scale-105 cursor-pointer group"
-                   onClick={action.action}
-                 >
-                   <CardContent className="p-6 text-center">
-                     <div className={`w-12 h-12 rounded-lg ${action.color} flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300`}>
-                       <action.icon className="w-6 h-6 text-white" />
-                     </div>
-                     <h3 className="font-semibold text-sm mb-1">{action.title}</h3>
-                     <p className="text-xs text-muted-foreground">{action.description}</p>
-                   </CardContent>
-                 </Card>
-               );
-             })}
-           </div>
+          <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4">
+            {quickActions.map((action, index) => {
+              if (action.link) {
+                return (
+                  <Link key={index} to={action.link}>
+                    <Card className="bg-gradient-card border-0 shadow-card hover:shadow-lg transition-all duration-300 cursor-pointer group h-full">
+                      <CardContent className="p-3 md:p-6 text-center">
+                        <div className={`w-10 h-10 md:w-12 md:h-12 rounded-lg ${action.color} flex items-center justify-center mx-auto mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-300`}>
+                          <action.icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
+                        </div>
+                        <h3 className="font-semibold text-xs md:text-sm mb-0.5 md:mb-1 line-clamp-1">{action.title}</h3>
+                        <p className="text-[10px] md:text-xs text-muted-foreground line-clamp-2 hidden md:block">{action.description}</p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                );
+              }
+              
+              return (
+                <Card
+                  key={index}
+                  className="bg-gradient-card border-0 shadow-card hover:shadow-lg transition-all duration-300 cursor-pointer group h-full"
+                  onClick={action.action}
+                >
+                  <CardContent className="p-3 md:p-6 text-center">
+                    <div className={`w-10 h-10 md:w-12 md:h-12 rounded-lg ${action.color} flex items-center justify-center mx-auto mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-300`}>
+                      <action.icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
+                    </div>
+                    <h3 className="font-semibold text-xs md:text-sm mb-0.5 md:mb-1 line-clamp-1">{action.title}</h3>
+                    <p className="text-[10px] md:text-xs text-muted-foreground line-clamp-2 hidden md:block">{action.description}</p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
         </div>
 
         {/* Upcoming Birthdays */}
         {upcomingBirthdays.length > 0 && (
-          <div className="mb-12">
-            <h2 className="text-2xl font-semibold mb-6 flex items-center">
-              <Calendar className="w-6 h-6 mr-2 text-primary" />
+          <div className="mb-6 md:mb-12">
+            <h2 className="text-lg md:text-2xl font-semibold mb-3 md:mb-6 flex items-center">
+              <Calendar className="w-5 h-5 md:w-6 md:h-6 mr-2 text-primary" />
               {t('dashboard.upcomingBirthdays')}
             </h2>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
               {upcomingBirthdays.map((contact) => (
                 <ContactCard
                   key={contact.id}
@@ -435,13 +460,13 @@ const Dashboard = () => {
 
         {/* Next Month Birthdays */}
         {nextMonthBirthdays.length > 0 && (
-          <div className="mb-12">
-            <h2 className="text-2xl font-semibold mb-6 flex items-center">
-              <Clock className="w-6 h-6 mr-2 text-primary" />
+          <div className="mb-6 md:mb-12">
+            <h2 className="text-lg md:text-2xl font-semibold mb-3 md:mb-6 flex items-center">
+              <Clock className="w-5 h-5 md:w-6 md:h-6 mr-2 text-primary" />
               {t('dashboard.nextMonthBirthdays')}
             </h2>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
               {nextMonthBirthdays.map((contact) => (
                 <ContactCard
                   key={contact.id}
