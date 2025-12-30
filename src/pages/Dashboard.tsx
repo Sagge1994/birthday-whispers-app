@@ -366,10 +366,13 @@ const Dashboard = () => {
 
         {/* This Month Section */}
         {upcomingBirthdays.length > 0 && (
-          <section className="mb-8">
-            <div className="flex items-center gap-2 mb-4 pb-2 border-b border-border">
-              <h2 className="text-lg font-medium text-foreground">Denna månad</h2>
-              <Badge variant="secondary" className="text-xs">{upcomingBirthdays.length}</Badge>
+          <section className="mb-6 p-4 rounded-xl bg-accent/50 border border-accent">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <Gift className="w-4 h-4 text-primary" />
+              </div>
+              <h2 className="text-lg font-semibold text-foreground">Denna månad</h2>
+              <Badge className="bg-primary/10 text-primary border-0">{upcomingBirthdays.length}</Badge>
             </div>
             
             <div className="space-y-3">
@@ -388,10 +391,13 @@ const Dashboard = () => {
 
         {/* Next Month Section */}
         {nextMonthBirthdays.length > 0 && (
-          <section className="mb-8">
-            <div className="flex items-center gap-2 mb-4 pb-2 border-b border-border">
-              <h2 className="text-lg font-medium text-foreground">Nästa månad</h2>
-              <Badge variant="secondary" className="text-xs">{nextMonthBirthdays.length}</Badge>
+          <section className="mb-6 p-4 rounded-xl bg-secondary border border-border">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
+                <Clock className="w-4 h-4 text-muted-foreground" />
+              </div>
+              <h2 className="text-lg font-semibold text-foreground">Nästa månad</h2>
+              <Badge variant="secondary">{nextMonthBirthdays.length}</Badge>
             </div>
             
             <div className="space-y-3">
@@ -408,22 +414,22 @@ const Dashboard = () => {
           </section>
         )}
 
-        {/* Quick Actions - Clean grid */}
-        <section className="mb-8">
-          <div className="flex items-center gap-2 mb-4 pb-2 border-b border-border">
-            <h2 className="text-lg font-medium text-foreground">Snabbåtgärder</h2>
+        {/* Quick Actions */}
+        <section className="mb-6">
+          <div className="flex items-center gap-2 mb-4">
+            <h2 className="text-lg font-semibold text-foreground">Snabbåtgärder</h2>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {quickActions.map((action, index) => (
               <Card
                 key={index}
-                className="border shadow-soft hover:shadow-card transition-shadow cursor-pointer"
+                className="border-2 hover:border-primary/30 hover:bg-accent/30 transition-all cursor-pointer"
                 onClick={action.action}
               >
                 <CardContent className="p-4 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center">
-                    <action.icon className="w-5 h-5 text-foreground" />
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <action.icon className="w-5 h-5 text-primary" />
                   </div>
                   <span className="text-sm font-medium">{action.title}</span>
                 </CardContent>
