@@ -284,18 +284,15 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pastel-pink via-background to-pastel-blue pb-20 md:pb-0">
+    <div className="min-h-screen bg-background pb-20 md:pb-0">
       <LanguageSwitcher />
       
-      {/* Mobile-optimized Header - Bigger and clearer */}
-      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-md border-b border-border/50 px-4 py-4 md:hidden shadow-sm">
+      {/* Mobile Header - Clean and minimal */}
+      <div className="sticky top-0 z-10 bg-background border-b border-border px-4 py-4 md:hidden">
         <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              Födelsedagar
-            </h1>
-            <p className="text-xs text-muted-foreground">Glöm aldrig en födelsedag</p>
-          </div>
+          <h1 className="text-xl font-semibold text-foreground">
+            Födelsedagar
+          </h1>
           <div className="flex items-center gap-1">
             <Button
               variant="ghost"
@@ -317,11 +314,11 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Mobile Quick Add Button - Fixed at bottom */}
+      {/* Mobile Quick Add Button */}
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-20 md:hidden">
         <Button 
           onClick={() => setShowAddDialog(true)}
-          className="bg-gradient-primary hover:shadow-lg shadow-xl rounded-full h-14 px-6 text-base font-semibold"
+          className="bg-primary text-primary-foreground shadow-lg rounded-full h-14 px-6 text-base font-medium"
           size="lg"
         >
           <Plus className="w-5 h-5 mr-2" />
@@ -329,30 +326,25 @@ const Dashboard = () => {
         </Button>
       </div>
 
-      <div className="container mx-auto px-3 py-4 md:px-4 md:py-8 max-w-7xl">
+      <div className="container mx-auto px-4 py-6 md:py-8 max-w-4xl">
         {/* Desktop Header */}
         <div className="hidden md:flex items-center justify-between mb-8">
-          <div className="text-center flex-1">
-            <h3 className="font-bold text-4xl mb-3 bg-gradient-primary bg-clip-text text-transparent">
+          <div>
+            <h1 className="font-semibold text-2xl text-foreground">
               {t('dashboard.title')}
-            </h3>
-            <p className="text-xl text-muted-foreground">
+            </h1>
+            <p className="text-muted-foreground">
               {t('dashboard.subtitle')}
             </p>
           </div>
           
-          {/* User Menu */}
           <div className="flex items-center gap-2">
-            <Badge variant="outline" className="border-primary/20">
+            <Badge variant="outline" className="font-normal">
               <User className="w-3 h-3 mr-1" />
               {user?.email?.split('@')[0]}
             </Badge>
             <Link to="/subscription">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-muted-foreground hover:text-foreground"
-              >
+              <Button variant="ghost" size="sm">
                 <Crown className="w-4 h-4" />
               </Button>
             </Link>
@@ -360,52 +352,45 @@ const Dashboard = () => {
               variant="ghost"
               size="sm"
               onClick={() => setShowLogoutDialog(true)}
-              className="text-muted-foreground hover:text-foreground"
             >
               <LogOut className="w-4 h-4" />
             </Button>
           </div>
         </div>
 
-
-        {/* Quick Stats - Bigger on mobile */}
-        <div className="grid grid-cols-3 gap-3 md:gap-6 mb-6 md:mb-12">
-          <Card className="bg-gradient-card border-0 shadow-card">
-            <CardContent className="p-4 md:p-6 text-center">
-              <Users className="w-6 h-6 md:w-8 md:h-8 text-primary mx-auto mb-2" />
-              <div className="text-xl md:text-2xl font-bold text-primary">
-                {contacts.length}
-              </div>
-              <div className="text-xs md:text-sm text-muted-foreground font-medium">Kontakter</div>
+        {/* Stats Row - Clean cards */}
+        <div className="grid grid-cols-3 gap-3 md:gap-4 mb-8">
+          <Card className="border shadow-soft">
+            <CardContent className="p-4 text-center">
+              <div className="text-2xl font-semibold text-foreground">{contacts.length}</div>
+              <div className="text-xs text-muted-foreground mt-1">Kontakter</div>
             </CardContent>
           </Card>
           
-          <Card className="bg-gradient-card border-0 shadow-card">
-            <CardContent className="p-4 md:p-6 text-center">
-              <Calendar className="w-6 h-6 md:w-8 md:h-8 text-primary mx-auto mb-2" />
-              <div className="text-xl md:text-2xl font-bold text-primary">{upcomingBirthdays.length}</div>
-              <div className="text-xs md:text-sm text-muted-foreground font-medium">Denna månad</div>
+          <Card className="border shadow-soft">
+            <CardContent className="p-4 text-center">
+              <div className="text-2xl font-semibold text-foreground">{upcomingBirthdays.length}</div>
+              <div className="text-xs text-muted-foreground mt-1">Denna månad</div>
             </CardContent>
           </Card>
           
-          <Card className="bg-gradient-card border-0 shadow-card">
-            <CardContent className="p-4 md:p-6 text-center">
-              <Gift className="w-6 h-6 md:w-8 md:h-8 text-primary mx-auto mb-2" />
-              <div className="text-xl md:text-2xl font-bold text-primary">{birthdaysToday.length}</div>
-              <div className="text-xs md:text-sm text-muted-foreground font-medium">Idag</div>
+          <Card className="border shadow-soft">
+            <CardContent className="p-4 text-center">
+              <div className="text-2xl font-semibold text-foreground">{birthdaysToday.length}</div>
+              <div className="text-xs text-muted-foreground mt-1">Idag</div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Upcoming Birthdays - Show FIRST so users see them immediately */}
+        {/* This Month Section */}
         {upcomingBirthdays.length > 0 && (
-          <div className="mb-8 md:mb-12 bg-pastel-pink/30 rounded-2xl p-4 md:p-6 border-2 border-primary/20">
-            <h2 className="text-lg md:text-2xl font-bold mb-4 md:mb-6 flex items-center text-primary">
-              <Calendar className="w-6 h-6 md:w-7 md:h-7 mr-2" />
-              🎂 {t('dashboard.upcomingBirthdays')}
-            </h2>
+          <section className="mb-8">
+            <div className="flex items-center gap-2 mb-4 pb-2 border-b border-border">
+              <h2 className="text-lg font-medium text-foreground">Denna månad</h2>
+              <Badge variant="secondary" className="text-xs">{upcomingBirthdays.length}</Badge>
+            </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
+            <div className="space-y-3">
               {upcomingBirthdays.map((contact) => (
                 <ContactCard
                   key={contact.id}
@@ -416,18 +401,18 @@ const Dashboard = () => {
                 />
               ))}
             </div>
-          </div>
+          </section>
         )}
 
-        {/* Next Month Birthdays */}
+        {/* Next Month Section */}
         {nextMonthBirthdays.length > 0 && (
-          <div className="mb-8 md:mb-12 bg-pastel-lavender/30 rounded-2xl p-4 md:p-6 border-2 border-accent/30">
-            <h2 className="text-lg md:text-2xl font-bold mb-4 md:mb-6 flex items-center text-accent-foreground">
-              <Clock className="w-6 h-6 md:w-7 md:h-7 mr-2 text-primary" />
-              📅 {t('dashboard.nextMonthBirthdays')}
-            </h2>
+          <section className="mb-8">
+            <div className="flex items-center gap-2 mb-4 pb-2 border-b border-border">
+              <h2 className="text-lg font-medium text-foreground">Nästa månad</h2>
+              <Badge variant="secondary" className="text-xs">{nextMonthBirthdays.length}</Badge>
+            </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
+            <div className="space-y-3">
               {nextMonthBirthdays.map((contact) => (
                 <ContactCard
                   key={contact.id}
@@ -438,28 +423,26 @@ const Dashboard = () => {
                 />
               ))}
             </div>
-          </div>
+          </section>
         )}
 
-        {/* Quick Actions - Now after birthdays */}
-        <div className="mb-6 md:mb-12">
-          <h2 className="text-lg md:text-2xl font-semibold mb-3 md:mb-6 flex items-center">
-            <Sparkles className="w-5 h-5 md:w-6 md:h-6 mr-2 text-primary" />
-            {t('dashboard.quickActions')}
-          </h2>
+        {/* Quick Actions - Clean grid */}
+        <section className="mb-8">
+          <div className="flex items-center gap-2 mb-4 pb-2 border-b border-border">
+            <h2 className="text-lg font-medium text-foreground">Snabbåtgärder</h2>
+          </div>
           
-          <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4">
-            {quickActions.map((action, index) => {
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {quickActions.slice(0, 4).map((action, index) => {
               if (action.link) {
                 return (
                   <Link key={index} to={action.link}>
-                    <Card className="bg-gradient-card border-0 shadow-card hover:shadow-lg transition-all duration-300 cursor-pointer group h-full">
-                      <CardContent className="p-3 md:p-6 text-center">
-                        <div className={`w-10 h-10 md:w-12 md:h-12 rounded-lg ${action.color} flex items-center justify-center mx-auto mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-300`}>
-                          <action.icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
+                    <Card className="border shadow-soft hover:shadow-card transition-shadow cursor-pointer h-full">
+                      <CardContent className="p-4 flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center">
+                          <action.icon className="w-5 h-5 text-foreground" />
                         </div>
-                        <h3 className="font-semibold text-xs md:text-sm mb-0.5 md:mb-1 line-clamp-1">{action.title}</h3>
-                        <p className="text-[10px] md:text-xs text-muted-foreground line-clamp-2 hidden md:block">{action.description}</p>
+                        <span className="text-sm font-medium">{action.title}</span>
                       </CardContent>
                     </Card>
                   </Link>
@@ -469,57 +452,64 @@ const Dashboard = () => {
               return (
                 <Card
                   key={index}
-                  className="bg-gradient-card border-0 shadow-card hover:shadow-lg transition-all duration-300 cursor-pointer group h-full"
+                  className="border shadow-soft hover:shadow-card transition-shadow cursor-pointer"
                   onClick={action.action}
                 >
-                  <CardContent className="p-3 md:p-6 text-center">
-                    <div className={`w-10 h-10 md:w-12 md:h-12 rounded-lg ${action.color} flex items-center justify-center mx-auto mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-300`}>
-                      <action.icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
+                  <CardContent className="p-4 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center">
+                      <action.icon className="w-5 h-5 text-foreground" />
                     </div>
-                    <h3 className="font-semibold text-xs md:text-sm mb-0.5 md:mb-1 line-clamp-1">{action.title}</h3>
-                    <p className="text-[10px] md:text-xs text-muted-foreground line-clamp-2 hidden md:block">{action.description}</p>
+                    <span className="text-sm font-medium">{action.title}</span>
                   </CardContent>
                 </Card>
               );
             })}
           </div>
-        </div>
-        {/* Your Contacts */}
-        {contacts.length === 0 ? (
-          <Card className="bg-gradient-card border-0 shadow-card">
-            <CardContent className="p-12 text-center">
-              <div className="text-6xl mb-4">🎈</div>
-              <h3 className="text-xl font-semibold mb-2">{t('dashboard.noContacts')}</h3>
-              <p className="text-muted-foreground mb-6">
+        </section>
+
+        {/* Empty State */}
+        {contacts.length === 0 && (
+          <Card className="border shadow-soft">
+            <CardContent className="p-8 text-center">
+              <div className="text-4xl mb-4">🎂</div>
+              <h3 className="text-lg font-medium mb-2">{t('dashboard.noContacts')}</h3>
+              <p className="text-muted-foreground mb-6 text-sm">
                 {t('dashboard.noContactsDesc')}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button 
-                  onClick={() => setShowAddDialog(true)}
-                  className="bg-gradient-primary hover:shadow-soft"
-                >
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Button onClick={() => setShowAddDialog(true)}>
                   <Plus className="w-4 h-4 mr-2" />
                   {t('dashboard.addFirstContact')}
                 </Button>
-                <Button 
-                  onClick={() => setShowImporter(true)}
-                  variant="outline"
-                  className="border-primary/20"
-                >
+                <Button onClick={() => setShowImporter(true)} variant="outline">
                   <Download className="w-4 h-4 mr-2" />
                   {t('dashboard.importFromPhone')}
                 </Button>
               </div>
             </CardContent>
           </Card>
-        ) : (
-          <div>
-            <h2 className="text-2xl font-semibold mb-6 flex items-center">
-              <Heart className="w-6 h-6 mr-2 text-primary" />
-              {t('dashboard.yourContacts')} ({contacts.length})
-            </h2>
+        )}
+
+        {/* All Contacts */}
+        {contacts.length > 0 && (
+          <section className="mb-8">
+            <div className="flex items-center justify-between mb-4 pb-2 border-b border-border">
+              <div className="flex items-center gap-2">
+                <h2 className="text-lg font-medium text-foreground">Alla kontakter</h2>
+                <Badge variant="secondary" className="text-xs">{contacts.length}</Badge>
+              </div>
+              {sortedContacts.length > 6 && (
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => setShowAllContacts(!showAllContacts)}
+                >
+                  {showAllContacts ? "Visa mindre" : "Visa alla"}
+                </Button>
+              )}
+            </div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="space-y-3">
               {(showAllContacts ? sortedContacts : sortedContacts.slice(0, 6)).map((contact) => (
                 <ContactCard
                   key={contact.id}
@@ -530,30 +520,10 @@ const Dashboard = () => {
                 />
               ))}
             </div>
-            
-            {contacts.length > 6 && (
-              <div className="text-center mt-8">
-                {!showAllContacts ? (
-                  <Button
-                    onClick={() => setShowAllContacts(true)}
-                    variant="outline"
-                    className="border-primary/20"
-                  >
-                    {t('dashboard.viewAllContacts', { count: contacts.length })}
-                  </Button>
-                ) : (
-                  <Button
-                    onClick={() => setShowAllContacts(false)}
-                    variant="outline"
-                    className="border-primary/20"
-                  >
-                    Visa färre kontakter
-                  </Button>
-                )}
-              </div>
-            )}
-          </div>
+          </section>
         )}
+
+
 
         {/* Dialogs */}
         <AddContactDialog
