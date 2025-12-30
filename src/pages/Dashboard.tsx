@@ -399,10 +399,10 @@ const Dashboard = () => {
 
         {/* Upcoming Birthdays - Show FIRST so users see them immediately */}
         {upcomingBirthdays.length > 0 && (
-          <div className="mb-6 md:mb-12">
-            <h2 className="text-lg md:text-2xl font-semibold mb-3 md:mb-6 flex items-center">
-              <Calendar className="w-5 h-5 md:w-6 md:h-6 mr-2 text-primary" />
-              {t('dashboard.upcomingBirthdays')}
+          <div className="mb-8 md:mb-12 bg-pastel-pink/30 rounded-2xl p-4 md:p-6 border-2 border-primary/20">
+            <h2 className="text-lg md:text-2xl font-bold mb-4 md:mb-6 flex items-center text-primary">
+              <Calendar className="w-6 h-6 md:w-7 md:h-7 mr-2" />
+              🎂 {t('dashboard.upcomingBirthdays')}
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
@@ -421,10 +421,10 @@ const Dashboard = () => {
 
         {/* Next Month Birthdays */}
         {nextMonthBirthdays.length > 0 && (
-          <div className="mb-6 md:mb-12">
-            <h2 className="text-lg md:text-2xl font-semibold mb-3 md:mb-6 flex items-center">
-              <Clock className="w-5 h-5 md:w-6 md:h-6 mr-2 text-primary" />
-              {t('dashboard.nextMonthBirthdays')}
+          <div className="mb-8 md:mb-12 bg-pastel-lavender/30 rounded-2xl p-4 md:p-6 border-2 border-accent/30">
+            <h2 className="text-lg md:text-2xl font-bold mb-4 md:mb-6 flex items-center text-accent-foreground">
+              <Clock className="w-6 h-6 md:w-7 md:h-7 mr-2 text-primary" />
+              📅 {t('dashboard.nextMonthBirthdays')}
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
