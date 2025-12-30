@@ -392,6 +392,28 @@ const Dashboard = () => {
           </Card>
         </div>
 
+        {/* Upcoming Birthdays - Show FIRST so users see them immediately */}
+        {upcomingBirthdays.length > 0 && (
+          <div className="mb-6 md:mb-12">
+            <h2 className="text-lg md:text-2xl font-semibold mb-3 md:mb-6 flex items-center">
+              <Calendar className="w-5 h-5 md:w-6 md:h-6 mr-2 text-primary" />
+              {t('dashboard.upcomingBirthdays')}
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
+              {upcomingBirthdays.map((contact) => (
+                <ContactCard
+                  key={contact.id}
+                  contact={contact}
+                  onDelete={deleteContact}
+                  onUpdate={updateContact}
+                  onEdit={handleEditContact}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Quick Actions - Compact on mobile */}
         <div className="mb-6 md:mb-12">
           <h2 className="text-lg md:text-2xl font-semibold mb-3 md:mb-6 flex items-center">
@@ -435,29 +457,6 @@ const Dashboard = () => {
             })}
           </div>
         </div>
-
-        {/* Upcoming Birthdays */}
-        {upcomingBirthdays.length > 0 && (
-          <div className="mb-6 md:mb-12">
-            <h2 className="text-lg md:text-2xl font-semibold mb-3 md:mb-6 flex items-center">
-              <Calendar className="w-5 h-5 md:w-6 md:h-6 mr-2 text-primary" />
-              {t('dashboard.upcomingBirthdays')}
-            </h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
-              {upcomingBirthdays.map((contact) => (
-                <ContactCard
-                  key={contact.id}
-                  contact={contact}
-                  onDelete={deleteContact}
-                  onUpdate={updateContact}
-                  onEdit={handleEditContact}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
         {/* Next Month Birthdays */}
         {nextMonthBirthdays.length > 0 && (
           <div className="mb-6 md:mb-12">
