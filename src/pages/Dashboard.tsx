@@ -311,7 +311,7 @@ const Dashboard = () => {
         </Button>
       </div>
 
-      <div className="container mx-auto px-4 py-6 md:py-8 max-w-4xl">
+      <div className="container mx-auto px-2 md:px-4 py-6 md:py-8 max-w-4xl">
         {/* Desktop Header - Friendly */}
         <div className="hidden md:flex items-center justify-between mb-8">
           <div className="flex items-center gap-3">
@@ -373,7 +373,7 @@ const Dashboard = () => {
 
         {/* This Month Section */}
         {upcomingBirthdays.length > 0 && (
-          <section className="mb-6 p-5 rounded-2xl bg-gradient-to-br from-[hsl(350_70%_95%)] to-[hsl(350_60%_97%)] border border-[hsl(350_60%_90%)] shadow-md">
+          <section className="mb-6 p-3 md:p-5 rounded-2xl bg-gradient-to-br from-[hsl(350_70%_95%)] to-[hsl(350_60%_97%)] border border-[hsl(350_60%_90%)] shadow-md">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center shadow-sm">
                 <span className="text-lg">🎁</span>
@@ -398,7 +398,7 @@ const Dashboard = () => {
 
         {/* Next Month Section */}
         {nextMonthBirthdays.length > 0 && (
-          <section className="mb-6 p-5 rounded-2xl bg-gradient-to-br from-[hsl(270_50%_96%)] to-[hsl(270_40%_98%)] border border-[hsl(270_40%_90%)] shadow-md">
+          <section className="mb-6 p-3 md:p-5 rounded-2xl bg-gradient-to-br from-[hsl(270_50%_96%)] to-[hsl(270_40%_98%)] border border-[hsl(270_40%_90%)] shadow-md">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-full bg-[hsl(270_50%_88%)] flex items-center justify-center shadow-sm">
                 <span className="text-lg">📅</span>
