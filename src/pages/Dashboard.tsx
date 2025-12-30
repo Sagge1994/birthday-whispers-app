@@ -266,20 +266,23 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background pb-20 md:pb-0">
+    <div className="min-h-screen bg-gradient-to-br from-[hsl(350_80%_97%)] via-background to-[hsl(270_60%_97%)] pb-20 md:pb-0">
       <LanguageSwitcher />
       
-      {/* Mobile Header - Clean and minimal */}
-      <div className="sticky top-0 z-10 bg-background border-b border-border px-4 py-4 md:hidden">
+      {/* Mobile Header - Warm and friendly */}
+      <div className="sticky top-0 z-10 bg-gradient-to-r from-[hsl(350_70%_96%)] to-[hsl(350_60%_98%)] border-b border-[hsl(350_60%_90%)] px-4 py-4 md:hidden backdrop-blur-sm">
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-semibold text-foreground">
-            Födelsedagar
-          </h1>
+          <div className="flex items-center gap-2">
+            <span className="text-2xl">🎂</span>
+            <h1 className="text-xl font-semibold text-foreground">
+              Födelsedagar
+            </h1>
+          </div>
           <div className="flex items-center gap-1">
             <Button
               variant="ghost"
               size="icon"
-              className="h-10 w-10"
+              className="h-10 w-10 hover:bg-primary/10"
               onClick={() => setShowSettings(true)}
             >
               <Settings className="w-5 h-5" />
@@ -287,7 +290,7 @@ const Dashboard = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="h-10 w-10"
+              className="h-10 w-10 hover:bg-primary/10"
               onClick={() => setShowLogoutDialog(true)}
             >
               <LogOut className="w-5 h-5" />
@@ -300,7 +303,7 @@ const Dashboard = () => {
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-20 md:hidden">
         <Button 
           onClick={() => setShowAddDialog(true)}
-          className="bg-primary text-primary-foreground shadow-lg rounded-full h-14 px-6 text-base font-medium"
+          className="bg-gradient-to-r from-primary to-[hsl(350_70%_60%)] text-primary-foreground shadow-xl rounded-full h-14 px-6 text-base font-medium hover:shadow-2xl transition-all hover:scale-105"
           size="lg"
         >
           <Plus className="w-5 h-5 mr-2" />
@@ -309,30 +312,34 @@ const Dashboard = () => {
       </div>
 
       <div className="container mx-auto px-4 py-6 md:py-8 max-w-4xl">
-        {/* Desktop Header */}
+        {/* Desktop Header - Friendly */}
         <div className="hidden md:flex items-center justify-between mb-8">
-          <div>
-            <h1 className="font-semibold text-2xl text-foreground">
-              {t('dashboard.title')}
-            </h1>
-            <p className="text-muted-foreground">
-              {t('dashboard.subtitle')}
-            </p>
+          <div className="flex items-center gap-3">
+            <span className="text-3xl">🎂</span>
+            <div>
+              <h1 className="font-semibold text-2xl text-foreground">
+                {t('dashboard.title')}
+              </h1>
+              <p className="text-muted-foreground">
+                {t('dashboard.subtitle')}
+              </p>
+            </div>
           </div>
           
           <div className="flex items-center gap-2">
-            <Badge variant="outline" className="font-normal">
+            <Badge variant="outline" className="font-normal bg-primary/5 border-primary/20">
               <User className="w-3 h-3 mr-1" />
               {user?.email?.split('@')[0]}
             </Badge>
             <Link to="/subscription">
-              <Button variant="ghost" size="sm">
-                <Crown className="w-4 h-4" />
+              <Button variant="ghost" size="sm" className="hover:bg-primary/10">
+                <Crown className="w-4 h-4 text-primary" />
               </Button>
             </Link>
             <Button
               variant="ghost"
               size="sm"
+              className="hover:bg-primary/10"
               onClick={() => setShowLogoutDialog(true)}
             >
               <LogOut className="w-4 h-4" />
@@ -340,25 +347,25 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Stats Row - Clean cards */}
+        {/* Stats Row - Colorful cards */}
         <div className="grid grid-cols-3 gap-3 md:gap-4 mb-8">
-          <Card className="border shadow-soft">
+          <Card className="border-0 bg-gradient-to-br from-[hsl(350_70%_94%)] to-[hsl(350_60%_97%)] shadow-md hover:shadow-lg transition-shadow">
             <CardContent className="p-4 text-center">
-              <div className="text-2xl font-semibold text-foreground">{contacts.length}</div>
+              <div className="text-2xl font-bold text-primary">{contacts.length}</div>
               <div className="text-xs text-muted-foreground mt-1">Kontakter</div>
             </CardContent>
           </Card>
           
-          <Card className="border shadow-soft">
+          <Card className="border-0 bg-gradient-to-br from-[hsl(25_80%_94%)] to-[hsl(25_70%_97%)] shadow-md hover:shadow-lg transition-shadow">
             <CardContent className="p-4 text-center">
-              <div className="text-2xl font-semibold text-foreground">{upcomingBirthdays.length}</div>
+              <div className="text-2xl font-bold text-[hsl(25_70%_45%)]">{upcomingBirthdays.length}</div>
               <div className="text-xs text-muted-foreground mt-1">Denna månad</div>
             </CardContent>
           </Card>
           
-          <Card className="border shadow-soft">
+          <Card className="border-0 bg-gradient-to-br from-[hsl(150_50%_92%)] to-[hsl(150_40%_96%)] shadow-md hover:shadow-lg transition-shadow">
             <CardContent className="p-4 text-center">
-              <div className="text-2xl font-semibold text-foreground">{birthdaysToday.length}</div>
+              <div className="text-2xl font-bold text-[hsl(150_50%_35%)]">{birthdaysToday.length}</div>
               <div className="text-xs text-muted-foreground mt-1">Idag</div>
             </CardContent>
           </Card>
@@ -366,13 +373,13 @@ const Dashboard = () => {
 
         {/* This Month Section */}
         {upcomingBirthdays.length > 0 && (
-          <section className="mb-6 p-4 rounded-xl bg-[hsl(350_70%_95%)] border border-[hsl(350_60%_90%)]">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                <Gift className="w-4 h-4 text-primary" />
+          <section className="mb-6 p-5 rounded-2xl bg-gradient-to-br from-[hsl(350_70%_95%)] to-[hsl(350_60%_97%)] border border-[hsl(350_60%_90%)] shadow-md">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center shadow-sm">
+                <span className="text-lg">🎁</span>
               </div>
               <h2 className="text-lg font-semibold text-foreground">Denna månad</h2>
-              <Badge className="bg-primary text-primary-foreground">{upcomingBirthdays.length}</Badge>
+              <Badge className="bg-primary text-primary-foreground shadow-sm">{upcomingBirthdays.length}</Badge>
             </div>
             
             <div className="space-y-3">
@@ -391,13 +398,13 @@ const Dashboard = () => {
 
         {/* Next Month Section */}
         {nextMonthBirthdays.length > 0 && (
-          <section className="mb-6 p-4 rounded-xl bg-[hsl(270_50%_96%)] border border-[hsl(270_40%_90%)]">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-full bg-[hsl(270_50%_85%)] flex items-center justify-center">
-                <Clock className="w-4 h-4 text-[hsl(270_40%_40%)]" />
+          <section className="mb-6 p-5 rounded-2xl bg-gradient-to-br from-[hsl(270_50%_96%)] to-[hsl(270_40%_98%)] border border-[hsl(270_40%_90%)] shadow-md">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-full bg-[hsl(270_50%_88%)] flex items-center justify-center shadow-sm">
+                <span className="text-lg">📅</span>
               </div>
               <h2 className="text-lg font-semibold text-foreground">Nästa månad</h2>
-              <Badge className="bg-[hsl(270_50%_85%)] text-[hsl(270_40%_30%)]">{nextMonthBirthdays.length}</Badge>
+              <Badge className="bg-[hsl(270_50%_85%)] text-[hsl(270_40%_30%)] shadow-sm">{nextMonthBirthdays.length}</Badge>
             </div>
             
             <div className="space-y-3">
@@ -417,6 +424,7 @@ const Dashboard = () => {
         {/* Quick Actions */}
         <section className="mb-6">
           <div className="flex items-center gap-2 mb-4">
+            <span className="text-lg">⚡</span>
             <h2 className="text-lg font-semibold text-foreground">Snabbåtgärder</h2>
           </div>
           
@@ -424,11 +432,11 @@ const Dashboard = () => {
             {quickActions.map((action, index) => (
               <Card
                 key={index}
-                className="border-2 border-[hsl(350_60%_92%)] hover:border-primary/40 hover:bg-[hsl(350_70%_97%)] transition-all cursor-pointer"
+                className="border-0 bg-gradient-to-br from-card to-[hsl(350_60%_98%)] shadow-md hover:shadow-lg hover:scale-[1.02] transition-all cursor-pointer"
                 onClick={action.action}
               >
                 <CardContent className="p-4 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center shadow-sm">
                     <action.icon className="w-5 h-5 text-primary" />
                   </div>
                   <span className="text-sm font-medium">{action.title}</span>
